@@ -1,6 +1,6 @@
 # UI Lab · 设计案例库
 
-[在线体验](https://ui-lab.wangruofeng007.com/)
+[在线体验](https://ui-lab.wangruofeng007.com/) · [Cloudflare Pages 地址](https://ui-lab-esu.pages.dev/)
 
 首页直接列出书籍和参考项目，进入来源后即可浏览案例。当前收录《重构 UI》的 50 个章节案例、UI Skills Playbook 的 47 个案例，《写给大家看的设计书》的 43 个案例和练习，Kill AI Slop 的 35 个案例，《写给程序员的设计书》的 43 个案例，以及 Motion Primitives 的 33 个案例。每个来源拥有独立章节目录、搜索和案例链接。
 
