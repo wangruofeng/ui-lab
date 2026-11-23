@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta
+      name="description"
+      content="从设计书籍与参考项目中学习，用可操作的前后对照练习界面设计。"
+    />
+    <title>设计案例库</title>
+    <link rel="icon" type="image/png" sizes="96x96" href="./brand-mark.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="kill-slop.css" />
+    <link rel="stylesheet" href="design-hackers.css" />
+    <link rel="stylesheet" href="motion-primitives.css" />
+    <link rel="stylesheet" href="motion-primitives-examples.css" />
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#case">跳到内容</a>
+    <header class="site-header">
+      <div class="header-content">
+        <a href="#/" class="brand">
+          <img
+            class="brand-mark"
+            src="./brand-mark.png"
+            width="28"
+            height="28"
+            alt=""
+          />
+          <span>设计案例库</span>
+        </a>
+        <div class="current-source" hidden>
+          <span>当前来源</span>
+          <a class="current-source-link"></a>
+        </div>
+        <nav class="site-navigation" aria-label="主导航">
+          <details class="source-menu" hidden>
+            <summary>切换来源</summary>
+            <ul class="source-options" aria-label="切换来源"></ul>
+          </details>
+          <button
+            class="catalog-jump nav-control"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="catalog-dialog"
+            hidden
+          >
+            目录
+          </button>
+          <button
+            class="open-search nav-control"
+            type="button"
+            aria-haspopup="dialog"
+            aria-controls="search-dialog"
+            aria-keyshortcuts="Control+K Meta+K"
+            aria-label="搜索案例"
+            title="搜索案例"
+          >
+            <span class="search-icon" aria-hidden="true"></span>
+          </button>
+        </nav>
+      </div>
+    </header>
+    <div class="shell">
+      <aside class="sidebar" aria-label="当前来源目录" hidden>
+        <p class="sidebar-source"></p>
+        <label class="search-label" for="search">案例目录</label>
+        <input
+          id="search"
+          type="search"
+          placeholder="搜索标题、概念…"
+          autocomplete="off"
+        />
+        <nav id="catalog" aria-label="按章节浏览"></nav>
+      </aside>
+      <main id="case" tabindex="-1" aria-labelledby="case-title"></main>
+    </div>
+    <dialog
+      id="search-dialog"
+      class="nav-dialog"
+      aria-labelledby="search-dialog-title"
+    >
+      <div class="nav-dialog-inner">
+        <header class="nav-dialog-header">
+          <h2 id="search-dialog-title">搜索案例</h2>
+          <form method="dialog">
+            <button class="dialog-close" aria-label="关闭搜索">关闭</button>
+          </form>
+        </header>
+        <input
+          id="global-search"
+          type="search"
+          aria-label="搜索所有案例"
+          placeholder="搜索所有来源的案例…"
+          autocomplete="off"
+          autofocus
+        />
+        <p id="search-status" role="status"></p>
+        <ul id="search-results" aria-label="搜索结果"></ul>
+      </div>
+    </dialog>
+    <dialog
+      id="catalog-dialog"
+      class="nav-dialog catalog-dialog"
+      aria-labelledby="catalog-dialog-title"
+    >
+      <div class="nav-dialog-inner">
+        <header class="nav-dialog-header">
+          <h2 id="catalog-dialog-title">案例目录</h2>
+          <form method="dialog">
+            <button class="dialog-close" aria-label="关闭目录" autofocus>
+              关闭
+            </button>
+          </form>
+        </header>
+        <div class="catalog-content"></div>
+      </div>
+    </dialog>
+  </body>
+</html>
