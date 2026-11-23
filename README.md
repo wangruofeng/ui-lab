@@ -12,7 +12,13 @@
 
 ## 构建与部署
 
-运行 `npm run build` 将静态站点打包到 `dist/`。云端使用 Cloudflare Pages，生产分支为 `main`，构建命令为 `npm run build`，输出目录为 `dist`。
+运行 `npm run build` 将静态站点打包到 `dist/`。可以用以下命令预览与线上相同的构建产物。
+
+```sh
+python3 -m http.server 4323 --bind 127.0.0.1 --directory dist
+```
+
+Cloudflare Pages 从 GitHub 的 `main` 分支拉取代码，运行 `npm run build`，并发布 `dist/`。在 Pages 的部署记录中对照 GitHub 提交 SHA，即可确认生产站点使用的版本。
 
 ## 来源与素材
 
