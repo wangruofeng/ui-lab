@@ -35,7 +35,7 @@ await rm(output, { recursive: true, force: true });
 await mkdir(output);
 await Promise.all([
   ...siteFiles.map((file) => copyFile(join(root, file), join(output, file))),
-  ...["source-art", "playbook-demo"].map((directory) =>
+  ...["source-art", "playbook-demo", "fonts"].map((directory) =>
     cp(join(root, directory), join(output, directory), { recursive: true }),
   ),
 ]);

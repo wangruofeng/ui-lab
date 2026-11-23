@@ -218,16 +218,6 @@
   object-fit: cover;
 }
 
-.mp-slide--1 img {
-  object-position: 50% 70%;
-  filter: saturate(0.7) hue-rotate(18deg);
-}
-
-.mp-slide--2 img {
-  object-position: 50% 20%;
-  filter: saturate(0.85) sepia(0.26);
-}
-
 .mp-slide figcaption {
   position: absolute;
   inset: auto 8px 8px;
@@ -439,6 +429,44 @@
   overscroll-behavior: contain;
   padding: 4px;
   scroll-timeline-name: --mp-reading;
+}
+
+.mp-in-view-scroll {
+  display: block;
+  height: 220px;
+  padding: 16px 12px 100px;
+  overflow-x: hidden;
+}
+
+.mp-in-view-instruction {
+  min-height: 232px;
+  padding-top: 24px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.mp-in-view-content {
+  display: grid;
+  gap: 6px;
+  max-width: 30ch;
+  margin-inline: auto;
+}
+
+.mp-in-view-content p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mp-in-view[data-after="true"] .mp-in-view-content {
+    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out, filter 300ms ease-in-out;
+  }
+
+  .mp-in-view[data-after="true"] .mp-in-view-target:not(.is-in-view) .mp-in-view-content {
+    opacity: 0;
+    transform: translateY(100px);
+    filter: blur(4px);
+  }
 }
 
 .mp-progressive-blur[data-after="true"]:not(.is-at-end) .mp-scroll-wrap::after {

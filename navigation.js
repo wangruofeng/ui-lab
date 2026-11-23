@@ -2,8 +2,6 @@ import { collectionCases, collections, libraryHref } from "./library.js";
 
 const header = document.querySelector(".site-header");
 const homeLink = header.querySelector(".brand");
-const currentSource = header.querySelector(".current-source");
-const currentSourceLink = currentSource.querySelector("a");
 const sourceMenu = header.querySelector(".source-menu");
 const sourceList = header.querySelector(".source-options");
 const searchButton = header.querySelector(".open-search");
@@ -64,12 +62,6 @@ export function updateNavigation(collection, item, missing) {
   sourceMenu.hidden = !item;
   sidebar.hidden = !collection;
   catalogButton.hidden = !narrow.matches || !collection;
-  currentSource.hidden = !collection;
-  currentSourceLink.textContent = collection?.title ?? "";
-  if (collection) currentSourceLink.href = libraryHref(collection);
-  else currentSourceLink.removeAttribute("href");
-  document.querySelector(".sidebar-source").textContent =
-    collection?.title ?? "";
   if (!collection && !missing) homeLink.setAttribute("aria-current", "page");
   else homeLink.removeAttribute("aria-current");
   for (const link of sourceList.querySelectorAll("a")) {

@@ -33,6 +33,7 @@ function renderCatalog() {
           item.scene,
           item.tip,
           item.referenceLabel,
+          item.principle,
           ...item.outline,
         ]
           .join(" ")
@@ -47,7 +48,7 @@ function renderCatalog() {
         (group) => `
     <details ${query || group.title === item?.category ? "open" : ""}>
       <summary><strong>${group.title}</strong><span>${group.items.length}</span></summary>
-      <ul>${group.items.map((entry) => `<li><a href="${libraryHref(collection, entry)}" ${item?.id === entry.id ? 'aria-current="page"' : ""}>${entry.title}</a></li>`).join("")}</ul>
+      <ul>${group.items.map((entry) => `<li><a href="${libraryHref(collection, entry)}" ${item?.id === entry.id ? 'aria-current="page"' : ""}>${entry.principle ? entry.title.split("：", 1)[0] : entry.title}${entry.principle ? ` <small class="catalog-principle">${entry.principle}</small>` : ""}</a></li>`).join("")}</ul>
     </details>`,
       )
       .join("") || '<p class="no-results">没有匹配案例</p>';
@@ -60,12 +61,12 @@ function renderCase(collection, active) {
   const previous = cases[index - 1];
   const next = cases[index + 1];
   document.title = `${active.title} · ${collection.title} · 设计案例库`;
-  const link = (item, label) =>
+  const link = (item, label, shortcut) =>
     item
-      ? `<a href="${libraryHref(collection, item)}"><small>${label}</small><strong>${item.title}</strong></a>`
+      ? `<a href="${libraryHref(collection, item)}" aria-keyshortcuts="${shortcut}"><small>${label}</small><strong>${item.title}</strong></a>`
       : "<span></span>";
   main.innerHTML = `
-    ${breadcrumbs(collection)}
+    ${breadcrumbs(collection, active)}
     <div class="eyebrow"><span>${active.category}</span><span>${String(index + 1).padStart(2, "0")} / ${cases.length}</span></div>
     <h1 id="case-title" tabindex="-1">${active.title}</h1>
     <p class="intro">${active.tip}</p>
@@ -99,8 +100,16 @@ function renderCase(collection, active) {
     <section class="prompt-card" aria-labelledby="prompt-title">
       <div class="prompt-heading">
         <div><h2 id="prompt-title">案例提示词</h2><p>复制提示词，附上你的界面代码或截图。</p></div>
-        <button type="button" id="copy-prompt" aria-label="复制提示词" title="复制提示词">
-          <span class="copy-icon" aria-hidden="true"></span>
+        <button type="button" id="copy-prompt" aria-label="复制提示词">
+          <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="9" y="9" width="13" height="13" rx="2" />
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+          </svg>
+          <svg class="copied-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="m4 12 5 5L20 6" />
+          </svg>
+          <span class="copy-label">复制</span>
+          <span class="copied-label">已复制</span>
         </button>
       </div>
       <textarea id="case-prompt" aria-labelledby="prompt-title" rows="8" readonly></textarea>
@@ -108,7 +117,7 @@ function renderCase(collection, active) {
     </section>
     ${active.reference ? `<p class="case-reference"><a href="${active.reference}">查看参考项目中的原始条目</a></p>` : ""}
     ${active.referenceLabel ? `<p class="case-reference">书中出处 · ${active.referenceLabel}</p>` : ""}
-    <nav class="case-nav" aria-label="相邻案例">${link(previous, "上一案例")}${link(next, "下一案例")}</nav>`;
+    <nav class="case-nav" aria-label="相邻案例">${link(previous, "上一案例", "ArrowLeft")}${link(next, "下一案例", "ArrowRight")}</nav>`;
   if (!active.playbookDemo && !motionExample) connectPlayer();
   const prompt = document.querySelector("#case-prompt");
   const copyStatus = document.querySelector("#copy-status");
@@ -245,10 +254,13 @@ function connectPlayer() {
   });
 }
 
-function breadcrumbs(collection) {
-  return `<nav class="breadcrumbs" aria-label="当前位置">
+function breadcrumbs(collection, item) {
+  return `<nav class="breadcrumbs" aria-label="面包屑导航">
     <a href="${libraryHref()}">案例库</a>
-    ${collection ? `<a href="${libraryHref(collection)}">${collection.title}</a>` : ""}
+    <span aria-hidden="true">›</span>
+    ${item ? `<a href="${libraryHref(collection)}">${collection.title}</a>
+    <span aria-hidden="true">›</span>` : ""}
+    <span aria-current="page">${item?.title ?? collection.title}</span>
   </nav>`;
 }
 
@@ -264,7 +276,7 @@ function renderOverview(collection) {
       )
       .join("");
     main.innerHTML = `
-      ${breadcrumbs()}
+      ${breadcrumbs(collection)}
       <h1 id="case-title" tabindex="-1">${collection.title}</h1>
       <p class="intro">${collection.description}</p>
       <p class="collection-source"><span>${collection.type} · ${collection.author} · ${collectionCases(collection).length} 个案例</span>${collection.url ? `<a href="${collection.url}">查看参考来源</a>` : `<span>${collection.edition ?? ""}</span>`}</p>
@@ -319,6 +331,18 @@ document.querySelector(".skip-link").addEventListener("click", (event) => {
   main.focus();
 });
 search.addEventListener("input", renderCatalog);
+document.addEventListener("keydown", (event) => {
+  if (!route.item || (event.key !== "ArrowLeft" && event.key !== "ArrowRight")) return;
+  if (event.defaultPrevented || event.repeat || event.isComposing ||
+      event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+  if (event.target.closest("input, textarea, select, [contenteditable], .comparison, .source-menu") ||
+      document.querySelector("dialog[open]")) return;
+
+  const adjacentCase = main.querySelector(`.case-nav a[aria-keyshortcuts="${event.key}"]`);
+  if (!adjacentCase) return;
+  event.preventDefault();
+  adjacentCase.click();
+});
 window.addEventListener("hashchange", () => {
   renderRoute();
   document.querySelector("#case-title").focus({ preventScroll: true });

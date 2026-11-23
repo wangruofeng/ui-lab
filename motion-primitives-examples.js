@@ -109,10 +109,14 @@ const renderers = {
   carousel: () =>
     renderViews(
       ["山谷", "河畔", "高地"],
-      ["山谷步道", "河畔露营", "高地环线"].map(
-        (title, index) => `
-      <figure class="mp-slide mp-slide--${index}">
-        <img src="mountains.jpg" alt="" draggable="false"><figcaption>${title}</figcaption>
+      [
+        ["山谷步道", "valley-trail"],
+        ["河畔露营", "riverside-camp"],
+        ["高地环线", "highland-loop"],
+      ].map(
+        ([title, image]) => `
+      <figure class="mp-slide">
+        <img src="./source-art/carousel/${image}.webp" alt="" draggable="false"><figcaption>${title}</figcaption>
       </figure>`,
       ),
       "选择目的地",
@@ -203,7 +207,16 @@ const renderers = {
       <span class="mp-divider" aria-hidden="true"></span>
     </div>
     <label class="mp-range">冷暖分界 <input data-mp-range type="range" min="0" max="100" value="50"></label>`,
-  "in-view": () => scrollArea("展览目录", false),
+  "in-view": () => `
+    <div class="mp-scroll mp-in-view-scroll" tabindex="0" role="region" aria-label="展览导览">
+      <p class="mp-in-view-instruction">向下滚动 ↓</p>
+      <div class="mp-in-view-target">
+        <div class="mp-in-view-content">
+          <strong>展览导览</strong>
+          <p>从一楼的光影装置出发，沿楼梯上行，在二楼的观景窗前结束参观。</p>
+        </div>
+      </div>
+    </div>`,
   "progressive-blur": () => scrollArea("收藏地点", false),
   "scroll-progress": () => scrollArea("路线指南", true),
   "infinite-slider": () => {
@@ -758,28 +771,12 @@ export function prepareMotionExamples(main) {
     '.mp-in-view[data-after="true"] .mp-scroll',
   )) {
     if (root.closest("[inert]")) continue;
+    const target = root.querySelector(".mp-in-view-target");
     const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          observer.unobserve(entry.target);
-          if (moves(root.closest("[data-mp-example]")) && root.scrollTop > 0) {
-            animate(
-              entry.target,
-              [
-                { opacity: 0, transform: "translateY(18px)" },
-                { opacity: 1, transform: "translateY(0)" },
-              ],
-              { duration: 520 },
-            );
-          }
-        }
-      },
-      { root, threshold: 0.7 },
+      (entries) => target.classList.toggle("is-in-view", entries.at(-1).isIntersecting),
+      { root, rootMargin: "0px 0px -72px 0px" },
     );
-    root
-      .querySelectorAll(".mp-record")
-      .forEach((item) => observer.observe(item));
+    observer.observe(target);
     observers.push(observer);
   }
   const loops = Array.from(

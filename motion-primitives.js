@@ -25,12 +25,12 @@ function renderDialog() {
 
 function renderPopover() {
   return `<div class="motion-frame motion-frame--popover">
-    <p class="motion-saved" role="status"></p>
     <button type="button" class="motion-origin motion-action" data-motion-action="open" aria-expanded="false">添加备注</button>
     <section class="motion-layer motion-note-layer" role="dialog" aria-label="编辑行程备注" hidden>
       <label>行程备注<textarea rows="2" placeholder="写一句提醒…"></textarea></label>
       <div class="motion-note-actions">${closeButton}<button type="button" class="motion-action" data-motion-action="save">保存</button></div>
     </section>
+    <p class="motion-saved" role="status"></p>
   </div>`;
 }
 
@@ -102,6 +102,7 @@ function changeOverlay(demo, opening) {
 
   if (
     demo.closest(".improved") &&
+    (opening || !demo.classList.contains("motion-demo--morphing-popover")) &&
     !matchMedia("(prefers-reduced-motion: reduce)").matches
   ) {
     const to = target.getBoundingClientRect();

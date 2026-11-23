@@ -58,7 +58,7 @@
 }
 
 .motion-dialog-card:hover {
-  border-color: var(--brand);
+  border-color: color-mix(in srgb, var(--brand-border) 85%, var(--brand));
   background: var(--brand-soft);
 }
 
@@ -127,7 +127,7 @@
   cursor: pointer;
 }
 
-.motion-action:hover,
+.motion-action:not(.motion-frame--popover > .motion-origin):hover,
 .motion-close:hover {
   background: var(--brand-soft-hover);
 }

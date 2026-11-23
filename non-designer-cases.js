@@ -1,6 +1,19 @@
+const principlesByTreatment = {
+  alignment: "对齐",
+  center: "对齐",
+  hierarchy: "对比",
+  list: "对齐",
+  proximity: "亲密性",
+  repetition: "重复",
+  reverse: "对比",
+  type: "对比",
+};
+
+const principlesChapter = "四大原则 · 书中示例";
+
 const topics = [
   [
-    "四大原则 · 书中示例",
+    principlesChapter,
     [
       [
         "easy-design",
@@ -365,8 +378,8 @@ const topics = [
   ],
 ];
 
-export const nonDesignerCategories = topics.map(([title, entries]) => ({
-  title,
+export const nonDesignerCategories = topics.map(([category, entries]) => ({
+  title: category,
   items: entries.map(
     ([id, title, referenceLabel, treatment, headline, criterion]) => ({
       id,
@@ -377,6 +390,7 @@ export const nonDesignerCategories = topics.map(([title, entries]) => ({
       criterion,
       referenceLabel,
       treatment,
+      ...(category === principlesChapter && { principle: principlesByTreatment[treatment] }),
       outline: [],
     }),
   ),
