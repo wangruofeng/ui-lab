@@ -3219,6 +3219,35 @@ h1 {
   background: rgb(16 18 22 / 88%);
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  img[data-fade-on-load].image-loaded {
+    animation: image-fade-in 220ms ease-out;
+  }
+
+  @keyframes image-fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .artwork-dialog,
+  .artwork-dialog::backdrop {
+    opacity: 0;
+    transition: opacity 220ms ease-out, display 220ms allow-discrete, overlay 220ms allow-discrete;
+  }
+
+  .artwork-dialog[open],
+  .artwork-dialog[open]::backdrop {
+    opacity: 1;
+  }
+
+  @starting-style {
+    .artwork-dialog[open],
+    .artwork-dialog[open]::backdrop {
+      opacity: 0;
+    }
+  }
+}
+
 .artwork-dialog form {
   position: absolute;
   inset-block-start: 12px;

@@ -148,7 +148,7 @@ function typeScene({ id }, after) {
 function ratioScene({ id }, after) {
   let preview;
   if (id === "ratio-crop") {
-    preview = `<figure class="hacker-crop"><img src="./assets/mountains.jpg" alt="山谷、河流与远山"><figcaption>${after ? "3∶2 宽幅 · 保留两侧环境" : "1∶1 方形 · 裁掉两侧环境"}</figcaption></figure>`;
+    preview = `<figure class="hacker-crop"><img data-fade-on-load src="./assets/mountains.jpg" alt="山谷、河流与远山"><figcaption>${after ? "3∶2 宽幅 · 保留两侧环境" : "1∶1 方形 · 裁掉两侧环境"}</figcaption></figure>`;
   } else if (id === "golden-ratio") {
     preview = `<div class="hacker-column-example">
       <div class="hacker-columns"><div><strong>沿岸步道</strong><p>从木桥出发，向岬角走一公里。</p></div><aside><strong>开放时间</strong><p>09:00–16:00</p></aside></div>

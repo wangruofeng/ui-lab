@@ -305,7 +305,7 @@ function breadcrumbs(collection, item) {
 
 function renderArtwork(artwork, preview = false) {
   if (!artwork) return "";
-  const image = `<img src="${artwork.src}" alt="" decoding="async">`;
+  const image = `<img src="${artwork.src}" alt="" decoding="async" data-fade-on-load>`;
   const classes = `library-artwork library-artwork--${artwork.kind}`;
   return preview
     ? `<button type="button" class="${classes}" aria-label="${artwork.kind === "cover" ? "放大查看封面" : "放大查看 Logo"}" aria-haspopup="dialog" aria-controls="artwork-dialog">${image}</button>`
@@ -447,6 +447,11 @@ window.addEventListener("hashchange", () => {
   document.querySelector("#case-title").focus({ preventScroll: true });
   window.scrollTo(0, 0);
 });
+document.addEventListener("load", ({ target }) => {
+  if (target instanceof HTMLImageElement && target.hasAttribute("data-fade-on-load")) {
+    target.classList.add("image-loaded");
+  }
+}, true);
 renderRoute();
 
 function selectDemoOption(button) {
@@ -519,7 +524,11 @@ artworkDialog.addEventListener("click", (event) => {
 main.addEventListener("click", (event) => {
   const artworkButton = event.target.closest('button[aria-controls="artwork-dialog"]');
   if (artworkButton) {
-    artworkPreview.src = artworkButton.querySelector("img").src;
+    const src = artworkButton.querySelector("img").src;
+    if (artworkPreview.src !== src) {
+      artworkPreview.classList.remove("image-loaded");
+      artworkPreview.src = src;
+    }
     artworkPreview.dataset.kind = route.collection.artwork.kind;
     artworkPreview.alt = artworkButton.getAttribute("aria-label").replace("放大查看", route.collection.title + " ");
     artworkDialog.showModal();

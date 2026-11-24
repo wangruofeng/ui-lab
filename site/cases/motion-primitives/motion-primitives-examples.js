@@ -116,7 +116,7 @@ const renderers = {
       ].map(
         ([title, image]) => `
       <figure class="mp-slide">
-        <img src="./assets/source-art/carousel/${image}.webp" alt="" draggable="false"><figcaption>${title}</figcaption>
+        <img data-fade-on-load src="./assets/source-art/carousel/${image}.webp" alt="" draggable="false"><figcaption>${title}</figcaption>
       </figure>`,
       ),
       "选择目的地",
