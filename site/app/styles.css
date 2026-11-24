@@ -101,6 +101,37 @@ input {
   flex: none;
 }
 
+.site-footer {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 24px clamp(13px, 3vw, 28px) 0;
+  color: var(--muted);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+.site-footer a {
+  color: var(--ink);
+}
+.site-footer a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+.site-footer-meta,
+.site-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+.site-footer-meta {
+  justify-content: space-between;
+  padding-block: 14px;
+}
+.site-footer-links {
+  justify-content: flex-end;
+  margin-inline-start: auto;
+}
+
 .shell {
   --sidebar-width: 254px;
   display: grid;
