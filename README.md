@@ -49,6 +49,8 @@ Cloudflare Pages 从 GitHub 的 `main` 分支拉取代码，运行 `npm run buil
 
 ## 来源与素材
 
+UI Lab 原创代码采用 [MIT 许可证](./LICENSE)。第三方代码和素材适用各自的许可及权利声明。
+
 项目用途、第三方权利和反馈方式见 [免责声明](./DISCLAIMER.md)。各来源的代码按对应的许可条款使用，包括 [loading.dev](./site/licenses/loading-dev-LICENSE.md)、[Transitions.dev](./site/licenses/transitions-dev-LICENSE.md) 和 [shadcn/ui](./site/licenses/shadcn-ui-LICENSE.md)。
 
 书籍案例使用独立绘制的示例界面和整理后的练习说明。封面和项目标识用于识别各自来源，权利归原作者或权利人。演示用山谷照片和抽象插图由 AI 生成。
