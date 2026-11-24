@@ -7,8 +7,26 @@ const output = join(root, "dist");
 const siteFiles = [
   "index.html",
   "app.js",
+  "sliding-tabs.js",
   "navigation.js",
   "library.js",
+  "loading-dev-cases.js",
+  "loading-demo.js",
+  "loading-dev-spinners.js",
+  "loading-dev-LICENSE.md",
+  "transitions-cases.js",
+  "transitions-catalog.js",
+  "transitions-gallery-demos.js",
+  "transitions-navigation-demos.js",
+  "transitions-demo.js",
+  "transitions-demo.css",
+  "transitions-official-numbers.js",
+  "transitions-official-numbers.css",
+  "transitions-dev-LICENSE.md",
+  "shadcn-cases.js",
+  "shadcn-demo.js",
+  "shadcn-ui-LICENSE.md",
+  "shadcn-demo.css",
   "cases.js",
   "prompts.js",
   "scenes.js",
@@ -35,7 +53,7 @@ await rm(output, { recursive: true, force: true });
 await mkdir(output);
 await Promise.all([
   ...siteFiles.map((file) => copyFile(join(root, file), join(output, file))),
-  ...["source-art", "playbook-demo", "fonts"].map((directory) =>
+  ...["source-art", "playbook-demo", "shadcn-attachment-demo", "shadcn-official-demo", "fonts"].map((directory) =>
     cp(join(root, directory), join(output, directory), { recursive: true }),
   ),
 ]);

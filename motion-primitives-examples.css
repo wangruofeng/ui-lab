@@ -5,18 +5,28 @@
 
 .mp-frame {
   display: grid;
-  align-content: start;
+  align-content: center;
   gap: 8px;
   font-size: 12px;
 }
 
-.mp-example .motion-action {
+.mp-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.mp-heading > button {
+  margin-inline-start: auto;
+}
+
+.mp-example .motion-action:not(:where(.mp-heading > button)) {
   min-height: 30px;
   text-align: start;
 }
 
-.mp-example .motion-action[aria-pressed="true"],
-.mp-example .motion-action[aria-expanded="true"] {
+.mp-example .motion-action:not(:where(.mp-heading > button)):is([aria-pressed="true"], [aria-expanded="true"]) {
   background: var(--mp-pale);
   border-color: var(--mp-blue);
 }

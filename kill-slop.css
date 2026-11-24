@@ -9,7 +9,7 @@
   padding: 16px;
   color: var(--cleanup-ink);
   background: #fbfcfa;
-  border-color: var(--cleanup-line);
+  border-color: var(--example-border, var(--cleanup-line));
 }
 
 .cleanup-demo > header h4 {
@@ -399,15 +399,6 @@
   align-items: start;
   padding-block: 16px;
 }
-@media (max-width: 540px) {
-  .pair:has(.cleanup-case) {
-    grid-template-columns: 1fr;
-  }
-  .pair:has(.cleanup-case) .panel + .panel {
-    border-left: 0;
-    border-top: 1px solid var(--line);
-  }
-}
 /* Comparison surfaces retain the same content and scale across both states. */
 .gradient-text .cleanup-demo h4 {
   font-size: clamp(27px, 4vw, 36px);
@@ -628,20 +619,7 @@
   flex-wrap: wrap;
   justify-content: end;
   gap: 6px;
-}
-
-.cleanup-replay {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 8px 11px;
-  color: var(--brand);
-  background: var(--surface);
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.cleanup-replay:hover {
-  background: var(--brand-soft);
+  margin-inline-start: auto;
 }
 
 .cleanup-motion-figure {

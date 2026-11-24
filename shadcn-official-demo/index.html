@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>shadcn/ui official examples</title>
+    <link rel="stylesheet" href="./demo.css" />
+    <style>
+      #official-demo [data-slot="card"]:has([data-slot="chart"]) {
+        border-color: transparent;
+        box-shadow: none;
+      }
+
+      #official-demo .border:has(> [data-slot="table-container"]) {
+        border-color: transparent;
+        background: var(--card);
+      }
+    </style>
+    <script type="module" src="./entry.js"></script>
+  </head>
+  <body class="bg-surface font-sans text-[1.05rem] text-foreground antialiased sm:text-[15px]" style="display: grid; min-height: 100vh">
+    <main id="official-demo" class="flex justify-center"></main>
+  </body>
+</html>

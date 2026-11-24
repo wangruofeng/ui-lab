@@ -27,6 +27,7 @@ const caseIndex = collections.flatMap((collection) =>
       item.scene,
       item.tip,
       item.referenceLabel,
+      item.principle,
       ...item.outline,
     ]
       .join(" ")

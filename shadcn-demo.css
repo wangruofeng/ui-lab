@@ -1,0 +1,18 @@
+.sc-attachment-frame,
+.sc-official-frame {
+  display: block;
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--line);
+  background: #f8f8f8;
+}
+
+.sc-attachment-frame {
+  height: 490px;
+}
+
+@media (max-width: 600px) {
+  .sc-official-frame[data-case="date-picker"] {
+    min-height: 650px;
+  }
+}

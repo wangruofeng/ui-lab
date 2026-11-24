@@ -1,0 +1,104 @@
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+
+@font-face {
+  font-family: Geist;
+  src: url("../shadcn-attachment-demo/assets/geist.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("./assets/geist-mono.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light;
+  --radius: .625rem;
+  --chart-1: var(--color-blue-300);
+  --chart-2: var(--color-blue-500);
+  --chart-3: var(--color-blue-600);
+  --chart-4: var(--color-blue-700);
+  --chart-5: var(--color-blue-800);
+}
+
+@theme inline {
+  --font-sans: Geist, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+  --radius-sm: calc(var(--radius) * .6);
+  --radius-md: calc(var(--radius) * .8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0% 0 0);
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0% 0 0);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0% 0 0);
+  --color-primary: oklch(0% 0 0);
+  --color-primary-foreground: oklch(.985 0 0);
+  --color-secondary: oklch(.97 0 0);
+  --color-secondary-foreground: oklch(.205 0 0);
+  --color-muted: oklch(.97 0 0);
+  --color-muted-foreground: oklch(.556 0 0);
+  --color-accent: oklch(.97 0 0);
+  --color-accent-foreground: oklch(.205 0 0);
+  --color-destructive: oklch(.577 .245 27.325);
+  --color-border: oklch(.922 0 0);
+  --color-input: oklch(.922 0 0);
+  --color-ring: oklch(.708 0 0);
+  --color-surface: oklch(.98 0 0);
+  --color-success: oklch(.627 .194 149.214);
+  --color-warning: oklch(.75 .183 55.934);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+}
+
+#official-demo {
+  min-width: 0;
+  padding: clamp(16px, 5vw, 40px);
+}
+
+#official-demo[data-case="chart"] > [data-slot="card"] {
+  width: 100%;
+  font-size: 1rem;
+}
+
+#official-demo[data-case="data-table"] > div {
+  max-width: 36rem;
+}
+
+#official-demo[data-case="combobox"] [data-slot="combobox-chip"] {
+  background-color: oklch(.93 .012 255);
+}
+
+body {
+  align-content: center;
+}
+
+body:has(> #official-demo[data-case="date-picker"]) {
+  align-content: end;
+}
+
+#official-demo[data-case="date-picker"] {
+  align-items: end;
+  padding-bottom: 16px;
+}
+
+@media (width < 48rem) {
+  #official-demo[data-case="date-picker"] {
+    min-height: 680px;
+  }
+}

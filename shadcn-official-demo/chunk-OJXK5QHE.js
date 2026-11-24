@@ -1,0 +1,1 @@
+import{u as f,w as o}from"./chunk-UJ5HTTPQ.js";function m(t,e,n,r){return t.addEventListener(e,n,r),()=>{t.removeEventListener(e,n,r)}}function d(t){let e=f(u,t).current;return e.next=t,o(e.effect),e}function u(t){let e={current:t,next:t,effect:()=>{e.current=e.next}};return e}export{m as a,d as b};

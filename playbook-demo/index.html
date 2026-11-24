@@ -6,9 +6,51 @@
     <title>Playbook 前后对照</title>
     <link rel="stylesheet" href="./demo.css" />
     <style>
+      body { background: #fafafa; }
       #demo { display: grid; justify-items: center; padding: 8px; }
+      #demo > .max-w-3xl.border-line-default {
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      /* Presentation cards whose demonstrations do not depend on the ring. */
+      #demo:is(
+        [data-case="fade-truncated-text"],
+        [data-case="inset-primary-actions"],
+        [data-case="match-icon-stroke-weight"],
+        [data-case="reserve-brand-color-for-links"],
+        [data-case="pair-status-with-labels"],
+        [data-case="use-structural-skeletons"],
+        [data-case="warm-toolbar-tooltips"]
+      ) .bg-surface-default.ring-line-default.ring-1 {
+        box-shadow: none;
+      }
+
+      #demo[data-case="fade-scroll-edges"] .max-w-xs.border-line-default,
+      #demo[data-case="reserve-brand-color-for-links"] .border-t.border-line-default {
+        border-color: transparent;
+      }
+
+      #demo[data-case="peek-the-next-scroll-item"] .rounded-xl.border-line-default {
+        border-color: transparent;
+        background: #f5f5f5;
+      }
+
+      #demo[data-case="tune-tracking-by-size"] [role="switch"] > .shadow-sm {
+        box-shadow: none;
+      }
+
+      #demo[data-case="reserve-space-with-aspect-ratio"] .bg-fill-subtle {
+        background-color: #e7e7e7;
+      }
     </style>
     <script type="module" src="./demo.js"></script>
   </head>
-  <body><main id="demo"></main></body>
+  <body>
+    <main id="demo"></main>
+    <script>
+      document.querySelector("#demo").dataset.case = new URLSearchParams(location.search).get("case") ?? "";
+    </script>
+  </body>
 </html>

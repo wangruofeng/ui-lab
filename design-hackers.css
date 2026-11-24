@@ -7,7 +7,7 @@
   max-width: 360px;
   padding: 15px;
   color: var(--hacker-ink);
-  border-color: var(--hacker-line);
+  border-color: var(--example-border, var(--hacker-line));
 }
 
 .hacker-demo h4,
@@ -862,17 +862,6 @@
 .comparison:has(.hacker-case) .stage {
   align-items: start;
   padding-block: 16px;
-}
-
-@media (max-width: 540px) {
-  .pair:has(.hacker-case) {
-    grid-template-columns: 1fr;
-  }
-
-  .pair:has(.hacker-case) .panel + .panel {
-    border-left: 0;
-    border-top: 1px solid var(--line);
-  }
 }
 
 .hacker-demo .hacker-compare-note,

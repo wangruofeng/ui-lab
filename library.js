@@ -1,3 +1,6 @@
+import { loadingDevCategories } from "./loading-dev-cases.js";
+import { transitionsCategories } from "./transitions-cases.js";
+import { shadcnCategories } from "./shadcn-cases.js";
 import { motionPrimitivesCategories } from "./motion-primitives.js";
 import { designHackersCategories } from "./design-hackers-cases.js";
 import { killSlopCategories } from "./kill-slop-cases.js";
@@ -60,6 +63,36 @@ export const collections = [
       "从配色、字体到动效与布局，用前后对照练习识别和清理常见的界面套路。",
     url: "https://killaislop.com/#catalogue",
     categories: killSlopCategories,
+  },
+  {
+    id: "loading-dev",
+    artwork: { kind: "logo", src: "./source-art/loading-dev.png" },
+    type: "参考项目",
+    title: "loading.dev",
+    author: "Jakub Krehel、Paul Faivret",
+    description: "体验全部 36 种加载指示器，按旋转、错峰、扩散、波形和形变浏览，逐个调整速度和尺寸。",
+    url: "https://loading.dev/",
+    categories: loadingDevCategories,
+  },
+  {
+    id: "transitions-dev",
+    artwork: { kind: "logo", src: "./source-art/transitions-dev.png" },
+    type: "参考项目",
+    title: "Transitions.dev",
+    author: "Jakub Antalik",
+    description: "操作表单、内容卡片和通知，观察动效如何说明界面状态的变化。",
+    url: "https://transitions.dev/library.html",
+    categories: transitionsCategories,
+  },
+  {
+    id: "shadcn-ui",
+    artwork: { kind: "logo", src: "./source-art/shadcn-ui.png" },
+    type: "参考项目",
+    title: "shadcn/ui",
+    author: "shadcn/ui",
+    description: "按官网示例体验付款表格、日期范围、命令菜单、聊天滚动和可调整面板等交互。",
+    url: "https://ui.shadcn.com/docs/components",
+    categories: shadcnCategories,
   },
   {
     id: "motion-primitives",

@@ -11,6 +11,9 @@
     <title>设计案例库</title>
     <link rel="icon" type="image/png" sizes="96x96" href="./brand-mark.png" />
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="transitions-demo.css" />
+    <link rel="stylesheet" href="transitions-official-numbers.css" />
+    <link rel="stylesheet" href="shadcn-demo.css" />
     <link rel="stylesheet" href="kill-slop.css" />
     <link rel="stylesheet" href="design-hackers.css" />
     <link rel="stylesheet" href="motion-primitives.css" />
@@ -71,13 +74,7 @@
     </header>
     <div class="shell">
       <aside class="sidebar" aria-label="当前来源目录" hidden>
-        <label class="search-label" for="search">案例目录</label>
-        <input
-          id="search"
-          type="search"
-          placeholder="搜索标题、概念…"
-          autocomplete="off"
-        />
+        <p class="catalog-heading">案例目录</p>
         <nav id="catalog" aria-label="按章节浏览"></nav>
       </aside>
       <main id="case" tabindex="-1" aria-labelledby="case-title"></main>

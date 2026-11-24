@@ -1,0 +1,1 @@
+import{d as a,e as d}from"./chunk-UB2GHPJT.js";var e=a(d(),1);function p({controlled:t,default:r,name:f,state:u="value"}){let{current:n}=e.useRef(t!==void 0),[i,l]=e.useState(r),s=n?t:i,c=e.useCallback(o=>{n||l(o)},[]);return[s,c]}export{p as a};

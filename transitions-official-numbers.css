@@ -1,0 +1,148 @@
+/* Transitions.dev by Jakub Antalik, P9 and P26 public demos.
+ * Source: https://transitions.dev/detail.html (2026-11-24 snapshot).
+ * See transitions-dev-LICENSE.md.
+ */
+
+@font-face {
+  font-family: "Transitions Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("./fonts/transitions-inter-latin.woff2") format("woff2");
+}
+
+.td-official-number {
+  --font-sans: "Transitions Inter", "Inter Variable", system-ui, sans-serif;
+  --text: var(--ink);
+  --p9-dur: 600ms;
+  --p9-exit-dur: 155ms;
+  --p9-enter-delay: 50ms;
+  --p9-stagger: 40ms;
+  --p9-distance: 0.52em;
+  --p9-exit-distance: 0.52em;
+  --p9-blur: max(0.067em, 0.171em - 2.1px);
+  --p9-lift: 0.125em;
+  --p9-start-scale: 0.7;
+  --p9-peak: 1.03;
+  --p26-step-dur:        130ms;
+  --p26-from:            100;
+  --p26-target:          178;
+  --p26-spins:           0;
+  --p26-cell:            1.2em;
+  --p26-stagger:         90ms;
+  --p26-ease:            cubic-bezier(0.35, -0.02, 0.43, 1);
+  --p26-side-scale:      0.7;
+  --p26-side-offset:     0.52em;
+  --p26-side-blur:       max(0.067em, 0.171em - 2.1px);
+  --p26-side-opacity:    0.17;
+  --p26-center-scale:    0.9;
+  --p26-center-blur:     0.042em;
+  --p26-antic-dur:       100ms;
+  --p26-antic-scale:     0.94;
+  --p26-antic-lift:      0.125em;
+  --p26-land-dur:        740ms;
+  --p26-land-peak:       1.03;
+}
+
+.p9-number {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 35px;
+  line-height: 40px;
+  color: var(--text);
+  letter-spacing: 0;
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  align-items: baseline;
+  user-select: none;
+  position: relative;
+}
+.p9-slot { position: relative; display: inline-block; }
+.p9-old { position: absolute; inset: 0; text-align: center; pointer-events: none; }
+.p9-char { display: inline-block; will-change: transform, opacity, filter; }
+.p9-number.is-animating .p9-char {
+  animation: p9-pop-in var(--p9-dur) linear both;
+  animation-delay: calc(var(--p9-stagger) * var(--digit-i, 0) + var(--p9-enter-delay));
+}
+.p9-number.is-animating .p9-old {
+  animation: p9-pop-out var(--p9-exit-dur) linear both;
+  animation-delay: calc(var(--p9-stagger) * var(--digit-i, 0));
+}
+.p9-number.is-animating [data-stagger="1"] { --digit-i: 1; }
+.p9-number.is-animating [data-stagger="2"] { --digit-i: 2; }
+/* Digits that did not change (the leading ones the old and new number
+   share) stay still; only the digits that changed swap. */
+.p9-number.is-animating .p9-char[data-same] { animation: none; }
+
+@keyframes p9-pop-in {
+  0% { transform: translateY(calc(var(--p9-distance) * 1 + var(--p9-lift) * 0)) scale(var(--p9-start-scale)); opacity: 0; filter: blur(calc(var(--p9-blur) * 1)); }
+  5% { transform: translateY(calc(var(--p9-distance) * 0.941 + var(--p9-lift) * 0.216)) scale(var(--p9-start-scale)); opacity: 0.059; filter: blur(calc(var(--p9-blur) * 1)); }
+  10% { transform: translateY(calc(var(--p9-distance) * 0.755 + var(--p9-lift) * 0.648)) scale(var(--p9-start-scale)); opacity: 0.245; filter: blur(calc(var(--p9-blur) * 1)); }
+  15% { transform: translateY(calc(var(--p9-distance) * 0.475 + var(--p9-lift) * 0.972)) scale(var(--p9-start-scale)); opacity: 0.525; filter: blur(calc(var(--p9-blur) * 1)); }
+  20% { transform: translateY(calc(var(--p9-distance) * 0.206 + var(--p9-lift) * 0.792)) scale(calc(1 + (var(--p9-start-scale) - 1) * 0.792)); opacity: 0.794; filter: blur(calc(var(--p9-blur) * 0.9)); }
+  25% { transform: translateY(calc(var(--p9-distance) * 0.041 + var(--p9-lift) * 0.392)) scale(calc(1 + (var(--p9-start-scale) - 1) * 0.392)); opacity: 0.959; filter: blur(calc(var(--p9-blur) * 0.75)); }
+  30% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * 0.033)) scale(calc(1 + (var(--p9-start-scale) - 1) * 0.033)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0.6)); }
+  35% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * -0.194)) scale(calc(1 + (var(--p9-peak) - 1) * 0.711)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0.45)); }
+  40% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * -0.272)) scale(calc(1 + (var(--p9-peak) - 1) * 0.997)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0.3)); }
+  45% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * -0.238)) scale(calc(1 + (var(--p9-peak) - 1) * 0.87)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0.15)); }
+  50% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * -0.146)) scale(calc(1 + (var(--p9-peak) - 1) * 0.535)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0)); }
+  55% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * -0.05)) scale(calc(1 + (var(--p9-peak) - 1) * 0.183)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0)); }
+  60% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * 0.019)) scale(calc(1 + (var(--p9-peak) - 1) * -0.069)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0)); }
+  65% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * 0.05)) scale(calc(1 + (var(--p9-peak) - 1) * -0.185)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0)); }
+  70% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * 0.051)) scale(calc(1 + (var(--p9-peak) - 1) * -0.187)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0)); }
+  75% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * 0.035)) scale(calc(1 + (var(--p9-peak) - 1) * -0.128)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0)); }
+  80% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * 0.016)) scale(calc(1 + (var(--p9-peak) - 1) * -0.057)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0)); }
+  85% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * 0.002)) scale(calc(1 + (var(--p9-peak) - 1) * -0.007)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0)); }
+  90% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * -0.004)) scale(calc(1 + (var(--p9-peak) - 1) * 0.013)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0)); }
+  95% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * -0.003)) scale(calc(1 + (var(--p9-peak) - 1) * 0.011)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0)); }
+  100% { transform: translateY(calc(var(--p9-distance) * 0 + var(--p9-lift) * 0)) scale(1); opacity: 1; filter: blur(calc(var(--p9-blur) * 0)); }
+}
+@keyframes p9-pop-out {
+  0% { transform: translateY(calc(var(--p9-exit-distance) * 0)) scale(calc(1 + (var(--p9-start-scale) - 1) * 0)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0)); }
+  10% { transform: translateY(calc(var(--p9-exit-distance) * -0.009)) scale(calc(1 + (var(--p9-start-scale) - 1) * 0.009)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0.009)); }
+  20% { transform: translateY(calc(var(--p9-exit-distance) * -0.042)) scale(calc(1 + (var(--p9-start-scale) - 1) * 0.042)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0.042)); }
+  30% { transform: translateY(calc(var(--p9-exit-distance) * -0.112)) scale(calc(1 + (var(--p9-start-scale) - 1) * 0.112)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0.112)); }
+  40% { transform: translateY(calc(var(--p9-exit-distance) * -0.252)) scale(calc(1 + (var(--p9-start-scale) - 1) * 0.252)); opacity: 1; filter: blur(calc(var(--p9-blur) * 0.252)); }
+  50% { transform: translateY(calc(var(--p9-exit-distance) * -0.5)) scale(calc(1 + (var(--p9-start-scale) - 1) * 0.5)); opacity: 0.833; filter: blur(calc(var(--p9-blur) * 0.5)); }
+  60% { transform: translateY(calc(var(--p9-exit-distance) * -0.748)) scale(calc(1 + (var(--p9-start-scale) - 1) * 0.748)); opacity: 0.42; filter: blur(calc(var(--p9-blur) * 0.748)); }
+  70% { transform: translateY(calc(var(--p9-exit-distance) * -0.888)) scale(calc(1 + (var(--p9-start-scale) - 1) * 0.888)); opacity: 0.187; filter: blur(calc(var(--p9-blur) * 0.888)); }
+  80% { transform: translateY(calc(var(--p9-exit-distance) * -0.958)) scale(calc(1 + (var(--p9-start-scale) - 1) * 0.958)); opacity: 0.069; filter: blur(calc(var(--p9-blur) * 0.958)); }
+  90% { transform: translateY(calc(var(--p9-exit-distance) * -0.991)) scale(calc(1 + (var(--p9-start-scale) - 1) * 0.991)); opacity: 0.015; filter: blur(calc(var(--p9-blur) * 0.991)); }
+  100% { transform: translateY(calc(var(--p9-exit-distance) * -1)) scale(calc(1 + (var(--p9-start-scale) - 1) * 1)); opacity: 0; filter: blur(calc(var(--p9-blur) * 1)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .p9-number .p9-char { animation: none !important; }
+  .p9-number .p9-old { display: none; }
+}
+
+.p26-value {
+      display: inline-flex;
+      align-items: center;
+      height: var(--p26-cell);
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 35px;
+      line-height: var(--p26-cell);
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+    }
+    .p26-col {
+      position: relative;
+      display: inline-block;
+      height: var(--p26-cell);
+    }
+    .p26-sizer { visibility: hidden; }
+    .p26-digit {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      will-change: transform, filter, opacity;
+    }
+    .p26-sep {
+      display: flex;
+      align-items: center;
+      height: var(--p26-cell);
+    }

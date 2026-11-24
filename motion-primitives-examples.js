@@ -167,8 +167,8 @@ const renderers = {
       ],
       "选择工具",
     ),
-  "animated-number": () => numeric(counts, "已筹集金额", "元", "更新"),
-  "sliding-number": () => numeric(minutes, "下一班列车", "分钟", "刷新"),
+  "animated-number": () => numeric(counts, "已筹集金额", "元"),
+  "sliding-number": () => numeric(minutes, "下一班列车", "分钟"),
   "spinning-text": () => {
     const text = Array.from("NORTH FIELD · DESIGN STUDIO · ");
     return `<div class="mp-display"><div class="mp-wheel" role="img" aria-label="North Field Design Studio">
@@ -179,27 +179,25 @@ const renderers = {
             `<span style="--angle:${(index * 360) / text.length}deg">${letter}</span>`,
         )
         .join("")}</span>
-    </div></div>${button("play", "播放", 'aria-pressed="false"')}`;
+    </div></div>`;
   },
   "text-effect": () =>
-    textStage("春日来信 · 设计小展", "重播", ["春日来信", " · ", "设计小展"]),
-  "text-loop": () => textStage(words["text-loop"][0], "切换状态"),
+    textStage("春日来信 · 设计小展", ["春日来信", " · ", "设计小展"]),
+  "text-loop": () => textStage(words["text-loop"][0]),
   "text-morph": () =>
     textStage(
       words["text-morph"][0],
-      "切换名称",
       Array.from(words["text-morph"][0]),
     ),
   "text-roll": () =>
     textStage(
       words["text-roll"][0],
-      "切换排序",
       Array.from(words["text-roll"][0]),
     ),
-  "text-scramble": () => textStage(words["text-scramble"][0], "生成口令"),
-  "text-shimmer": () => textStage("等待导出", "开始导出"),
+  "text-scramble": () => textStage(words["text-scramble"][0]),
+  "text-shimmer": () => textStage("等待导出"),
   "text-shimmer-wave": () =>
-    textStage("正在同步文件", "重播", Array.from("正在同步文件")),
+    textStage("正在同步文件", Array.from("正在同步文件")),
   "image-comparison": () => `
     <div class="mp-photo">
       <img src="mountains.jpg" alt="偏暖的山谷照片" draggable="false">
@@ -225,11 +223,10 @@ const renderers = {
       .join("");
     return `<div class="mp-marquee" aria-label="北坡、白石、潮汐、远岸">
       <div class="mp-belt" aria-hidden="true"><div>${cards}</div><div>${cards}</div></div>
-    </div>${button("play", "播放", 'aria-pressed="false"')}`;
+    </div>`;
   },
   "border-trail": () => `
-    <div class="mp-center"><div class="mp-trail"><i aria-hidden="true"></i><span>文件已就绪</span></div></div>
-    ${button("trail", "模拟导入")}`,
+    <div class="mp-center"><div class="mp-trail"><i aria-hidden="true"></i><span>文件已就绪</span></div></div>`,
   cursor: () =>
     pointerStage(
       '<span class="mp-marker" aria-hidden="true"></span>',
@@ -248,8 +245,7 @@ const renderers = {
         .join("")}
     </div></div><p class="mp-status" role="status">选择工具</p>`,
   "glow-effect": () => `
-    <div class="mp-center mp-lamp"><span>环境灯</span></div>
-    ${button("glow", "开灯", 'aria-pressed="false"')}`,
+    <div class="mp-center mp-lamp"><span>环境灯</span></div>`,
   magnetic: () => `
     <div class="mp-center"><button type="button" class="mp-magnet" data-mp-pointer data-mp-action="save"><span>保存草稿</span></button></div>
     <p class="mp-status" role="status"></p>`,
@@ -265,20 +261,20 @@ const renderers = {
     ),
 };
 
-function numeric(values, label, unit, action) {
+function numeric(values, label, unit) {
   const initial = numberFormat.format(values[0]);
   const visual = unit === "分钟" ? glyphs(initial) : initial;
   return `<div class="mp-display"><small>${label}</small>
     <strong class="mp-number"><span class="mp-value" aria-hidden="true">${visual}</span> <small>${unit}</small></strong>
     <span class="mp-announcement" role="status">${initial}${unit}</span>
-  </div>${button("number", action)}`;
+  </div>`;
 }
 
-function textStage(text, action, parts) {
+function textStage(text, parts) {
   return `<div class="mp-display">
     <strong class="mp-text" aria-hidden="true">${parts ? parts.map((part) => `<span>${part}</span>`).join("") : text}</strong>
     <span class="mp-announcement" role="status">${text}</span>
-  </div>${button("text", action)}`;
+  </div>`;
 }
 
 function scrollArea(label, progress) {
@@ -304,9 +300,27 @@ function pointerStage(content, label) {
     <div class="mp-controls">${button("pointer", label)}<output class="mp-status"></output></div>`;
 }
 
+const playButton = button("play", "播放", 'aria-pressed="false"');
+const frameActions = {
+  "animated-number": button("number", "更新"),
+  "sliding-number": button("number", "刷新"),
+  "spinning-text": playButton,
+  "text-effect": button("text", "重播"),
+  "text-loop": button("text", "切换状态"),
+  "text-morph": button("text", "切换名称"),
+  "text-roll": button("text", "切换排序"),
+  "text-scramble": button("text", "生成口令"),
+  "text-shimmer": button("text", "开始导出"),
+  "text-shimmer-wave": button("text", "重播"),
+  "infinite-slider": playButton,
+  "border-trail": button("trail", "模拟导入"),
+  "glow-effect": button("glow", "开灯", 'aria-pressed="false"'),
+};
+
 export function renderMotionExample(item, after) {
   return `<article class="widget motion-demo mp-example mp-${item.id}${item.id === "image-comparison" ? " is-cool" : ""}" data-mp-example="${item.id}" data-after="${after}">
-    <h4>${item.scene}</h4><div class="motion-frame mp-frame">${renderers[item.id](item.id)}</div>
+    <div class="mp-heading"><h4>${item.scene}</h4>${frameActions[item.id] ?? ""}</div>
+    <div class="motion-frame mp-frame">${renderers[item.id](item.id)}</div>
     <p class="motion-note">${item.notes[Number(after)]}</p>
   </article>`;
 }
