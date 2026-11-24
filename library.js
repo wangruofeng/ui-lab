@@ -80,35 +80,17 @@ export function collectionCases(collection) {
   );
 }
 
-const previousPlaybookIds = {
-  "focus-rings": "show-visible-focus-rings",
-  "form-labels": "label-every-form-field",
-  "status-cues": "pair-status-with-labels",
-};
-
 export function resolveRoute(hash) {
-  const route = hash.replace(/^#\/?/, "").replace(/\/$/, "");
-  if (!route || route === "ui") return {};
-  const parts = route.split("/");
-  if (parts[0] === "ui") parts.shift();
+  if (!hash || hash === "#/") return {};
+  if (!hash.startsWith("#/")) return { missing: true };
+  const parts = hash.slice(2).split("/");
   const [collectionId, itemId] = parts;
   if (!collectionId || parts.length > 2) return { missing: true };
   const collection = collections.find((entry) => entry.id === collectionId);
-  if (!collection && parts.length === 1) {
-    const book = collections.find((entry) => entry.id === "refactoring-ui");
-    const item = collectionCases(book).find(
-      (entry) => entry.id === collectionId,
-    );
-    return item ? { collection: book, item } : { missing: true };
-  }
   if (!collection || (parts.length === 2 && !itemId)) return { missing: true };
   if (!itemId) return { collection };
-  const canonicalId =
-    collectionId === "ui-skills" && Object.hasOwn(previousPlaybookIds, itemId)
-      ? previousPlaybookIds[itemId]
-      : itemId;
   const item = collectionCases(collection).find(
-    (entry) => entry.id === canonicalId,
+    (entry) => entry.id === itemId,
   );
   return item ? { collection, item } : { missing: true };
 }

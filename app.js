@@ -13,6 +13,8 @@ import { renderScene } from "./scenes.js";
 const search = document.querySelector("#search");
 const catalog = document.querySelector("#catalog");
 const main = document.querySelector("#case");
+const artworkDialog = document.querySelector("#artwork-dialog");
+const artworkPreview = artworkDialog.querySelector("img");
 installMotionPrimitives(main);
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 const shell = document.querySelector(".shell");
@@ -264,6 +266,15 @@ function breadcrumbs(collection, item) {
   </nav>`;
 }
 
+function renderArtwork(artwork, preview = false) {
+  if (!artwork) return "";
+  const image = `<img src="${artwork.src}" alt="" decoding="async">`;
+  const classes = `library-artwork library-artwork--${artwork.kind}`;
+  return preview
+    ? `<button type="button" class="${classes}" aria-label="${artwork.kind === "cover" ? "放大查看封面" : "放大查看 Logo"}" aria-haspopup="dialog" aria-controls="artwork-dialog">${image}</button>`
+    : `<div class="${classes}">${image}</div>`;
+}
+
 function renderOverview(collection) {
   if (collection) {
     const chapters = collection.categories
@@ -277,9 +288,14 @@ function renderOverview(collection) {
       .join("");
     main.innerHTML = `
       ${breadcrumbs(collection)}
-      <h1 id="case-title" tabindex="-1">${collection.title}</h1>
-      <p class="intro">${collection.description}</p>
-      <p class="collection-source"><span>${collection.type} · ${collection.author} · ${collectionCases(collection).length} 个案例</span>${collection.url ? `<a href="${collection.url}">查看参考来源</a>` : `<span>${collection.edition ?? ""}</span>`}</p>
+      <header class="collection-header">
+        ${renderArtwork(collection.artwork, true)}
+        <div class="collection-header-copy">
+          <h1 id="case-title" tabindex="-1">${collection.title}</h1>
+          <p class="intro">${collection.description}</p>
+          <p class="collection-source"><span>${collection.type} · ${collection.author} · ${collectionCases(collection).length} 个案例</span>${collection.url ? `<a href="${collection.url}">查看参考来源</a>` : `<span>${collection.edition ?? ""}</span>`}</p>
+        </div>
+      </header>
       <div class="chapter-grid">${chapters}</div>`;
     return;
   }
@@ -288,7 +304,7 @@ function renderOverview(collection) {
     .map(
       (entry) => `
       <article class="library-card">
-        ${entry.artwork ? `<div class="library-artwork library-artwork--${entry.artwork.kind}"><img src="${entry.artwork.src}" alt="" decoding="async"></div>` : ""}
+        ${renderArtwork(entry.artwork)}
         <div class="library-card-copy">
           <h2><a href="${libraryHref(entry)}">${entry.title}</a></h2>
           <p class="library-card-description">${entry.description}</p>
@@ -305,6 +321,7 @@ function renderOverview(collection) {
 }
 
 function renderRoute() {
+  if (artworkDialog.open) artworkDialog.close();
   cancelAnimationFrame(frame);
   const previousCollection = route.collection;
   route = resolveRoute(location.hash);
@@ -413,7 +430,19 @@ main.addEventListener("change", (event) => {
     : "";
 });
 
+artworkDialog.addEventListener("click", (event) => {
+  if (event.target === artworkDialog) artworkDialog.close();
+});
+
 main.addEventListener("click", (event) => {
+  const artworkButton = event.target.closest('button[aria-controls="artwork-dialog"]');
+  if (artworkButton) {
+    artworkPreview.src = artworkButton.querySelector("img").src;
+    artworkPreview.dataset.kind = route.collection.artwork.kind;
+    artworkPreview.alt = artworkButton.getAttribute("aria-label").replace("放大查看", route.collection.title + " ");
+    artworkDialog.showModal();
+    return;
+  }
   const button = event.target.closest("[data-demo-action]");
   if (!button) return;
   if (button.dataset.demoAction === "cleanup-motion") {
