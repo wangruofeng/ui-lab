@@ -102,3 +102,85 @@ body:has(> #official-demo[data-case="date-picker"]) {
     min-height: 680px;
   }
 }
+
+@theme inline {
+  --color-sidebar: oklch(.985 0 0);
+  --color-sidebar-foreground: var(--color-foreground);
+  --color-sidebar-primary: var(--color-primary);
+  --color-sidebar-primary-foreground: var(--color-primary-foreground);
+  --color-sidebar-accent: var(--color-accent);
+  --color-sidebar-accent-foreground: var(--color-accent-foreground);
+  --color-sidebar-border: var(--color-border);
+  --color-sidebar-ring: var(--color-ring);
+}
+
+#official-demo[data-case="sidebar"] {
+  padding: 0;
+}
+
+body:has(> #official-demo[data-case="sidebar"]) {
+  --sidebar-demo-divider: #cdd7e3;
+}
+
+body:has(> #official-demo[data-case="sidebar"]) :is([data-slot="sidebar-inner"], [data-sidebar="sidebar"][data-mobile="true"]) {
+  background-color: #e9eef4;
+}
+
+#official-demo[data-case="sidebar"] [data-slot="sidebar-container"] {
+  border-color: var(--sidebar-demo-divider);
+}
+
+body:has(> #official-demo[data-case="sidebar"]) [data-sidebar="menu-button"]:is(:hover, [data-active="true"], [data-state="open"]) {
+  background-color: #dbe5f0;
+}
+
+#official-demo[data-case="sidebar"] [data-slot="sidebar-inset"] {
+  background-color: #f3f6fa;
+}
+
+#official-demo[data-case="sidebar"] [data-slot="sidebar-inset"] > header {
+  background-color: #e1e9f3;
+  border-bottom: 1px solid var(--sidebar-demo-divider);
+}
+
+.sidebar-mode {
+  position: absolute;
+  z-index: 20;
+  inset-block-start: 12px;
+  inset-inline-end: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.sidebar-mode .select-control {
+  position: relative;
+}
+
+.sidebar-mode .select-control::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 11px;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+}
+
+.sidebar-mode select {
+  appearance: none;
+  padding: 4px 26px 4px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-background);
+}
+
+@media (width < 48rem) {
+  .sidebar-mode {
+    display: none;
+  }
+}

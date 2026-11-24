@@ -1,0 +1,228 @@
+.break-ui-toggle[aria-pressed="true"] {
+  color: var(--surface);
+  background: var(--ink);
+}
+
+.break-ui-before,
+.break-ui-after {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.break-ui-list {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.break-ui-empty {
+  margin: 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+.break-ui-member {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: min(100%, 340px);
+  justify-self: center;
+  padding: 12px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--surface);
+  font-size: 13px;
+}
+
+.break-ui-avatar {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--stage-fill);
+  font-weight: 650;
+}
+
+.break-ui-identity {
+  flex: 1;
+}
+
+.break-ui-identity > * {
+  display: block;
+}
+
+.break-ui-identity > span,
+.break-ui-meta {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.break-ui-meta {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+  text-align: end;
+}
+
+.break-ui-role {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--stage-fill);
+}
+
+.break-ui-before .break-ui-identity > * {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.break-ui-after .break-ui-member {
+  align-items: start;
+}
+
+.break-ui-center-row .break-ui-member {
+  align-items: center;
+}
+
+.break-ui-after .break-ui-identity {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.break-ui-after :is(.break-ui-avatar, .break-ui-meta) {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.break-ui-example {
+  display: grid;
+  gap: 12px;
+  width: min(100%, 280px);
+  justify-self: center;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--surface);
+  font-size: 13px;
+}
+
+.break-ui-example ul {
+  min-height: 4.5em;
+  margin: 0;
+  padding-inline-start: 1.25em;
+}
+
+.break-ui-pagination,
+.break-ui-progress-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.break-ui-pagination {
+  flex-wrap: wrap;
+}
+
+.break-ui-pagination button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.break-ui-example time {
+  font-size: 20px;
+  font-weight: 650;
+}
+
+.break-ui-progress-track {
+  position: relative;
+  height: 8px;
+  width: 65%;
+  margin: 6px 0;
+  background: var(--line);
+  border-radius: 999px;
+}
+
+.break-ui-progress-track > span {
+  position: absolute;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--brand);
+}
+
+.break-ui-file-details > summary {
+  display: grid;
+  gap: 6px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.break-ui-file-details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.break-ui-extra-tags > summary {
+  cursor: pointer;
+}
+
+.break-ui-filename {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: baseline;
+}
+
+.break-ui-file-open,
+.break-ui-file-close {
+  justify-self: start;
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: underline;
+}
+
+.break-ui-file-details:not([open]) :is(.break-ui-full-name, .break-ui-file-close),
+.break-ui-file-details[open] :is(.break-ui-filename, .break-ui-file-open) {
+  display: none;
+}
+
+.break-ui-filename > :first-child,
+.break-ui-filename-clipped {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.break-ui-filename > :last-child {
+  flex: none;
+}
+
+.break-ui-full-name {
+  overflow-wrap: anywhere;
+}
+
+.break-ui-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.break-ui-tags > span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  border-radius: 8px;
+  padding: 3px 7px;
+  background: var(--stage-fill);
+}
+
+.break-ui-extra-tags[open] > summary {
+  margin-bottom: 8px;
+}
+
+.break-ui-example:has(.break-ui-request-result, [data-retry-request]) p {
+  margin: 0;
+}
+
+.break-ui-example [data-retry-request] {
+  justify-self: start;
+}

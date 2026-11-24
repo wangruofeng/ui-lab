@@ -1,0 +1,1 @@
+function l(e){return e==null?void 0:`${e}-label`}function f(e,n){return e??n}function a(e,n,u=(r,t)=>r===t){return e.length===n.length&&e.every((r,t)=>u(r,n[t]))}function i(e){return Array.isArray(e)?e.map(n=>i(n)).join(","):e==null?"":String(e)}export{a,l as b,f as c,i as d};

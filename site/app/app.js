@@ -13,8 +13,14 @@ import { renderScene } from "./scenes.js";
 import { connectLoadingDemo, renderLoadingDemo } from "../cases/loading-dev/loading-demo.js";
 import { connectTransitionsDemo, renderTransitionsDemo } from "../cases/transitions-dev/transitions-demo.js";
 import { connectShadcnDemo, renderShadcnDemo } from "../cases/shadcn-ui/shadcn-demo.js";
+import { connectBreakUiDemo, renderBreakUiDemo } from "../cases/break-ui/break-ui-demo.js";
+import { connectInterfaceDetails, renderInterfaceDetails } from "../cases/interface-details/interface-details-demo.js";
+import { connectStageshowDemo, renderStageshowDemo } from "../cases/stageshow/stageshow-demo.js";
 
 const interactiveDemos = {
+  stageshow: { render: renderStageshowDemo, connect: connectStageshowDemo },
+  "interface-details": { render: renderInterfaceDetails, connect: connectInterfaceDetails },
+  "break-ui": { render: renderBreakUiDemo, connect: connectBreakUiDemo },
   loading: { render: renderLoadingDemo, connect: connectLoadingDemo },
   transitions: { render: renderTransitionsDemo, connect: connectTransitionsDemo },
   shadcn: { render: renderShadcnDemo, connect: connectShadcnDemo },
@@ -405,17 +411,40 @@ function renderOverview(collection) {
     <div class="library-grid">${cards}</div>`;
 }
 
+function renderSitemap() {
+  const sources = collections.map((collection) => {
+    const chapters = collection.categories.map((category) => `
+      <section class="chapter-card">
+        <h3>${category.title}</h3>
+        <ul>${category.items.map((item) => `<li><a href="${libraryHref(collection, item)}">${item.title}</a></li>`).join("")}</ul>
+      </section>`).join("");
+    return `
+      <details class="sitemap-source">
+        <summary>${collection.title} <span>${collectionCases(collection).length} 个案例</span></summary>
+        <p><a href="${libraryHref(collection)}">浏览来源目录</a></p>
+        <div class="sitemap-chapters">${chapters}</div>
+      </details>`;
+  }).join("");
+  main.innerHTML = `
+    <div class="breadcrumbs"><a href="${libraryHref()}">设计案例库</a></div>
+    <h1 id="case-title" tabindex="-1">站点地图</h1>
+    <div class="sitemap-sources">${sources}</div>`;
+}
+
 function renderRoute() {
   if (artworkDialog.open) artworkDialog.close();
   cancelAnimationFrame(frame);
   route = resolveRoute(location.hash);
-  const { collection, item, missing } = route;
+  const { collection, item, missing, sitemap } = route;
   updateNavigation(collection, item, missing);
   shell.classList.toggle("library-shell", !collection);
   document.title = collection
     ? `${collection.title} · 设计案例库`
     : "设计案例库";
-  if (missing) {
+  if (sitemap) {
+    document.title = "站点地图 · 设计案例库";
+    renderSitemap();
+  } else if (missing) {
     main.innerHTML = `<h1 id="case-title" tabindex="-1">找不到这个案例</h1><p><a href="${libraryHref()}">返回案例库</a></p>`;
   } else if (item) {
     renderCase(collection, item);

@@ -18,6 +18,7 @@ const groups = [
   {
     title: "输入与选择",
     cases: [
+      ["slider-range", "Slider · 双滑块与多滑块", "拖动滑块，或聚焦后用方向键调整数值。上方为双滑块，下方为三个滑块。", "保留官网两个示例的初始值和步进。双滑块初始为 25、50，步进 5，三个滑块初始为 10、20、70，步进 10。", "https://ui.shadcn.com/docs/components/base/slider#range"],
       ["combobox", "Combobox · 搜索和多选", "初始已选中 Next.js。输入框架名称筛选，回车选中高亮项，也可以点击已选项旁的叉号移除。", "多选项显示在输入框内。筛选时自动高亮第一个匹配项，选中后新增对应标签。", "https://ui.shadcn.com/docs/components/base/combobox#multiple"],
       ["date-picker", "Date Picker · 跨月日期范围", "点击已选日期范围打开并排日历，再点日期调整区间。用上一月或下一月继续浏览。", "初始区间为当年 1 月 20 日至 2 月 9 日，两个连续月份中同步高亮范围，触发按钮显示选区。", "https://ui.shadcn.com/docs/components/base/date-picker#range-picker"],
       ["input-otp", "Input OTP · 带分隔符的六位输入", "在六格内输入或粘贴验证码，可以用方向键和退格修正。", "三组各两位共用一个原生输入，分隔符用于视觉分组，保留标准文本选区、复制和粘贴。", "https://ui.shadcn.com/docs/components/base/input-otp#separator"],
@@ -26,6 +27,8 @@ const groups = [
   {
     title: "命令与流程",
     cases: [
+      ["toast-promise", "Toast · 异步操作反馈", "点击 Create Event，观察同一条通知从创建中更新为创建成功。", "沿用官网的两秒模拟请求，同一条 Toast 依次显示 Creating event… 和 Event created.。", "https://ui.shadcn.com/docs/components/base/toast#promise"],
+      ["dropdown-menu", "Dropdown Menu · 多选与单选菜单", "分别打开两组菜单，试试勾选显示项和切换互斥选项。", "保持 Status Bar 默认勾选、Activity Bar 禁用，并验证单选菜单一次只选中一个选项。", "https://ui.shadcn.com/docs/components/base/dropdown-menu#checkboxes"],
       ["command", "Command · 搜索与定位命令", "搜索 Calendar 或 Billing，再用方向键浏览匹配项。Calculator 是禁用示例。", "保留建议与设置分组、禁用项、快捷键提示及无结果状态；输入焦点保持在搜索框。"],
       ["questionnaire", "Questionnaire · 多步骤问卷", "选择或输入功能方向，填写或跳过进度信息，再选择开工时间并保存计划。", "保留三个原始步骤的单选、自定义输入、多选、跳过、回退、字母快捷键与保存反馈。"],
       ["context-menu", "Context Menu · 右键菜单与子菜单", "在示例区右键或长按，展开 More Tools，再试试勾选 Show Full URLs。", "保留原始菜单项、禁用前进、子菜单和勾选状态；悬停或方向键可浏览子菜单。"],
@@ -34,6 +37,7 @@ const groups = [
   {
     title: "空间与布局",
     cases: [
+      ["sidebar", "Sidebar · 折叠与快捷键", "宽屏下切换折叠方式，点击演示内的侧栏按钮，或在演示内按 Cmd+B / Ctrl+B。窄屏下侧栏会以抽屉展开。", "沿用官网侧栏示例，验证图标折叠、完全收起和窄屏抽屉。确认触发按钮和快捷键能切换侧栏状态。", "https://ui.shadcn.com/docs/components/base/sidebar#sidebar"],
       ["resizable", "Resizable · 调整嵌套分栏", "拖动面板之间的分隔柄，或聚焦后按方向键。左侧调整宽度，右侧上下两块调整高度。", "左右初始各占一半，右侧上下初始为 25% 和 75%。每个分隔柄独立响应拖动和对应轴的方向键。", "https://ui.shadcn.com/docs/components/base/resizable"],
     ],
   },

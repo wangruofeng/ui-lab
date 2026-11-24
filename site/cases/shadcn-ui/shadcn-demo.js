@@ -11,6 +11,10 @@ const minimumHeights = {
   questionnaire: 470,
   "context-menu": 430,
   resizable: 300,
+  "toast-promise": 300,
+  "slider-range": 250,
+  "dropdown-menu": 330,
+  sidebar: 540,
 };
 
 export function renderShadcnDemo(variant) {
@@ -25,7 +29,7 @@ export function renderShadcnDemo(variant) {
 
 export function connectShadcnDemo(section) {
   const frame = section.querySelector(".sc-official-frame");
-  if (!frame) return;
+  if (!frame || frame.dataset.case === "sidebar") return;
   frame.addEventListener("load", () => {
     const preview = frame.contentDocument?.querySelector("#official-demo");
     if (!preview) return;

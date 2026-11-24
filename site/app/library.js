@@ -7,6 +7,9 @@ import { killSlopCategories } from "../cases/kill-ai-slop/kill-slop-cases.js";
 import { nonDesignerCategories } from "../cases/non-designers/non-designer-cases.js";
 import { playbookCategories } from "../cases/ui-skills/playbook-cases.js";
 import { categories } from "../cases/refactoring-ui/cases.js";
+import { breakUiCollection } from "../cases/break-ui/break-ui-cases.js";
+import { interfaceDetailsCollection } from "../cases/interface-details/interface-details-cases.js";
+import { stageshowCollection } from "../cases/stageshow/stageshow-cases.js";
 
 export const collections = [
   {
@@ -105,6 +108,9 @@ export const collections = [
     url: "https://motion-primitives.com/",
     categories: motionPrimitivesCategories,
   },
+  breakUiCollection,
+  interfaceDetailsCollection,
+  stageshowCollection,
 ];
 
 export function collectionCases(collection) {
@@ -115,6 +121,7 @@ export function collectionCases(collection) {
 
 export function resolveRoute(hash) {
   if (!hash || hash === "#/") return {};
+  if (hash === "#/sitemap") return { sitemap: true };
   if (!hash.startsWith("#/")) return { missing: true };
   const parts = hash.slice(2).split("/");
   const [collectionId, itemId] = parts;

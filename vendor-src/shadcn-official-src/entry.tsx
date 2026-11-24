@@ -2,6 +2,10 @@ import type { ComponentType } from "react"
 import { createRoot } from "react-dom/client"
 
 const examples: Record<string, () => Promise<ComponentType>> = {
+  "toast-promise": () => import("./additional-examples").then(module => module.PromiseToastExample),
+  "slider-range": () => import("./additional-examples").then(module => module.SliderExamples),
+  "dropdown-menu": () => import("./additional-examples").then(module => module.DropdownExamples),
+  sidebar: () => import("./additional-examples").then(module => module.SidebarExample),
   "message-scroller": () => import("./upstream/examples/message-scroller").then(module => module.MessageScrollerStreaming),
   "code-block": () => import("./upstream/examples/code-block").then(module => module.CodeBlockActionsExample),
   trace: () => import("./upstream/examples/trace").then(module => module.TraceDemo),

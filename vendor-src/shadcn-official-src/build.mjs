@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { readdir, readFile, writeFile, rm } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { join, resolve } from "node:path";
@@ -34,6 +35,7 @@ const bundle = await build({
           return { path, namespace: "shadcn-icons" };
         }
         const support = {
+          "@/registry/base-nova/hooks/use-mobile": "use-mobile.ts",
           "@/components/message-animated": "message-animated.tsx",
           "@/lib/ai": "ai.ts",
           "@/lib/message-animations": "message-animations.ts",
@@ -73,8 +75,13 @@ const stylesheet = await compile([theme, utilities].join("\n"), {
   onDependency() {},
 });
 const scanner = new Scanner({ sources: [] });
+const indexPath = join(output, "index.html");
+const previewHtml = await readFile(indexPath, "utf8");
 const candidates = [...sources, {
-  content: await readFile(join(output, "index.html"), "utf8"),
+  content: await readFile(join(source, "additional-examples.tsx"), "utf8"),
+  extension: "tsx",
+}, {
+  content: previewHtml,
   extension: "html",
 }];
 const css = optimize(stylesheet.build(scanner.scanFiles(candidates)), { minify: true }).code;
@@ -115,7 +122,14 @@ await Promise.all([
   writeFile(join(output, "demo.css"), css),
   writeFile(join(output, "THIRD-PARTY-NOTICES.txt"), notices),
 ]);
-await writeFile(entry, bundle.outputFiles.find(file => file.path === entry).contents);
+const entryContents = bundle.outputFiles.find(file => file.path === entry).contents;
+await writeFile(entry, entryContents);
+const version = createHash("sha256").update(entryContents).update(css).digest("hex").slice(0, 12);
+const versionedHtml = previewHtml.replace(
+  /\.\/(entry\.js|demo\.css)(?:\?v=[a-f0-9]+)?(?=")/g,
+  (_, filename) => `./${filename}?v=${version}`,
+);
+if (versionedHtml !== previewHtml) await writeFile(indexPath, versionedHtml);
 const current = new Set(bundle.outputFiles.map(file => file.path));
 await Promise.all((await readdir(output))
   .filter(file => file.endsWith(".js") && !current.has(join(output, file)))
