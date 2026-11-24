@@ -1,6 +1,6 @@
 import { connectSlidingTabs } from "./sliding-tabs.js";
-import { prepareMotionExamples } from "./motion-primitives-examples.js";
-import { installMotionPrimitives } from "./motion-primitives.js";
+import { prepareMotionExamples } from "../cases/motion-primitives/motion-primitives-examples.js";
+import { installMotionPrimitives } from "../cases/motion-primitives/motion-primitives.js";
 import { updateNavigation } from "./navigation.js";
 import { buildPrompt } from "./prompts.js";
 import {
@@ -10,9 +10,9 @@ import {
   collections,
 } from "./library.js";
 import { renderScene } from "./scenes.js";
-import { connectLoadingDemo, renderLoadingDemo } from "./loading-demo.js";
-import { connectTransitionsDemo, renderTransitionsDemo } from "./transitions-demo.js";
-import { connectShadcnDemo, renderShadcnDemo } from "./shadcn-demo.js";
+import { connectLoadingDemo, renderLoadingDemo } from "../cases/loading-dev/loading-demo.js";
+import { connectTransitionsDemo, renderTransitionsDemo } from "../cases/transitions-dev/transitions-demo.js";
+import { connectShadcnDemo, renderShadcnDemo } from "../cases/shadcn-ui/shadcn-demo.js";
 
 const interactiveDemos = {
   loading: { render: renderLoadingDemo, connect: connectLoadingDemo },
@@ -89,7 +89,7 @@ function renderCase(collection, active) {
         : active.playbookDemo
         ? `<section class="comparison playbook-comparison" aria-labelledby="playbook-demo-title">
       <div class="comparison-bar"><div><h2 id="playbook-demo-title">前后对照</h2><p>用演示右上角的控件切换前后状态，再试试案例中的操作。</p></div></div>
-      <iframe class="playbook-frame" src="./playbook-demo/?case=${active.id}" title="${active.title} · 交互演示" sandbox="allow-scripts allow-same-origin"></iframe>
+      <iframe class="playbook-frame" src="./demos/playbook-demo/?case=${active.id}" title="${active.title} · 交互演示" sandbox="allow-scripts allow-same-origin"></iframe>
       </section>`
         : `<section class="comparison" aria-label="界面前后对比">
       <div class="comparison-bar"><div><h2>${active.scene}</h2><p>${motionExample ? "在两侧分别执行同一个操作，比较界面如何响应。" : active.kind === "print" ? "可编辑标题、切换辅助线，或播放版式变化。" : "观察左侧从调整前过渡到调整后的变化"}</p></div>

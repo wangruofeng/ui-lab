@@ -8,7 +8,7 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  src: url("./fonts/transitions-inter-latin.woff2") format("woff2");
+  src: url("../../assets/fonts/transitions-inter-latin.woff2") format("woff2");
 }
 
 .td-official-number {

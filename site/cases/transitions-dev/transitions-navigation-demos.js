@@ -1,4 +1,4 @@
-import { connectSlidingTabs } from "./sliding-tabs.js";
+import { connectSlidingTabs } from "../../app/sliding-tabs.js";
 
 const ease = "cubic-bezier(.22,1,.36,1)";
 
@@ -383,7 +383,7 @@ export const transitionsNavigationDemos = {
   },
   "image-open-tilt": {
     markup: `<div class="td-stack tn-image-stage"><button type="button" class="tn-image-toggle" aria-label="放大示例图片" aria-pressed="false">
-      <img src="./mountains.jpg" alt="" width="320" height="180"></button></div>`,
+      <img src="./assets/mountains.jpg" alt="" width="320" height="180"></button></div>`,
     connect(stage) {
       const trigger = stage.querySelector("button");
       trigger.addEventListener("click", () => {

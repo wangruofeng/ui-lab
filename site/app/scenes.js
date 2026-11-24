@@ -1,6 +1,6 @@
-import { renderMotionPrimitives } from "./motion-primitives.js";
-import { renderDesignHackers } from "./design-hackers-scene.js";
-import { renderKillSlop } from "./kill-slop-scene.js";
+import { renderMotionPrimitives } from "../cases/motion-primitives/motion-primitives.js";
+import { renderDesignHackers } from "../cases/design-hackers/design-hackers-scene.js";
+import { renderKillSlop } from "../cases/kill-ai-slop/kill-slop-scene.js";
 
 const field = (name, value, type = "text") =>
   `<label class="field"><span>${name}</span><input type="${type}" value="${value}" required></label>`;
@@ -152,7 +152,7 @@ function depth({ id, scene }) {
 }
 
 function picture({ id, scene }) {
-  return `<div class="widget picture-widget"><div class="picture-frame"><img src="mountains.jpg" alt=""><div class="picture-text"><strong>${scene}</strong><small>户外探索 · 路线精选</small></div></div>${id === "upload" ? '<div class="picture-caption">成员上传 · 旅行记录</div>' : ""}</div>`;
+  return `<div class="widget picture-widget"><div class="picture-frame"><img src="./assets/mountains.jpg" alt=""><div class="picture-text"><strong>${scene}</strong><small>户外探索 · 路线精选</small></div></div>${id === "upload" ? '<div class="picture-caption">成员上传 · 旅行记录</div>' : ""}</div>`;
 }
 
 function ledger({ id, scene }, after) {
@@ -405,7 +405,7 @@ const printFormats = {
       '<label class="print-guide"><input class="postcard-flip" type="checkbox">查看背面</label>',
     render(title) {
       return `<div class="postcard-front">
-        <img src="mountains.jpg" alt="山谷中的河流与远山">
+        <img src="./assets/mountains.jpg" alt="山谷中的河流与远山">
         <div class="postcard-caption">${editablePrintTitle(title)}<p>十一月 · 山谷</p></div>
       </div>
       <div class="postcard-back">
@@ -523,7 +523,7 @@ function printStudy(id, title, [kicker, first, second, third, footer], after) {
       break;
     }
     case "feature":
-      content = `${intro}<div class="study-feature-image"><img src="mountains.jpg" alt="山谷与远山"></div><section class="study-amenities">${line(first)}${line(second)}</section><address>${third}<br><strong>${footer}</strong></address>`;
+      content = `${intro}<div class="study-feature-image"><img src="./assets/mountains.jpg" alt="山谷与远山"></div><section class="study-amenities">${line(first)}${line(second)}</section><address>${third}<br><strong>${footer}</strong></address>`;
       break;
     case "stationery":
       content = `<div class="study-letter">${intro}<div>${line(first)}${line(second)}</div><address>${third}</address></div><div class="study-envelope"><span>${footer}</span><p>${third}</p></div>`;

@@ -6,7 +6,7 @@ import { compile, optimize } from "@tailwindcss/node";
 import { Scanner } from "@tailwindcss/oxide";
 
 const source = fileURLToPath(new URL(".", import.meta.url));
-const output = resolve(source, "../shadcn-official-demo");
+const output = resolve(source, "../../site/demos/shadcn-official-demo");
 const upstream = join(source, "upstream");
 const nodeModules = join(source, "node_modules");
 
@@ -100,8 +100,8 @@ const licenses = await Promise.all([...packages].sort().map(async (pkg) => {
   }
   throw new Error(`缺少 ${pkg} 的许可证文件`);
 }));
-const shadcnLicense = await readFile(resolve(source, "../shadcn-ui-LICENSE.md"), "utf8");
-const fontsLicense = await readFile(resolve(source, "../shadcn-attachment-demo/assets/GEIST-LICENSE.txt"), "utf8");
+const shadcnLicense = await readFile(resolve(source, "../../site/licenses/shadcn-ui-LICENSE.md"), "utf8");
+const fontsLicense = await readFile(resolve(source, "../../site/demos/shadcn-attachment-demo/assets/GEIST-LICENSE.txt"), "utf8");
 const notices = [
   `shadcn/ui\n\n${shadcnLicense.trim()}`,
   `Geist 和 Geist Mono\n\n${fontsLicense.trim()}`,

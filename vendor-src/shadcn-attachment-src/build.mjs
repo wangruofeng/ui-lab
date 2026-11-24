@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { join, resolve } from "node:path";
 
 const source = fileURLToPath(new URL(".", import.meta.url));
-const output = resolve(source, "../shadcn-attachment-demo");
+const output = resolve(source, "../../site/demos/shadcn-attachment-demo");
 const dependencies = process.argv[2] ? resolve(process.argv[2]) : source;
 const requireBuild = createRequire(join(dependencies, "package.json"));
 const { build } = requireBuild("esbuild");
@@ -58,7 +58,7 @@ const licenses = await Promise.all([...packages].sort().map(async (pkg) => {
   if (!file) throw new Error(`缺少 ${pkg} 的许可证文件`);
   return `${pkg}\n\n${(await readFile(join(directory, file), "utf8")).trim()}`;
 }));
-const shadcnLicense = await readFile(resolve(source, "../shadcn-ui-LICENSE.md"), "utf8");
+const shadcnLicense = await readFile(resolve(source, "../../site/licenses/shadcn-ui-LICENSE.md"), "utf8");
 await writeFile(join(output, "THIRD-PARTY-NOTICES.txt"), [
   `shadcn/ui\n\n${shadcnLicense.trim()}`,
   ...licenses,

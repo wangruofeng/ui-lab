@@ -186,7 +186,7 @@ export const transitionsGalleryDemos = {
       ${Array.from({ length: 6 }, (_, index) => {
         const number = index + 1;
         return `<span class="tg-avatar" tabindex="0" aria-label="评审成员 ${number}">
-          <img src="./source-art/avatar-group/avatar-${number}.webp" alt="" width="32" height="32" draggable="false">
+          <img src="./assets/source-art/avatar-group/avatar-${number}.webp" alt="" width="32" height="32" draggable="false">
         </span>`;
       }).join("")}
       <span class="tg-avatar tg-avatar-more" tabindex="0" aria-label="另有两位成员">+2</span>
@@ -232,9 +232,9 @@ export const transitionsGalleryDemos = {
   },
   "card-stack-hover": {
     markup: `<button type="button" class="tg-card-stack" aria-label="产品照片卡片堆" aria-expanded="false">
-      <span class="tg-stack-card"><img src="./source-art/card-stack/studio-camera.webp" alt="蓝色复古相机" width="312" height="312" draggable="false"></span>
-      <span class="tg-stack-card"><img src="./source-art/card-stack/studio-radio.webp" alt="绿色桌面收音机" width="312" height="312" draggable="false"></span>
-      <span class="tg-stack-card"><img src="./source-art/card-stack/studio-headphones.webp" alt="橙色头戴式耳机" width="312" height="312" draggable="false"></span>
+      <span class="tg-stack-card"><img src="./assets/source-art/card-stack/studio-camera.webp" alt="蓝色复古相机" width="312" height="312" draggable="false"></span>
+      <span class="tg-stack-card"><img src="./assets/source-art/card-stack/studio-radio.webp" alt="绿色桌面收音机" width="312" height="312" draggable="false"></span>
+      <span class="tg-stack-card"><img src="./assets/source-art/card-stack/studio-headphones.webp" alt="橙色头戴式耳机" width="312" height="312" draggable="false"></span>
     </button>`,
     connect(stage) {
       const stack = stage.querySelector(".tg-card-stack");

@@ -116,7 +116,7 @@ const renderers = {
       ].map(
         ([title, image]) => `
       <figure class="mp-slide">
-        <img src="./source-art/carousel/${image}.webp" alt="" draggable="false"><figcaption>${title}</figcaption>
+        <img src="./assets/source-art/carousel/${image}.webp" alt="" draggable="false"><figcaption>${title}</figcaption>
       </figure>`,
       ),
       "选择目的地",
@@ -200,8 +200,8 @@ const renderers = {
     textStage("正在同步文件", Array.from("正在同步文件")),
   "image-comparison": () => `
     <div class="mp-photo">
-      <img src="mountains.jpg" alt="偏暖的山谷照片" draggable="false">
-      <img class="mp-photo-cool" src="mountains.jpg" alt="偏冷的同一张山谷照片" draggable="false">
+      <img src="./assets/mountains.jpg" alt="偏暖的山谷照片" draggable="false">
+      <img class="mp-photo-cool" src="./assets/mountains.jpg" alt="偏冷的同一张山谷照片" draggable="false">
       <span class="mp-divider" aria-hidden="true"></span>
     </div>
     <label class="mp-range">冷暖分界 <input data-mp-range type="range" min="0" max="100" value="50"></label>`,
@@ -614,7 +614,7 @@ function changeText(demo, control) {
   const keyframes = wave
     ? [
         { color: "var(--ink)" },
-        { color: "#286d91", offset: 0.45 },
+        { color: "var(--mp-text-highlight)", offset: 0.45 },
         { color: "var(--ink)" },
       ]
     : [

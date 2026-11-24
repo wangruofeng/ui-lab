@@ -1,17 +1,17 @@
-import { loadingDevCategories } from "./loading-dev-cases.js";
-import { transitionsCategories } from "./transitions-cases.js";
-import { shadcnCategories } from "./shadcn-cases.js";
-import { motionPrimitivesCategories } from "./motion-primitives.js";
-import { designHackersCategories } from "./design-hackers-cases.js";
-import { killSlopCategories } from "./kill-slop-cases.js";
-import { nonDesignerCategories } from "./non-designer-cases.js";
-import { playbookCategories } from "./playbook-cases.js";
-import { categories } from "./cases.js";
+import { loadingDevCategories } from "../cases/loading-dev/loading-dev-cases.js";
+import { transitionsCategories } from "../cases/transitions-dev/transitions-cases.js";
+import { shadcnCategories } from "../cases/shadcn-ui/shadcn-cases.js";
+import { motionPrimitivesCategories } from "../cases/motion-primitives/motion-primitives.js";
+import { designHackersCategories } from "../cases/design-hackers/design-hackers-cases.js";
+import { killSlopCategories } from "../cases/kill-ai-slop/kill-slop-cases.js";
+import { nonDesignerCategories } from "../cases/non-designers/non-designer-cases.js";
+import { playbookCategories } from "../cases/ui-skills/playbook-cases.js";
+import { categories } from "../cases/refactoring-ui/cases.js";
 
 export const collections = [
   {
     id: "refactoring-ui",
-    artwork: { kind: "cover", src: "./source-art/refactoring-ui.webp" },
+    artwork: { kind: "cover", src: "./assets/source-art/refactoring-ui.webp" },
     type: "书籍",
     title: "重构 UI",
     author: "Adam Wathan、Steve Schoger",
@@ -23,7 +23,7 @@ export const collections = [
     id: "non-designers-design-book",
     artwork: {
       kind: "cover",
-      src: "./source-art/non-designers-design-book.webp",
+      src: "./assets/source-art/non-designers-design-book.webp",
     },
     type: "书籍",
     title: "写给大家看的设计书",
@@ -35,7 +35,7 @@ export const collections = [
   },
   {
     id: "design-for-hackers",
-    artwork: { kind: "cover", src: "./source-art/design-for-hackers.webp" },
+    artwork: { kind: "cover", src: "./assets/source-art/design-for-hackers.webp" },
     type: "书籍",
     title: "写给程序员的设计书",
     author: "David Kadavy",
@@ -45,7 +45,7 @@ export const collections = [
   },
   {
     id: "ui-skills",
-    artwork: { kind: "logo", src: "./source-art/ui-skills.webp" },
+    artwork: { kind: "logo", src: "./assets/source-art/ui-skills.webp" },
     type: "参考项目",
     title: "UI Skills Playbook",
     author: "Julien Thibeaut",
@@ -55,7 +55,7 @@ export const collections = [
   },
   {
     id: "kill-ai-slop",
-    artwork: { kind: "logo", src: "./source-art/kill-ai-slop.svg" },
+    artwork: { kind: "logo", src: "./assets/source-art/kill-ai-slop.svg" },
     type: "参考网站",
     title: "Kill AI Slop",
     author: "yetone",
@@ -66,7 +66,7 @@ export const collections = [
   },
   {
     id: "loading-dev",
-    artwork: { kind: "logo", src: "./source-art/loading-dev.png" },
+    artwork: { kind: "logo", src: "./assets/source-art/loading-dev.png" },
     type: "参考项目",
     title: "loading.dev",
     author: "Jakub Krehel、Paul Faivret",
@@ -76,7 +76,7 @@ export const collections = [
   },
   {
     id: "transitions-dev",
-    artwork: { kind: "logo", src: "./source-art/transitions-dev.png" },
+    artwork: { kind: "logo", src: "./assets/source-art/transitions-dev.png" },
     type: "参考项目",
     title: "Transitions.dev",
     author: "Jakub Antalik",
@@ -86,7 +86,7 @@ export const collections = [
   },
   {
     id: "shadcn-ui",
-    artwork: { kind: "logo", src: "./source-art/shadcn-ui.png" },
+    artwork: { kind: "logo", src: "./assets/source-art/shadcn-ui.png" },
     type: "参考项目",
     title: "shadcn/ui",
     author: "shadcn/ui",
@@ -96,7 +96,7 @@ export const collections = [
   },
   {
     id: "motion-primitives",
-    artwork: { kind: "logo", src: "./source-art/motion-primitives.svg" },
+    artwork: { kind: "logo", src: "./assets/source-art/motion-primitives.svg" },
     type: "参考项目",
     title: "Motion Primitives",
     author: "Julien Thibeaut",

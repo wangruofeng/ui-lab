@@ -2,13 +2,13 @@ import { createRequire } from "node:module";
 import { readFile, writeFile, mkdir, copyFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { playbookCategories } from "./playbook-cases.js";
+import { playbookCategories } from "../site/cases/ui-skills/playbook-cases.js";
 
-const projectDir = path.dirname(fileURLToPath(import.meta.url));
+const projectDir = fileURLToPath(new URL("../", import.meta.url));
 const upstream = path.resolve(
   process.argv[2] || path.join(projectDir, "../ui-skills"),
 );
-const output = path.join(projectDir, "playbook-demo");
+const output = path.join(projectDir, "site/demos/playbook-demo");
 const requireUpstream = createRequire(path.join(upstream, "package.json"));
 const { build } = requireUpstream("esbuild");
 const { compile, optimize } = requireUpstream("@tailwindcss/node");
@@ -68,9 +68,12 @@ const bundle = await build({
             const contents = (await readFile(filename, "utf8"))
               .replace(
                 /https:\/\/upload\.wikimedia\.org\/[^"]+/g,
-                "../mountains.jpg",
+                "../../assets/mountains.jpg",
               )
-              .replace("/i18n/zh-CN.json", "./translations.json");
+              .replace(
+                "'/i18n/zh-CN.json'",
+                'new URL("./translations.json", import.meta.url).href',
+              );
             return {
               contents,
               loader: filename.endsWith(".tsx") ? "tsx" : "js",

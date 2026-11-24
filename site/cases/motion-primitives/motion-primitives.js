@@ -5,7 +5,7 @@ import {
 
 export { motionPrimitivesCategories } from "./motion-primitives-cases.js";
 
-const image = '<img src="mountains.jpg" alt="远山与蜿蜒的河流">';
+const image = '<img src="./assets/mountains.jpg" alt="远山与蜿蜒的河流">';
 const closeButton =
   '<button type="button" class="motion-close" data-motion-action="close">关闭</button>';
 

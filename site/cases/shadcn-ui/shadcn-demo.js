@@ -15,10 +15,10 @@ const minimumHeights = {
 
 export function renderShadcnDemo(variant) {
   if (variant === "attachment") {
-    return `<iframe class="sc-attachment-frame" src="./shadcn-attachment-demo/"
+    return `<iframe class="sc-attachment-frame" src="./demos/shadcn-attachment-demo/"
       title="shadcn/ui 官方 Attachment 组件演示" sandbox="allow-scripts allow-same-origin"></iframe>`;
   }
-  return `<iframe class="sc-official-frame" src="./shadcn-official-demo/?case=${encodeURIComponent(variant)}"
+  return `<iframe class="sc-official-frame" src="./demos/shadcn-official-demo/?case=${encodeURIComponent(variant)}"
     data-case="${variant}" height="${minimumHeights[variant]}" title="shadcn/ui 官方 ${variant} 示例"
     sandbox="allow-scripts allow-same-origin allow-downloads allow-forms" allow="clipboard-write"></iframe>`;
 }

@@ -308,12 +308,16 @@
   pointer-events: none;
 }
 
+.mp-text-shimmer,
+.mp-text-shimmer-wave {
+  --mp-text-highlight: #767676;
+}
+
 .mp-sheen {
   background: linear-gradient(
       100deg,
       var(--ink) 37%,
-      #388cb6 46%,
-      #4a92ad 54%,
+      var(--mp-text-highlight) 46% 54%,
       var(--ink) 64%
     )
     175% 0 / 250% 100%;

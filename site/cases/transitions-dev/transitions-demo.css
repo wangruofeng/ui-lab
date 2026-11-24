@@ -630,7 +630,7 @@
   z-index: 1;
   width: min(100%, 96px);
   aspect-ratio: 4 / 3;
-  background: center / cover url("./mountains.jpg") var(--surface);
+  background: center / cover url("../../assets/mountains.jpg") var(--surface);
   cursor: grab;
   touch-action: none;
   user-select: none;
@@ -641,7 +641,7 @@
 }
 
 .td-drop-grid .is-filled {
-  background: center / cover url("./mountains.jpg") var(--surface);
+  background: center / cover url("../../assets/mountains.jpg") var(--surface);
   border-color: transparent;
 }
 
@@ -754,7 +754,7 @@
   position: absolute;
   inset: 0;
   border-radius: 9px;
-  background: center / cover url("./mountains.jpg") var(--surface);
+  background: center / cover url("../../assets/mountains.jpg") var(--surface);
 }
 
 .td-delete-area > button {
@@ -774,7 +774,7 @@
   inset-block-start: calc(var(--row) * 25%);
   width: calc(100% / 7);
   height: 25%;
-  background-image: url("./mountains.jpg");
+  background-image: url("../../assets/mountains.jpg");
   background-position: calc(var(--column) * (100% / 6)) calc(var(--row) * (100% / 3));
   background-size: 700% 400%;
 }
@@ -1209,7 +1209,7 @@
   width: 100%;
   aspect-ratio: 2 / 1;
   border-radius: 8px;
-  background: center / cover url("./mountains.jpg") #e1e5ee;
+  background: center / cover url("../../assets/mountains.jpg") #e1e5ee;
 }
 
 .td-actions .select-control select {
