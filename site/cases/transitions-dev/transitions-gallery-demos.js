@@ -1,3 +1,5 @@
+import { t } from "../../app/locale.js";
+
 import { transitionsOfficialNumberDemos } from "./transitions-official-numbers.js";
 import { transitionsNavigationDemos } from "./transitions-navigation-demos.js";
 
@@ -9,7 +11,7 @@ function play(element, frames, options) {
   return element.animate(frames, options);
 }
 
-const action = (label = "重播动效") => `<button type="button" data-demo-toolbar>${label}</button>`;
+const action = (label = t("重播动效", "Replay animation")) => `<button type="button" data-demo-toolbar>${label}</button>`;
 const status = '<p role="status" class="td-status td-stage-status"></p>';
 
 function digitLayer(slot, value) {
@@ -36,12 +38,12 @@ function subtleNumberDemo() {
   const slotsFor = value => [...value].map(digit => `<span class="tg-digit">${digit}</span>`).join("");
   return {
     markup: `<div class="td-stack"><div class="tg-number" aria-hidden="true">${slotsFor(initial)}</div>
-      ${action("更新数字")}${status}</div>`,
+      ${action(t("更新数字", "Update"))}${status}</div>`,
     connect(stage) {
       const number = stage.querySelector(".tg-number");
       const output = stage.querySelector("[role=status]");
       let previous = initial;
-      output.textContent = `数值：${initial}`;
+      output.textContent = `${t("数值：", "Value:")}${initial}`;
       stage.querySelector("button").addEventListener("click", () => {
         const oldValue = Number(previous.replaceAll(",", ""));
         const delta = Math.floor(Math.random() * 80) - 40;
@@ -58,7 +60,7 @@ function subtleNumberDemo() {
           });
         }
         previous = next;
-        output.textContent = `数值：${next}`;
+        output.textContent = `${t("数值：", "Value:")}${next}`;
       });
     },
   };
@@ -67,15 +69,15 @@ function subtleNumberDemo() {
 function sweep(organic = false) {
   const visual = organic
     ? '<div class="tg-organic-field" aria-hidden="true"><i></i><i></i><i></i></div>'
-    : '<p class="tg-sweep">正在规划下一步</p>';
+    : `<p class="tg-sweep">${t("正在规划下一步", "Planning the next step")}</p>`;
   return {
-    markup: `<div class="td-stack tg-sweep-demo">${visual}${action("播放")}</div>`,
+    markup: `<div class="td-stack tg-sweep-demo">${visual}${action(t("播放", "Play"))}</div>`,
     connect(stage) {
       const demo = stage.querySelector(".tg-sweep-demo");
       const button = stage.querySelector("button");
       button.addEventListener("click", () => {
         const active = demo.classList.toggle("is-playing");
-        button.textContent = active ? (organic ? "停止" : "暂停") : "播放";
+        button.textContent = active ? (organic ? t("停止", "Stop") : t("暂停", "Pause")) : t("播放", "Play");
       });
     },
   };
@@ -88,16 +90,16 @@ export const transitionsGalleryDemos = {
   "shimmer-text": sweep(),
   "organic-shimmer": sweep(true),
   "pro-gradient-text": {
-    markup: '<div class="td-stack"><p class="tg-sweep tg-gradient">专业动效</p></div>',
+    markup: `<div class="td-stack"><p class="tg-sweep tg-gradient">${t("专业动效", "Pro motion")}</p></div>`,
   },
   "text-states-swap": {
-    markup: `<div class="td-stack"><div class="tg-text-swap"><p aria-live="polite">正在处理</p></div>${action("切换状态")}</div>`,
+    markup: `<div class="td-stack"><div class="tg-text-swap"><p aria-live="polite">${t("正在处理", "Processing")}</p></div>${action(t("切换状态", "Toggle status"))}</div>`,
     connect(stage) {
       const output = stage.querySelector("p");
       const trigger = stage.querySelector("button");
       let busy = false;
       let index = 0;
-      const states = ["正在处理", "处理完成"];
+      const states = [t("正在处理", "Processing"), t("处理完成", "Complete")];
       trigger.addEventListener("click", async () => {
         if (busy) return;
         busy = true;
@@ -119,8 +121,8 @@ export const transitionsGalleryDemos = {
     },
   },
   "texts-reveal": {
-    markup: `<div class="td-stack"><div id="tg-reveal-copy" class="tg-reveal-text" aria-hidden="true"><h3>评审记录已更新</h3><p>可以查看最新的命名和布局建议。</p></div>
-      <button type="button" data-demo-toolbar aria-expanded="false" aria-controls="tg-reveal-copy">切换文字</button></div>`,
+    markup: `<div class="td-stack"><div id="tg-reveal-copy" class="tg-reveal-text" aria-hidden="true"><h3>${t("评审记录已更新", "Review notes updated")}</h3><p>${t("可以查看最新的命名和布局建议。", "See the latest suggestions for naming and layout.")}</p></div>
+      <button type="button" data-demo-toolbar aria-expanded="false" aria-controls="tg-reveal-copy">${t("切换文字", "Toggle text")}</button></div>`,
     connect(stage) {
       const copy = stage.querySelector(".tg-reveal-text");
       const button = stage.querySelector("button");
@@ -139,15 +141,15 @@ export const transitionsGalleryDemos = {
   },
   "thinking-states": {
     markup: `<div class="td-stack tg-thinking">
-      <div class="tg-text-swap"><div><p class="tg-sweep" aria-live="polite">正在准备工作区</p></div><span aria-hidden="true"></span></div>
-      ${action("播放")}
+      <div class="tg-text-swap"><div><p class="tg-sweep" aria-live="polite">${t("正在准备工作区", "Preparing workspace")}</p></div><span aria-hidden="true"></span></div>
+      ${action(t("播放", "Play"))}
     </div>`,
     connect(stage) {
       const demo = stage.querySelector(".tg-thinking");
       const trigger = stage.querySelector("button");
       const text = stage.querySelector("p");
       const previous = stage.querySelector(".tg-text-swap span");
-      const labels = ["正在准备工作区", "正在运行命令", "正在浏览文件"];
+      const labels = [t("正在准备工作区", "Preparing workspace"), t("正在运行命令", "Running command"), t("正在浏览文件", "Browsing files")];
       const hold = 2000;
       let index = 0;
       let timer;
@@ -169,7 +171,7 @@ export const transitionsGalleryDemos = {
       }
       trigger.addEventListener("click", () => {
         const playing = demo.classList.toggle("is-playing");
-        trigger.textContent = playing ? "暂停" : "播放";
+        trigger.textContent = playing ? t("暂停", "Pause") : t("播放", "Play");
         clearTimeout(timer);
         if (playing) {
           timer = setTimeout(next, hold);
@@ -182,14 +184,14 @@ export const transitionsGalleryDemos = {
     },
   },
   "avatar-group-hover": {
-    markup: `<div class="tg-avatars" role="group" aria-label="评审成员">
+    markup: `<div class="tg-avatars" role="group" aria-label="${t("评审成员", "Reviewers")}">
       ${Array.from({ length: 6 }, (_, index) => {
         const number = index + 1;
-        return `<span class="tg-avatar" tabindex="0" aria-label="评审成员 ${number}">
+        return `<span class="tg-avatar" tabindex="0" aria-label="${t("评审成员", "Reviewers")} ${number}">
           <img data-fade-on-load src="./assets/source-art/avatar-group/avatar-${number}.webp" alt="" width="32" height="32" draggable="false">
         </span>`;
       }).join("")}
-      <span class="tg-avatar tg-avatar-more" tabindex="0" aria-label="另有两位成员">+2</span>
+      <span class="tg-avatar tg-avatar-more" tabindex="0" aria-label="${t("另有两位成员", "Two more reviewers")}">+2</span>
     </div>`,
     connect(stage) {
       const group = stage.querySelector(".tg-avatars");
@@ -231,10 +233,10 @@ export const transitionsGalleryDemos = {
     },
   },
   "card-stack-hover": {
-    markup: `<button type="button" class="tg-card-stack" aria-label="产品照片卡片堆" aria-expanded="false">
-      <span class="tg-stack-card"><img data-fade-on-load src="./assets/source-art/card-stack/studio-camera.webp" alt="蓝色复古相机" width="312" height="312" draggable="false"></span>
-      <span class="tg-stack-card"><img data-fade-on-load src="./assets/source-art/card-stack/studio-radio.webp" alt="绿色桌面收音机" width="312" height="312" draggable="false"></span>
-      <span class="tg-stack-card"><img data-fade-on-load src="./assets/source-art/card-stack/studio-headphones.webp" alt="橙色头戴式耳机" width="312" height="312" draggable="false"></span>
+    markup: `<button type="button" class="tg-card-stack" aria-label="${t("产品照片卡片堆", "Stack of product photos")}" aria-expanded="false">
+      <span class="tg-stack-card"><img data-fade-on-load src="./assets/source-art/card-stack/studio-camera.webp" alt="${t("蓝色复古相机", "Blue vintage camera")}" width="312" height="312" draggable="false"></span>
+      <span class="tg-stack-card"><img data-fade-on-load src="./assets/source-art/card-stack/studio-radio.webp" alt="${t("绿色桌面收音机", "Green tabletop radio")}" width="312" height="312" draggable="false"></span>
+      <span class="tg-stack-card"><img data-fade-on-load src="./assets/source-art/card-stack/studio-headphones.webp" alt="${t("橙色头戴式耳机", "Orange over-ear headphones")}" width="312" height="312" draggable="false"></span>
     </button>`,
     connect(stage) {
       const stack = stage.querySelector(".tg-card-stack");
@@ -265,7 +267,7 @@ export const transitionsGalleryDemos = {
     },
   },
   "3d-tilt": {
-    markup: `<div class="tg-tilt-anchor" tabindex="0" role="img" aria-label="灰色示例信用卡，移动指针或按住拖动可倾斜">
+    markup: `<div class="tg-tilt-anchor" tabindex="0" role="img" aria-label="${t("灰色示例信用卡，移动指针或按住拖动可倾斜", "Gray sample credit card. Move the pointer or press and drag to tilt it.")}">
       <div class="tg-tilt" aria-hidden="true">
         <div class="tg-tilt-heading"><span>Credit</span><strong>UI LAB</strong></div>
         <div class="tg-tilt-details"><span>Alex Morgan</span><span>••••  ••••  ••••  0425</span></div>
@@ -323,7 +325,7 @@ export const transitionsGalleryDemos = {
     },
   },
   "confetti-burst": {
-    markup: `<div class="tg-confetti"><canvas aria-hidden="true"></canvas><button class="demo-trigger" type="button">播放彩屑</button></div>`,
+    markup: `<div class="tg-confetti"><canvas aria-hidden="true"></canvas><button class="demo-trigger" type="button">${t("播放彩屑", "Play confetti")}</button></div>`,
     connect(stage) {
       const holder = stage.querySelector(".tg-confetti");
       const canvas = holder.querySelector("canvas");
@@ -391,8 +393,8 @@ export const transitionsGalleryDemos = {
     },
   },
   "matrix-dot-loader": {
-    markup: `<div class="td-stack"><div class="tg-matrices" role="group" aria-label="四种加载节奏">
-      ${[["scan", "扫描"], ["twinkle", "闪烁"], ["orbit", "环绕"], ["pulse", "脉冲"]].map(([pattern, label]) =>
+    markup: `<div class="td-stack"><div class="tg-matrices" role="group" aria-label="${t("四种加载节奏", "Four loading rhythms")}">
+      ${[["scan", t("扫描", "Sweep")], ["twinkle", t("闪烁", "Blink")], ["orbit", t("环绕", "Orbit")], ["pulse", t("脉冲", "Pulse")]].map(([pattern, label]) =>
       `<div class="tg-matrix-sample"><div class="tg-matrix" data-pattern="${pattern}" aria-hidden="true">${"<i></i>".repeat(16)}</div><span>${label}</span></div>`).join("")}
       </div></div>`,
     connect(stage) {
@@ -425,8 +427,8 @@ export const transitionsGalleryDemos = {
   "image-gen-placeholder": {
     markup: `<div class="td-stack"><div class="tg-image-slot tg-generation-slot" data-image-state="idle">
       <div class="tg-image-noise" aria-hidden="true"></div>
-      <div class="tg-image" role="img" aria-label="云下山脉" aria-hidden="true"></div>
-      </div>${action("播放")}${status}</div>`,
+      <div class="tg-image" role="img" aria-label="${t("云下山脉", "Mountains beneath the clouds")}" aria-hidden="true"></div>
+      </div>${action(t("播放", "Play"))}${status}</div>`,
     connect(stage) {
       const button = stage.querySelector("button");
       const slot = stage.querySelector(".tg-generation-slot");
@@ -434,9 +436,9 @@ export const transitionsGalleryDemos = {
       const noise = slot.querySelector(".tg-image-noise");
       const output = stage.querySelector("[role=status]");
       const states = [
-        ["idle", "播放", "已重置。"],
-        ["loading", "显示图像", "正在生成示例图。"],
-        ["revealed", "重置", "示例图已显示。"],
+        ["idle", t("播放", "Play"), t("已重置。", "Reset.")],
+        ["loading", t("显示图像", "Show image"), t("正在生成示例图。", "Generating the sample image.")],
+        ["revealed", t("重置", "Reset"), t("示例图已显示。", "Sample image displayed.")],
       ];
       let index = 0;
       const dots = document.createDocumentFragment();

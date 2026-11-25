@@ -1,9 +1,11 @@
+import { t } from "../../app/locale.js";
+
 import { transitionsGalleryDemos } from "./transitions-gallery-demos.js";
 
 const check = '<svg viewBox="0 0 20 20" aria-hidden="true"><path pathLength="1" d="m5 10 3 3 7-7"/></svg>';
 const motionReduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 const easeOut = "cubic-bezier(.22,1,.36,1)";
-const animateButton = '<button type="button" data-demo-toolbar>播放</button>';
+const animateButton = `<button type="button" data-demo-toolbar>${t("播放", "Play")}</button>`;
 const feedback = '<p class="td-feedback" role="status"></p>';
 
 function animate(element, keyframes, options) {
@@ -15,8 +17,8 @@ const demos = {
   "drag-and-drop": {
     markup: `<div class="td-stack">
       <div class="td-drop-grid">
-        <div data-origin><button type="button" class="td-drag-card" aria-label="把示例图片放入放置区"></button></div>
-        <div class="td-drop-zone" data-target aria-label="放置区"><span>把图片拖到这里</span></div>
+        <div data-origin><button type="button" class="td-drag-card" aria-label="${t("把示例图片放入放置区", "Drop the sample image in the drop zone")}"></button></div>
+        <div class="td-drop-zone" data-target aria-label="${t("放置区", "Drop zone")}"><span>${t("把图片拖到这里", "Drag the image here")}</span></div>
       </div>${feedback}
     </div>`,
     connect(stage) {
@@ -43,7 +45,7 @@ const demos = {
         card.hidden = true;
         zone.classList.add("is-filled");
         zone.firstElementChild.hidden = true;
-        status.textContent = "图片已放入。";
+        status.textContent = t("图片已放入。", "Image dropped.");
         animate(zone, [
           { transform: "scale(1)", easing: easeOut },
           { transform: "scale(.97)", offset: 250 / 700, easing: easeOut },
@@ -56,7 +58,7 @@ const demos = {
           if (restoreFocus && (document.activeElement === document.body || document.activeElement === card)) card.focus();
           animate(card, [{ opacity: 0, transform: "scale(.92)" }, { opacity: 1, transform: "none" }], 240);
           settling = false;
-          status.textContent = "可以再次拖放。";
+          status.textContent = t("可以再次拖放。", "You can drag and drop it again.");
         }, 1800);
       }
 
@@ -104,7 +106,7 @@ const demos = {
     markup: `<div class="td-stack">
       <div class="td-task-tile">
         <span class="td-save-icon" aria-hidden="true"><span class="td-save-spinner"></span><span data-check>${check}</span></span>
-        <span><strong>构建演示页面</strong><small>8 个子任务</small></span>
+        <span><strong>${t("构建演示页面", "Build demo page")}</strong><small>${t("8 个子任务", "8 subtasks")}</small></span>
       </div>
       ${animateButton}${feedback}
     </div>`,
@@ -118,10 +120,10 @@ const demos = {
         icon.removeAttribute("data-done");
         if (!motionReduced()) icon.getBoundingClientRect();
         icon.setAttribute("data-done", "");
-        status.textContent = "任务已完成。";
+        status.textContent = t("任务已完成。", "Task complete.");
         reset = setTimeout(() => {
           icon.removeAttribute("data-done");
-          status.textContent = "任务处理中。";
+          status.textContent = t("任务处理中。", "Task in progress.");
         }, 2000);
       });
     },
@@ -129,9 +131,9 @@ const demos = {
   "delete-dissolve": {
     markup: `<div class="td-stack">
       <div class="td-delete-area">
-        <div class="td-delete-card" role="img" aria-label="山景示例图片"></div>
+        <div class="td-delete-card" role="img" aria-label="${t("山景示例图片", "Sample mountain image")}"></div>
         <div class="td-smoke" aria-hidden="true"></div>
-        <button type="button" data-delete aria-label="删除示例图片">删除</button>
+        <button type="button" data-delete aria-label="${t("删除示例图片", "Delete sample image")}">${t("删除", "Delete")}</button>
       </div>${feedback}
     </div>`,
     connect(stage) {
@@ -143,7 +145,7 @@ const demos = {
         if (remove.getAttribute("aria-disabled") === "true") return;
         remove.setAttribute("aria-disabled", "true");
         card.hidden = true;
-        status.textContent = "正在删除图片。";
+        status.textContent = t("正在删除图片。", "Deleting the image.");
         const effects = [];
         if (!motionReduced()) {
           for (let y = 0; y < 4; y += 1) {
@@ -168,7 +170,7 @@ const demos = {
             card.hidden = false;
             remove.setAttribute("aria-disabled", "false");
             animate(card, [{ opacity: 0, transform: "scale(.94)" }, { opacity: 1, transform: "none" }], 290);
-            status.textContent = "图片已恢复，可以再次播放。";
+            status.textContent = t("图片已恢复，可以再次播放。", "Image restored. You can play it again.");
           }, motionReduced() ? 400 : 760);
         });
       });
@@ -176,7 +178,7 @@ const demos = {
   },
   "learn-more-hover": {
     markup: `<button type="button" class="td-learn">
-      了解更多 <span class="td-learn-arrow" aria-hidden="true">
+      ${t("了解更多", "Learn more")} <span class="td-learn-arrow" aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 4L10 8"/>
           <path d="M10 8L6 12"/>
@@ -201,7 +203,7 @@ const demos = {
         const visible = inbox.dataset.badgeOpen === "false";
         inbox.dataset.badgeOpen = String(visible);
         button.setAttribute("aria-pressed", String(visible));
-        status.textContent = visible ? "1 条未读通知。" : "通知角标已隐藏。";
+        status.textContent = visible ? t("1 条未读通知。", "1 unread notification.") : t("通知角标已隐藏。", "Notification badge hidden.");
       });
     },
   },
@@ -219,13 +221,13 @@ const demos = {
         const open = button.getAttribute("aria-pressed") === "false";
         button.setAttribute("aria-pressed", String(open));
         slot.classList.toggle("is-open", open);
-        stage.querySelector("[role=status]").textContent = open ? "显示关闭图标。" : "显示菜单图标。";
+        stage.querySelector("[role=status]").textContent = open ? t("显示关闭图标。", "Showing the close icon.") : t("显示菜单图标。", "Showing the menu icon.");
       });
     },
   },
   "streaming-text": {
     markup: `<div class="td-stack">
-      <p class="td-stream-text">图层中的 文字 可以 逐段 显现。 保留 段落 的 完整 高度， 这样 阅读 位置 不会 在 输出 时 来回 跳动。</p>
+      <p class="td-stream-text">${t("图层中的 文字 可以 逐段 显现。 保留 段落 的 完整 高度， 这样 阅读 位置 不会 在 输出 时 来回 跳动。", "Text in a layer can appear gradually. Keep space for the full paragraph so the reading position stays steady as the text arrives.")}</p>
       ${animateButton}${feedback}
     </div>`,
     connect(stage) {
@@ -247,14 +249,14 @@ const demos = {
           { opacity: 1, filter: "blur(0)" },
         ], { duration: 350, delay: index * 60, fill: "backwards", easing: easeOut })).filter(Boolean);
         Promise.allSettled(effects.map(effect => effect.finished)).then(() => {
-          if (current === run) output.textContent = "全文已显示。";
+          if (current === run) output.textContent = t("全文已显示。", "Full text is visible.");
         });
       });
     },
   },
   "error-state-shake": {
     markup: `<div class="td-form">
-      <input type="email" value="lin" aria-label="邮箱地址" aria-describedby="td-email-status">
+      <input type="email" value="lin" aria-label="${t("邮箱地址", "Email address")}" aria-describedby="td-email-status">
       <p id="td-email-status" class="td-status td-stage-status" role="status"></p>
       ${animateButton}
     </div>`,
@@ -269,7 +271,7 @@ const demos = {
         effect?.cancel();
         release?.cancel();
         input.setAttribute("aria-invalid", "true");
-        status.textContent = "请输入有效的邮箱地址。";
+        status.textContent = t("请输入有效的邮箱地址。", "Enter a valid email address.");
         effect = animate(input, [
           { transform: "none", easing: easeOut },
           { transform: "translateX(6px)", offset: 80 / 280, easing: easeOut },
@@ -290,15 +292,15 @@ const demos = {
   "input-clear-with-dissolve": {
     markup: `<div class="td-form">
       <div class="td-clear-field">
-        <input type="text" value="界面 动效 如何 工作？" placeholder="搜索" aria-label="搜索" autocomplete="off">
+        <input type="text" value="${t("界面 动效 如何 工作？", "How does interface motion work?")}" placeholder="${t("搜索", "Search")}" aria-label="${t("搜索", "Search")}" autocomplete="off">
         <div class="td-cleared-text" aria-hidden="true"></div>
-        <button type="button" class="td-clear-trigger" aria-label="清空搜索">
+        <button type="button" class="td-clear-trigger" aria-label="${t("清空搜索", "Clear search")}">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
             <path d="m4.5 4.5 7 7m0-7-7 7"/>
           </svg>
         </button>
       </div>
-      <button type="button" data-demo-toolbar data-reset>重置文字</button>
+      <button type="button" data-demo-toolbar data-reset>${t("重置文字", "Reset text")}</button>
     </div>`,
     connect(stage) {
       const input = stage.querySelector("input");
@@ -357,11 +359,11 @@ const demos = {
     markup: `<label class="td-choice">
       <input type="checkbox">
       <span class="td-checkbox">${check}</span>
-      通知我
+      ${t("通知我", "Notify me")}
     </label>`,
   },
   toggle: {
-    markup: `<button type="button" class="td-switch" role="switch" aria-checked="false" aria-label="切换开关">
+    markup: `<button type="button" class="td-switch" role="switch" aria-checked="false" aria-label="${t("切换开关", "Toggle switch")}">
       <span class="td-switch-thumb" aria-hidden="true"></span>
     </button>`,
     connect(stage) {
@@ -385,7 +387,7 @@ const demos = {
         const large = panel.dataset.expanded !== "true";
         panel.dataset.expanded = String(large);
         button.setAttribute("aria-pressed", String(!large));
-        stage.querySelector("[role=status]").textContent = large ? "已切换到宽卡片。" : "已切换到窄卡片。";
+        stage.querySelector("[role=status]").textContent = large ? t("已切换到宽卡片。", "Switched to the wide card.") : t("已切换到窄卡片。", "Switched to the narrow card.");
       });
     },
   },
@@ -393,8 +395,8 @@ const demos = {
     markup: `<div class="td-stack">
       <div class="td-profile" aria-busy="true">
         <div class="td-profile-content" inert>
-          <span class="td-avatar" aria-hidden="true">林</span>
-          <div><strong>林可</strong><p>lin@example.com</p></div>
+          <span class="td-avatar" aria-hidden="true">${t("林", "L")}</span>
+          <div><strong>${t("林可", "Lin Kay")}</strong><p>lin@example.com</p></div>
         </div>
         <div class="td-skeleton" aria-hidden="true"><i></i><i></i><i></i></div>
       </div>
@@ -421,7 +423,7 @@ const demos = {
         timer = setTimeout(() => {
           profile.setAttribute("aria-busy", "false");
           details.inert = false;
-          status.textContent = "已显示用户信息。";
+          status.textContent = t("已显示用户信息。", "User details are visible.");
         }, 1000);
       }
       button.addEventListener("click", replay);
@@ -429,15 +431,15 @@ const demos = {
   },
   "reasoning-stream": {
     markup: `<div class="td-stack">
-      <div class="td-log-window" aria-label="推理记录" tabindex="0">
+      <div class="td-log-window" aria-label="${t("推理记录", "Reasoning log")}" tabindex="0">
         <div class="td-log-strip"><div class="td-log-copy">
-          <p>先确认卡顿是每帧重新计算模糊，还是遮罩重复触发绘制。分开测量后更容易找到合适的修正。</p>
-          <p>位置动画一直重绘元素时，渐变和滤镜也会反复参与渲染。可以分开测量绘制和合成的成本。</p>
-          <p>让内容保持静止，只移动上面的遮盖层。把视觉变化放在合成阶段，避免每次都生成相同画面。</p>
-          <p>最后对照原动效的速度和对比度，保留能让读者看清状态变化的节奏。</p>
+          <p>${t("先确认卡顿是每帧重新计算模糊，还是遮罩重复触发绘制。分开测量后更容易找到合适的修正。", "First check whether the slowdown comes from recalculating blur every frame or from the mask triggering repeated paints. Measure them separately to find the best fix.")}</p>
+          <p>${t("位置动画一直重绘元素时，渐变和滤镜也会反复参与渲染。可以分开测量绘制和合成的成本。", "When a position animation keeps repainting an element, gradients and filters may also render again. Measure painting and compositing costs separately.")}</p>
+          <p>${t("让内容保持静止，只移动上面的遮盖层。把视觉变化放在合成阶段，避免每次都生成相同画面。", "Keep the content still and move only the overlay. Handle the visible change in the compositing stage to avoid rendering the same frame repeatedly.")}</p>
+          <p>${t("最后对照原动效的速度和对比度，保留能让读者看清状态变化的节奏。", "Finally, compare the original animation&#39;s speed and contrast. Keep a pace that lets readers see the state change.")}</p>
         </div></div>
       </div>
-      <button type="button" data-demo-toolbar data-play aria-pressed="false">播放</button>
+      <button type="button" data-demo-toolbar data-play aria-pressed="false">${t("播放", "Play")}</button>
     </div>`,
     connect(stage) {
       const button = stage.querySelector("[data-play]");
@@ -470,7 +472,7 @@ const demos = {
       button.addEventListener("click", () => {
         const playing = button.getAttribute("aria-pressed") !== "true";
         button.setAttribute("aria-pressed", String(playing));
-        button.textContent = playing ? "暂停" : "播放";
+        button.textContent = playing ? t("暂停", "Pause") : t("播放", "Play");
         clearTimeout(timer);
         if (playing && !strip.getAnimations().length) timer = setTimeout(step, 840);
       });
@@ -478,7 +480,7 @@ const demos = {
   },
   "like-button": {
     markup: `<button type="button" class="td-like" aria-pressed="false">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-8-5.1-8-10.2a4.4 4.4 0 0 1 8-2.5 4.4 4.4 0 0 1 8 2.5C20 14.9 12 20 12 20Z"/></svg>点赞
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-8-5.1-8-10.2a4.4 4.4 0 0 1 8-2.5 4.4 4.4 0 0 1 8 2.5C20 14.9 12 20 12 20Z"/></svg>${t("点赞", "Like")}
     </button>`,
     connect(stage) {
       const button = stage.querySelector("button");
@@ -514,10 +516,10 @@ const demos = {
   },
   "banner-stacking": {
     markup: `<div class="td-stack">
-      <ul class="td-banners" aria-label="通知堆栈" tabindex="0">
-        <li>通知 3</li><li>通知 2</li><li>通知 1</li>
+      <ul class="td-banners" aria-label="${t("通知堆栈", "Notification stack")}" tabindex="0">
+        <li>${t("通知 3", "Notification 3")}</li><li>${t("通知 2", "Notification 2")}</li><li>${t("通知 1", "Notification 1")}</li>
       </ul>
-      <button type="button" data-demo-toolbar data-add>添加通知</button>${feedback}
+      <button type="button" data-demo-toolbar data-add>${t("添加通知", "Add notification")}</button>${feedback}
     </div>`,
     connect(stage) {
       const add = stage.querySelector("[data-add]");
@@ -526,7 +528,7 @@ const demos = {
       let count = 3;
       add.addEventListener("click", () => {
         const item = document.createElement("li");
-        item.textContent = `通知 ${++count}`;
+        item.textContent = `${t("通知", "Notification")} ${++count}`;
         const oldest = list.querySelector("li:nth-child(3)");
         list.prepend(item);
         oldest.classList.add("is-leaving");
@@ -541,7 +543,7 @@ const demos = {
           { opacity: 0, transform: "translateY(60px) scale(.97)", filter: "blur(2px)" },
           { opacity: 1, transform: "none", filter: "none" },
         ], { duration: 350, easing: easeOut });
-        status.textContent = `已添加通知 ${count}，保留最近 3 条。`;
+        status.textContent = `${t("已添加通知", "Added notification")} ${count}${t("，保留最近 3 条。", ". Showing the 3 most recent.")}`;
       });
     },
   },

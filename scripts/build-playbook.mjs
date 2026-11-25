@@ -36,13 +36,20 @@ const entry = `
   import { createElement } from "react";
   import { createRoot } from "react-dom/client";
   import { PlaybookDemoRouter } from "./src/ui/playbook/demo-router.tsx";
-  const slug = new URLSearchParams(location.search).get("case");
+  const query = new URLSearchParams(location.search);
+  const slug = query.get("case");
+  const english = query.get("lang") === "en";
   const mount = document.querySelector("#demo");
-  fetch("./translations.json").then(response => response.json()).then(dictionary => {
+  const render = (dictionary) => {
     createRoot(mount).render(createElement(PlaybookDemoRouter, { slug, dictionary }));
-  }).catch(() => {
-    mount.textContent = "案例加载失败，请刷新重试。";
-  });
+  };
+  if (english) {
+    render();
+  } else {
+    fetch("./translations.json").then(response => response.json()).then(render).catch(() => {
+      mount.textContent = "案例加载失败，请刷新重试。";
+    });
+  }
 `;
 const bundle = await build({
   stdin: { contents: entry, resolveDir: upstream },
@@ -62,10 +69,10 @@ const bundle = await build({
         build.onLoad(
           {
             filter:
-              /(?:aspect-ratio-demo\.tsx|image-outline-demo\.tsx|i18n-core\.mjs)$/,
+              /(?:aspect-ratio-demo\.tsx|image-outline-demo\.tsx|i18n-core\.mjs|ui-localization\.tsx)$/,
           },
           async ({ path: filename }) => {
-            const contents = (await readFile(filename, "utf8"))
+            let contents = (await readFile(filename, "utf8"))
               .replace(
                 /https:\/\/upload\.wikimedia\.org\/[^"]+/g,
                 "../../assets/mountains.jpg",
@@ -74,6 +81,15 @@ const bundle = await build({
                 "'/i18n/zh-CN.json'",
                 'new URL("./translations.json", import.meta.url).href',
               );
+            if (path.basename(filename) === "ui-localization.tsx") {
+              // The upstream fallback patterns still translate with an empty dictionary.
+              contents = contents
+                .replace(
+                  "dictionary ? translateText(value, dictionary) : value",
+                  "dictionary && locale?.chinese !== false ? translateText(value, dictionary) : value",
+                )
+                .replace("[dictionary],", "[dictionary, locale?.chinese],");
+            }
             return {
               contents,
               loader: filename.endsWith(".tsx") ? "tsx" : "js",

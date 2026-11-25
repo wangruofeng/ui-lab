@@ -1,3 +1,5 @@
+import { t } from "../../app/locale.js";
+
 import { loadingSpinners } from "./loading-dev-spinners.js";
 
 function renderOptions(name, label, options, selected) {
@@ -17,13 +19,13 @@ export function renderLoadingDemo(variant) {
   return `
     <div class="loading-stage">
       <div class="loading-shape" data-duration="${duration}" aria-hidden="true">${markup}</div>
-      <span>正在加载</span>
+      <span>${t("正在加载", "Loading")}</span>
     </div>
     <div class="loading-toolbar">
-      ${renderOptions("loading-size", "尺寸", [[32, "小"], [56, "中"], [84, "大"]], 56)}
-      ${renderOptions("loading-speed", "速度", [[0.75, "0.75×"], [1, "原速"], [1.5, "1.5×"]], 1)}
-      <button type="button" data-demo-toolbar data-loading-toggle>播放</button>
-      <button type="button" data-demo-toolbar data-loading-restart>从头播放</button>
+      ${renderOptions("loading-size", t("尺寸", "Size"), [[32, t("小", "Small")], [56, t("中", "Medium")], [84, t("大", "Large")]], 56)}
+      ${renderOptions("loading-speed", t("速度", "Speed"), [[0.75, "0.75×"], [1, t("原速", "Normal")], [1.5, "1.5×"]], 1)}
+      <button type="button" data-demo-toolbar data-loading-toggle>${t("播放", "Play")}</button>
+      <button type="button" data-demo-toolbar data-loading-restart>${t("从头播放", "Restart")}</button>
     </div>`;
 }
 
@@ -38,7 +40,7 @@ export function connectLoadingDemo(section) {
   function setPlaying(next) {
     playing = next;
     indicator.style.setProperty("--ld-play-state", playing ? "running" : "paused");
-    toggle.textContent = playing ? "暂停" : "播放";
+    toggle.textContent = playing ? t("暂停", "Pause") : t("播放", "Play");
   }
 
   setPlaying(!matchMedia("(prefers-reduced-motion: reduce)").matches);

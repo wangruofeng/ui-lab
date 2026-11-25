@@ -29,6 +29,8 @@ Cloudflare Pages 从 GitHub 的 `main` 分支拉取代码，运行 `npm run buil
 
 ## 路由与目录
 
+桌面左侧案例目录的章节标题和案例项悬停时使用同一浅灰背景色。当前案例也使用这个背景色，文字沿用普通案例项的颜色和字重。
+
 - 来源页使用 `/来源`，案例页使用 `/来源/案例`，站内地图使用 `/sitemap`。旧的片段路由已退役。
 - 站内链接通过 `libraryHref()` 生成。XML 站点地图和案例提示词通过 `libraryUrl()` 生成指向正式域名的链接。
 - 案例首页与站内地图共用章节卡片布局。每个来源独立分栏，按章节顺序将卡片放入当前最短的列。宽度不足时显示为单列。
@@ -68,3 +70,11 @@ npm run build --prefix vendor-src/stageshow-src
 ```
 
 [资产声明](../vendor-src/stageshow-src/NOTICE.md) · [Stageshow 及依赖许可证](../site/licenses/stageshow-LICENSE.txt)
+
+## 网站语言
+
+现有路径使用简体中文。英文页面用 `/en` 前缀，例如 `/en/refactoring-ui/feature`。页头链接会切换当前页面的语言。两种语言使用同一组来源与案例 ID，深层路径仍由单页应用回退处理。
+
+英文界面的字体在 `site/app/styles.css` 中按页面语言配置。正文和导航使用本地托管的 Inter，提示词中的代码使用 Roboto Mono。主标题优先使用访客设备上已安装的 Saans Medium，缺少该字体时使用 Inter。
+
+站点静态文案在 `site/index.html` 和 `site/app/locale-shell.js` 中维护。来源、章节和案例的英文名称在 `site/app/library-en.js` 中维护。案例英文说明、设计要点、书中出处和验收条件在 `site/app/case-copy-*-en.js` 中维护。演示文案用 `t(中文, 英文)` 在各自模块里维护。Playbook 内嵌演示通过 `lang=en` 使用原版英文文案。新增或改动案例时补齐两种语言的说明、演示和提示词。构建会检查英文目录、案例元数据和提示词是否仍混有汉字。

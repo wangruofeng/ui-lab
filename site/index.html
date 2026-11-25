@@ -10,6 +10,14 @@
       content="来自设计书籍和参考项目的 UI 案例，包含前后对照和交互演示。"
     />
     <title>设计案例库</title>
+    <script>
+      if (/^\/en(?:\/|$)/.test(location.pathname)) {
+        document.documentElement.lang = "en";
+        document.documentElement.dataset.localizing = "";
+        document.title = "Design Case Library";
+      }
+    </script>
+    <style>html[data-localizing] body { visibility: hidden; }</style>
     <link rel="icon" type="image/png" sizes="96x96" href="./assets/brand-mark.png" />
     <link rel="stylesheet" href="./app/styles.css" />
     <link rel="stylesheet" href="./cases/transitions-dev/transitions-demo.css" />
@@ -39,6 +47,7 @@
           <span>UI Lab</span>
         </a>
         <nav class="site-navigation" aria-label="主导航">
+          <a class="locale-switch nav-control" href="/en" lang="en" hreflang="en" aria-label="Switch to English">EN</a>
           <details class="source-menu" hidden>
             <summary>切换来源</summary>
             <ul class="source-options" aria-label="切换来源"></ul>
@@ -204,7 +213,7 @@
           </a>
           <a href="https://github.com/wangruofeng/ui-lab">GitHub</a>
           <a href="https://github.com/wangruofeng/ui-lab/blob/main/LICENSE" aria-label="UI Lab 原创代码的 MIT 许可证">MIT</a>
-          <a href="/sitemap">站点地图</a>
+          <a class="sitemap-link" href="/sitemap">站点地图</a>
         </div>
       </div>
     </footer>

@@ -1,3 +1,5 @@
+import { caseCount, english, t } from "./locale.js";
+import { localizeShell, updateLocaleLinks } from "./locale-shell.js";
 import { renderArtwork, renderLibraryHome } from "./library-home.js";
 import { connectSlidingTabs } from "./sliding-tabs.js";
 import { prepareMotionExamples } from "../cases/motion-primitives/motion-primitives-examples.js";
@@ -27,6 +29,8 @@ const interactiveDemos = {
   shadcn: { render: renderShadcnDemo, connect: connectShadcnDemo },
 };
 
+localizeShell();
+
 const catalog = document.querySelector("#catalog");
 const main = document.querySelector("#case");
 const artworkDialog = document.querySelector("#artwork-dialog");
@@ -55,12 +59,12 @@ function renderCatalog() {
 function renderCase(collection, active) {
   const motionExample = active.kind === "motion-primitives";
   const interactiveDemo = interactiveDemos[active.demo];
-  const referenceLabel = active.demo === "transitions" ? "官方演示" : "原始出处";
+  const referenceLabel = active.demo === "transitions" ? t("官方演示", "Official demo") : t("原始出处", "Original source");
   const cases = collectionCases(collection);
   const index = cases.findIndex((item) => item.id === active.id);
   const previous = cases[index - 1];
   const next = cases[index + 1];
-  document.title = `${active.title} · ${collection.title} · 设计案例库`;
+  document.title = `${active.title} · ${collection.title} · ${t("设计案例库", "Design Case Library")}`;
   const link = (item, label, shortcut) =>
     item
       ? `<a href="${libraryHref(collection, item)}" aria-keyshortcuts="${shortcut}" aria-labelledby="case-nav-${shortcut}-label case-nav-${shortcut}-title">
@@ -80,12 +84,12 @@ function renderCase(collection, active) {
       <h1 id="case-title" tabindex="-1">${active.title}</h1>
       <p class="intro">${active.tip}</p>
     </header>
-    <section class="case-workspace" aria-label="案例内容">
+    <section class="case-workspace" aria-label="${t("案例内容", "Case content")}">
       <div class="case-view-bar">
-        <div class="case-view-tabs sliding-tabs" role="tablist" aria-label="案例视图">
+        <div class="case-view-tabs sliding-tabs" role="tablist" aria-label="${t("案例视图", "Case views")}">
           <span class="sliding-tabs-indicator" aria-hidden="true"></span>
-          <button type="button" id="case-demo-tab" role="tab" aria-selected="true" aria-controls="case-demo-panel">演示</button>
-          <button type="button" id="case-prompt-tab" role="tab" aria-selected="false" aria-controls="case-prompt-panel" tabindex="-1">提示词</button>
+          <button type="button" id="case-demo-tab" role="tab" aria-selected="true" aria-controls="case-demo-panel">${t("演示", "Demo")}</button>
+          <button type="button" id="case-prompt-tab" role="tab" aria-selected="false" aria-controls="case-prompt-panel" tabindex="-1">${t("提示词", "Prompt")}</button>
         </div>
         <div class="demo-actions" hidden></div>
       </div>
@@ -95,34 +99,34 @@ function renderCase(collection, active) {
         ? `<div class="interactive-demo">${interactiveDemo.render(active.variant)}</div>`
         : active.playbookDemo
         ? `<section class="comparison playbook-comparison" aria-labelledby="playbook-demo-title">
-      <div class="comparison-bar"><div><h2 id="playbook-demo-title">前后对照</h2><p>用右上角的控件切换前后状态。</p></div></div>
-      <iframe class="playbook-frame" src="./demos/playbook-demo/?case=${active.id}" title="${active.title} · 交互演示" sandbox="allow-scripts allow-same-origin"></iframe>
+      <div class="comparison-bar"><div><h2 id="playbook-demo-title">${t("前后对照", "Before and after")}</h2><p>${t("用右上角的控件切换前后状态。", "Use the controls in the top right to switch states.")}</p></div></div>
+      <iframe class="playbook-frame" src="./demos/playbook-demo/?case=${active.id}${english ? "&amp;lang=en" : ""}" title="${active.title} · ${t("交互演示", "Interactive demo")}" sandbox="allow-scripts allow-same-origin"></iframe>
       </section>`
-        : `<section class="comparison" aria-label="界面前后对比">
-      <div class="comparison-bar"><div><h2>${active.scene}</h2><p>${motionExample ? "在两侧做同一操作，比较反馈。" : active.kind === "print" ? "编辑标题、切换辅助线或播放版式变化。" : "在左侧播放改动过程。"}</p></div>
+        : `<section class="comparison" aria-label="${t("界面前后对比", "Interface comparison")}">
+      <div class="comparison-bar"><div><h2>${active.scene}</h2><p>${motionExample ? t("在两侧做同一操作，比较反馈。", "Try the same action on both sides to compare feedback.") : active.kind === "print" ? t("编辑标题、切换辅助线或播放版式变化。", "Edit the headline, toggle guides, or play the layout transition.") : t("在左侧播放改动过程。", "Play the transition in the left panel.")}</p></div>
       ${
         motionExample
           ? ""
           : `<div class="comparison-actions">
-        ${active.hasMotionReplay ? '<button type="button" data-demo-action="cleanup-motion">同时重播动效</button>' : ""}
-        <button type="button" id="play">播放</button>
+        ${active.hasMotionReplay ? `<button type="button" data-demo-action="cleanup-motion">${t("同时重播动效", "Replay both animations")}</button>` : ""}
+        <button type="button" id="play">${t("播放", "Play")}</button>
       </div>`
       }</div>
       <div class="pair">
-        <section class="panel"><h3 id="before-label">调整前</h3><div class="stage" id="stage">
+        <section class="panel"><h3 id="before-label">${t("调整前", "Before")}</h3><div class="stage" id="stage">
           <div id="before-view">${renderScene(active, false)}</div>
           ${motionExample ? "" : `<div id="transition-view" inert>${renderScene(active, true)}</div>`}
         </div></section>
-        <section class="panel"><h3>调整后</h3><div class="stage">${renderScene(active, true)}</div></section>
+        <section class="panel"><h3>${t("调整后", "After")}</h3><div class="stage">${renderScene(active, true)}</div></section>
       </div>
-      ${motionExample ? "" : `<div class="timeline"><label for="progress">播放进度</label><input id="progress" type="range" min="0" max="100" value="0"><output id="percent" for="progress">0%</output></div>`}
+      ${motionExample ? "" : `<div class="timeline"><label for="progress">${t("播放进度", "Playback progress")}</label><input id="progress" type="range" min="0" max="100" value="0"><output id="percent" for="progress">0%</output></div>`}
     </section>`
     }
       </div>
       <div class="case-prompt-panel" id="case-prompt-panel" role="tabpanel" aria-labelledby="case-prompt-tab" tabindex="0" hidden>
         <div class="case-prompt-field">
           <div class="case-prompt-actions">
-            <button type="button" id="copy-prompt" aria-label="复制提示词">
+            <button type="button" id="copy-prompt" aria-label="${t("复制提示词", "Copy prompt")}">
               <svg class="copy-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
                 <rect x="9" y="9" width="13" height="13" rx="2" />
                 <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
@@ -130,8 +134,8 @@ function renderCase(collection, active) {
               <svg class="copied-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" aria-hidden="true">
                 <path d="m4 12 5 5L20 6" />
               </svg>
-              <span class="copy-label">复制</span>
-              <span class="copied-label">已复制</span>
+              <span class="copy-label">${t("复制", "Copy")}</span>
+              <span class="copied-label">${t("已复制", "Copied")}</span>
             </button>
           </div>
           <pre id="case-prompt" aria-labelledby="case-prompt-tab" tabindex="0"></pre>
@@ -139,9 +143,9 @@ function renderCase(collection, active) {
         <p id="copy-status" role="status"></p>
       </div>
     </section>
-    ${active.outline.length ? `<section class="notes"><h2>设计要点</h2><ul>${active.outline.map((note) => `<li>${note}</li>`).join("")}</ul></section>` : ""}
-    ${active.referenceLabel ? `<p class="case-reference">书中出处 · ${active.referenceLabel}</p>` : ""}
-    <nav class="case-nav" aria-label="相邻案例">${link(previous, "上一案例", "ArrowLeft")}${link(next, "下一案例", "ArrowRight")}</nav>`;
+    ${active.outline.length ? `<section class="notes"><h2>${t("设计要点", "Design notes")}</h2><ul>${active.outline.map((note) => `<li>${note}</li>`).join("")}</ul></section>` : ""}
+    ${active.referenceLabel ? `<p class="case-reference">${t("书中出处", "Book reference")} · ${active.referenceLabel}</p>` : ""}
+    <nav class="case-nav" aria-label="${t("相邻案例", "Adjacent cases")}">${link(previous, t("上一案例", "Previous case"), "ArrowLeft")}${link(next, t("下一案例", "Next case"), "ArrowRight")}</nav>`;
   if (interactiveDemo) {
     const section = main.querySelector(".interactive-demo");
     interactiveDemo.connect(section, active.variant);
@@ -174,7 +178,7 @@ function renderCase(collection, active) {
       await navigator.clipboard.writeText(markdown);
       if (!copyButton.isConnected) return;
       copyButton.dataset.copied = "true";
-      copyStatus.textContent = "已复制提示词";
+      copyStatus.textContent = t("已复制提示词", "Prompt copied");
       clearTimeout(copyFeedbackTimer);
       copyFeedbackTimer = setTimeout(() => {
         delete copyButton.dataset.copied;
@@ -183,7 +187,7 @@ function renderCase(collection, active) {
     } catch {
       if (!copyButton.isConnected) return;
       selectPrompt();
-      copyStatus.textContent = "已选中提示词，请手动复制";
+      copyStatus.textContent = t("已选中提示词，请手动复制", "Prompt selected. Copy it manually.");
     }
   });
   renderCatalog();
@@ -267,16 +271,16 @@ function connectPlayer() {
     before.style.opacity = 1 - value;
     before.inert = value > 0;
     label.lastChild.textContent =
-      value === 0 ? "调整前" : value === 1 ? "已显示调整后" : "变化预览";
+      value === 0 ? t("调整前", "Before") : value === 1 ? t("已显示调整后", "After") : t("变化预览", "Preview");
   }
   function update() {
     play.textContent = playing
-      ? "暂停"
+      ? t("暂停", "Pause")
       : position === 1
-        ? "重播"
+        ? t("重播", "Replay")
         : position > 0
-          ? "继续"
-          : "播放";
+          ? t("继续", "Resume")
+          : t("播放", "Play");
   }
   function advance(now) {
     startTime ??= now - position * duration;
@@ -310,8 +314,8 @@ function connectPlayer() {
 }
 
 function breadcrumbs(collection, item) {
-  return `<nav class="breadcrumbs" aria-label="面包屑导航">
-    <a href="${libraryHref()}">案例库</a>
+  return `<nav class="breadcrumbs" aria-label="${t("面包屑导航", "Breadcrumbs")}">
+    <a href="${libraryHref()}">${t("案例库", "Library")}</a>
     ${item ? `<span aria-hidden="true">›</span>
     <a href="${libraryHref(collection)}">${collection.title}</a>
     <span aria-hidden="true">›</span>
@@ -368,7 +372,7 @@ function renderOverview(collection) {
     }));
     const chapterCards = chapters.map(({ title, items, headingId }) => `
       <section class="chapter-card">
-        <h2 id="${headingId}" tabindex="-1">${title} <small>${items.length} 个案例</small></h2>
+        <h2 id="${headingId}" tabindex="-1">${title} <small>${caseCount(items.length)}</small></h2>
         <ul>${items.map((item) => `<li><a href="${libraryHref(collection, item)}">${item.title}</a></li>`).join("")}</ul>
       </section>`).join("");
     const chapterJumps = chapters.map(({ title, headingId }) =>
@@ -378,19 +382,19 @@ function renderOverview(collection) {
       <header class="collection-header">
         <div class="page-context">
           ${breadcrumbs(collection)}
-          ${collection.url ? `<a class="source-reference" href="${collection.url}">来源</a>` : ""}
+          ${collection.url ? `<a class="source-reference" href="${collection.url}">${t("来源", "Source")}</a>` : ""}
         </div>
         <div class="collection-heading">
           <h1 id="case-title" tabindex="-1">${collection.title}</h1>
           ${renderArtwork(collection.artwork, true)}
           <p class="intro">${collection.description}</p>
           <p class="collection-meta">
-            <span>${collection.type} · ${collection.author} · ${collectionCases(collection).length} 个案例</span>
+            <span>${collection.type} · ${collection.author} · ${caseCount(collectionCases(collection).length)}</span>
             ${collection.edition ? `<span>${collection.edition}</span>` : ""}
           </p>
         </div>
       </header>
-      <nav class="chapter-jumps" aria-label="章节直达">${chapterJumps}</nav>
+      <nav class="chapter-jumps" aria-label="${t("章节直达", "Jump to a chapter")}">${chapterJumps}</nav>
       <div class="chapter-grid collection-chapters">${chapterCards}</div>`;
     connectChapterGrid(main.querySelector(".collection-chapters"));
     for (const button of main.querySelectorAll(".chapter-jumps button")) {
@@ -415,16 +419,16 @@ function renderSitemap() {
       </section>`).join("");
     return `
       <details class="sitemap-source">
-        <summary>${collection.title} <span>${collectionCases(collection).length} 个案例</span></summary>
-        <p><a href="${libraryHref(collection)}">查看案例目录</a></p>
+        <summary>${collection.title} <span>${caseCount(collectionCases(collection).length)}</span></summary>
+        <p><a href="${libraryHref(collection)}">${t("查看案例目录", "Browse cases")}</a></p>
         <div class="chapter-grid sitemap-chapters">${chapters}</div>
       </details>`;
   }).join("");
   main.innerHTML = `
-    <div class="breadcrumbs"><a href="${libraryHref()}">设计案例库</a></div>
+    <div class="breadcrumbs"><a href="${libraryHref()}">${t("设计案例库", "Design Case Library")}</a></div>
     <div class="sitemap-heading">
-      <h1 id="case-title" tabindex="-1">站点地图</h1>
-      <a href="/sitemap.xml" aria-label="XML 版站点地图">XML 版</a>
+      <h1 id="case-title" tabindex="-1">${t("站点地图", "Sitemap")}</h1>
+      <a href="/sitemap.xml" aria-label="${t("XML 版站点地图", "XML sitemap")}">${t("XML 版", "XML")}</a>
     </div>
     <div class="sitemap-sources">${sources}</div>`;
   main.querySelectorAll(".sitemap-chapters").forEach(connectChapterGrid);
@@ -434,17 +438,18 @@ function renderRoute() {
   if (artworkDialog.open) artworkDialog.close();
   cancelAnimationFrame(frame);
   route = resolveRoute(location.pathname);
+  updateLocaleLinks();
   const { collection, item, missing, sitemap } = route;
   updateNavigation(collection, item, missing);
   shell.classList.toggle("library-shell", !collection);
   document.title = collection
-    ? `${collection.title} · 设计案例库`
-    : "设计案例库";
+    ? `${collection.title} · ${t("设计案例库", "Design Case Library")}`
+    : t("设计案例库", "Design Case Library");
   if (sitemap) {
-    document.title = "站点地图 · 设计案例库";
+    document.title = `${t("站点地图", "Sitemap")} · ${t("设计案例库", "Design Case Library")}`;
     renderSitemap();
   } else if (missing) {
-    main.innerHTML = `<h1 id="case-title" tabindex="-1">找不到案例</h1><p><a href="${libraryHref()}">返回案例库</a></p>`;
+    main.innerHTML = `<h1 id="case-title" tabindex="-1">${t("找不到案例", "Case not found")}</h1><p><a href="${libraryHref()}">${t("返回案例库", "Back to the library")}</a></p>`;
   } else if (item) {
     renderCase(collection, item);
   } else {
@@ -481,7 +486,7 @@ document.addEventListener("click", (event) => {
       event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
   const link = event.target.closest("a[href]");
   if (!link || link.target || link.hasAttribute("download") ||
-      link.origin !== location.origin || link.hash || link.search ||
+      link.origin !== location.origin || link.classList.contains("locale-switch") || link.hash || link.search ||
       resolveRoute(link.pathname).missing) return;
 
   event.preventDefault();
@@ -496,6 +501,7 @@ document.addEventListener("load", ({ target }) => {
   }
 }, true);
 renderRoute();
+delete document.documentElement.dataset.localizing;
 
 function selectDemoOption(button) {
   const group = button.parentElement;
@@ -549,14 +555,14 @@ main.addEventListener("submit", (event) => {
   if (!form) return;
   event.preventDefault();
   form.querySelector(".demo-feedback").textContent =
-    `${event.submitter.textContent}成功（本地演示）`;
+    t(`${event.submitter.textContent}成功（本地演示）`, `${event.submitter.textContent}: success (local demo)`);
 });
 
 main.addEventListener("change", (event) => {
   if (!event.target.matches(".depth-layer input[type=file]")) return;
   const file = event.target.files[0];
   event.target.parentElement.querySelector(".demo-feedback").textContent = file
-    ? `已选择：${file.name}`
+    ? t(`已选择：${file.name}`, `Selected: ${file.name}`)
     : "";
 });
 
@@ -573,7 +579,7 @@ main.addEventListener("click", (event) => {
       artworkPreview.src = src;
     }
     artworkPreview.dataset.kind = route.collection.artwork.kind;
-    artworkPreview.alt = artworkButton.getAttribute("aria-label").replace("放大查看", route.collection.title + " ");
+    artworkPreview.alt = route.collection.title;
     artworkDialog.showModal();
     return;
   }
@@ -592,20 +598,20 @@ main.addEventListener("click", (event) => {
   switch (button.dataset.demoAction) {
     case "tile":
       selectDemoOption(button);
-      status.textContent = `已选中${button.dataset.label} · ${button.dataset.count} 个项目`;
+      status.textContent = t(`已选中${button.dataset.label} · ${button.dataset.count} 个项目`, `Selected: ${button.dataset.label} · ${button.dataset.count} projects`);
       break;
     case "swatch":
       selectDemoOption(button);
       status.textContent = `${button.dataset.label} · ${button.dataset.color}`;
       break;
     case "export":
-      status.textContent = "在项目设置中选择「导出」，再选择所需文件格式。";
+      status.textContent = t("在项目设置中选择「导出」，再选择所需文件格式。", "In project settings, select Export and choose a file format.");
       break;
     case "browse":
-      status.textContent = "素材预览：工作区模板、排版指南、组件清单。";
+      status.textContent = t("素材预览：工作区模板、排版指南、组件清单。", "Preview: workspace templates, typography guide, and component list.");
       break;
     case "details":
-      status.textContent = "团队工作区 · 3 个项目 · 最近更新于 10 分钟前";
+      status.textContent = t("团队工作区 · 3 个项目 · 最近更新于 10 分钟前", "Team workspace · 3 projects · Updated 10 minutes ago");
       break;
     case "file":
       widget.querySelector("input[type=file]").click();
@@ -623,7 +629,7 @@ main.addEventListener("click", (event) => {
         control.disabled = true;
       });
       if (confirmation) confirmation.hidden = true;
-      status.textContent = "已移除成员（本地演示）";
+      status.textContent = t("已移除成员（本地演示）", "Member removed (local demo)");
       break;
   }
 });

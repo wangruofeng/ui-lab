@@ -1,4 +1,5 @@
-import { collectionCases, collections, libraryHref } from "./library.js";
+import { t } from "./locale.js";
+import { collectionCases, collections, englishCollections, originalCollections, libraryHref } from "./library.js";
 
 const header = document.querySelector(".site-header");
 const homeLink = header.querySelector(".brand");
@@ -16,24 +17,41 @@ const shell = document.querySelector(".shell");
 const caseMain = document.querySelector("#case");
 const narrow = matchMedia("(max-width: 760px)");
 
-const caseIndex = collections.flatMap((collection) =>
-  collectionCases(collection).map((item) => ({
-    collection,
-    item,
-    title: item.title.toLowerCase(),
-    context: [
-      collection.title,
-      item.category,
-      item.scene,
-      item.tip,
-      item.referenceLabel,
-      item.principle,
-      ...item.outline,
-    ]
-      .join(" ")
-      .toLowerCase(),
-  })),
-);
+const caseIndex = collections.flatMap((collection, index) => {
+  const originalCollection = originalCollections[index];
+  const englishCollection = englishCollections[index];
+  const translations = new Map(collectionCases(englishCollection).map((item) => [item.id, item]));
+  const originals = new Map(collectionCases(originalCollection).map((item) => [item.id, item]));
+
+  return collectionCases(collection).map((item) => {
+    const original = originals.get(item.id);
+    const translation = translations.get(item.id);
+    return {
+      collection,
+      item,
+      title: item.title.toLowerCase(),
+      context: [
+        collection.title,
+        originalCollection.title,
+        original.title,
+        englishCollection.title,
+        translation.title,
+        translation.category,
+        item.id,
+        item.category,
+        original.category,
+        item.scene,
+        item.tip,
+        original.tip,
+        translation.tip,
+        original.scene,
+        item.referenceLabel,
+        item.principle,
+        ...item.outline,
+      ].join(" ").toLowerCase(),
+    };
+  });
+});
 
 sourceList.innerHTML = collections
   .map(
@@ -93,10 +111,10 @@ function renderSearchResults() {
   const shown = matches.slice(0, 24);
   searchStatus.textContent =
     matches.length > shown.length
-      ? `${matches.length} 个结果，显示前 ${shown.length} 个`
+      ? t(`${matches.length} 个结果，显示前 ${shown.length} 个`, `${matches.length} results, showing the first ${shown.length}`)
       : matches.length
-        ? `${matches.length} 个结果`
-        : "未找到相关案例";
+        ? t(`${matches.length} 个结果`, `${matches.length} ${matches.length === 1 ? "result" : "results"}`)
+        : t("未找到相关案例", "No matching cases");
   searchResults.innerHTML = shown
     .map(
       ({ collection, item }) => `

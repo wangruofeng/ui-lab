@@ -27,6 +27,8 @@ UI Lab 原创代码采用 [MIT 许可证](../LICENSE)。第三方代码和素材
 
 项目用途、第三方权利和反馈方式见 [免责声明](../DISCLAIMER.md)。各来源的代码按对应的许可条款使用，包括 [loading.dev](../site/licenses/loading-dev-LICENSE.md)、[Transitions.dev](../site/licenses/transitions-dev-LICENSE.md)、[shadcn/ui](../site/licenses/shadcn-ui-LICENSE.md) 和 [Stageshow](../site/licenses/stageshow-LICENSE.txt)。
 
-书籍案例使用独立绘制的示例界面和整理后的练习说明。封面和项目标识用于识别各自来源，权利归原作者或权利人。演示用山谷照片和抽象插图由 AI 生成。
+书籍案例使用独立绘制的示例界面和整理后的练习说明。封面和项目标识用于识别各自来源，权利归原作者或权利人。《写给大家看的设计书》英文页使用 [Peachpit 的第四版封面](https://www.peachpit.com/store/non-designers-design-book-4th-edition-9780133966152)。演示用山谷照片和抽象插图由 AI 生成。
 
 UI Skills Playbook 的演示源自 [ibelick/ui-skills](https://github.com/ibelick/ui-skills)。上游 MIT 许可和打包依赖的许可见 [playbook-demo](../site/demos/playbook-demo/)。
+
+站点分发的字体 Inter 和 Roboto Mono 均采用 SIL Open Font License 1.1。 [Inter 许可](../site/assets/fonts/Inter-OFL.txt) · [Roboto Mono 许可](../site/assets/fonts/RobotoMono-OFL.txt)

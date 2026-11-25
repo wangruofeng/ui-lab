@@ -6,6 +6,29 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Inter Latin";
+  src: url("../assets/fonts/transitions-inter-latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans";
+  src: local("Saans Medium"), local("Saans-Medium");
+  font-style: normal;
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Roboto Mono";
+  src: url("../assets/fonts/RobotoMono-Latin.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+}
+
 :root {
   font-family: Inter, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
   color: var(--ink);
@@ -26,6 +49,31 @@
   --page-gutter: clamp(13px, 3vw, 28px);
   --icon-stroke-width: 1.5px;
 }
+
+:root[lang="en"] {
+  --english-sans: "Inter Latin", "Inter Variable", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --english-mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
+  font-family: var(--english-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:root[lang="en"] :is(.brand > span, .sliding-tabs, .select-control > select) {
+  font-family: var(--english-sans);
+}
+
+:root[lang="en"] #case-title {
+  font-family: "Saans", var(--english-sans);
+  font-weight: 500;
+  letter-spacing: -0.005em;
+}
+
+:root[lang="en"] .prompt-syntax-code {
+  font-family: var(--english-mono);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -229,15 +277,11 @@ input {
   line-height: 1.5;
   white-space: nowrap;
 }
-#catalog a:hover {
-  color: var(--brand);
-  background: var(--stage-fill);
-}
-#catalog a[aria-current],
-#catalog a[aria-current]:hover {
-  color: var(--brand);
+#catalog a:is(:hover, [aria-current]) {
   background: var(--brand-soft);
-  font-weight: 500;
+}
+#catalog a:hover:where(:not([aria-current])) {
+  color: var(--brand);
 }
 #catalog a:focus-visible {
   outline-offset: -2px;

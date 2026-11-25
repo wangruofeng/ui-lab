@@ -1,3 +1,5 @@
+import { locale } from "./locale.js";
+import { refactoringCriteriaEn } from "./refactoring-criteria-en.js";
 import { libraryUrl } from "./library.js";
 
 const criteria = {
@@ -90,9 +92,26 @@ const criteria = {
     "确定一次只调整的变量，记录前后对照、观察结果和适用条件，然后决定是否推广。",
 };
 
-export function buildPrompt(collection, item) {
-  const check = item.criterion ?? criteria[item.id];
+export function buildPrompt(collection, item, language = locale) {
+  const english = language === "en";
+  const check = item.criterion ?? (english ? refactoringCriteriaEn : criteria)[item.id];
   if (!check) throw new Error(`案例缺少提示词验收条件：${item.id}`);
+
+  if (english) {
+    return [
+      "## Task\nApply the design technique in the UI Lab case below to the supplied interface. Use the supplied code, screenshots, or description and the user’s task to define the goal.",
+      [
+        "## Reference case",
+        [collection.title, item.category, item.title].join(" › "),
+        ...(item.scene && item.scene !== item.category && item.scene !== item.title ? [`Demo scenario: ${item.scene}`] : []),
+        `Case ID: ${collection.id}/${item.id}`,
+        libraryUrl(collection, item, language),
+      ].join("\n"),
+      item.tip && !check.startsWith(item.tip) ? `## Case guidance\n${item.tip}` : "",
+      `## Application and acceptance criteria\n${check}`,
+      "## Deliverable\nReuse the project’s components and design tokens. Limit edits to the relevant areas. Edit the code when available. For a screenshot or description, provide implementable specifications and list any missing information. Explain what changed, what you verified, and which case and URL you used. If the link is unavailable, use the guidance and acceptance criteria above.",
+    ].filter(Boolean).join("\n\n");
+  }
 
   const reference = [
     "## 参考案例",
@@ -101,7 +120,7 @@ export function buildPrompt(collection, item) {
       ? [`演示场景 ${item.scene}`]
       : []),
     `案例编号 ${collection.id}/${item.id}`,
-    libraryUrl(collection, item),
+    libraryUrl(collection, item, language),
   ].join("\n");
 
   const summary = item.tip && !check.startsWith(item.tip)

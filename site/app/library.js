@@ -1,3 +1,5 @@
+import { english, localePath } from "./locale.js";
+import { localizeCollection } from "./library-en.js";
 import { loadingDevCategories } from "../cases/loading-dev/loading-dev-cases.js";
 import { transitionsCategories } from "../cases/transitions-dev/transitions-cases.js";
 import { shadcnCategories } from "../cases/shadcn-ui/shadcn-cases.js";
@@ -13,7 +15,7 @@ import { stageshowCollection } from "../cases/stageshow/stageshow-cases.js";
 
 export const libraryBaseUrl = "https://ui-lab.wangruofeng007.com/";
 
-export const collections = [
+export const originalCollections = [
   {
     id: "refactoring-ui",
     artwork: { kind: "cover", src: "./assets/source-art/refactoring-ui.webp", width: 404, height: 520 },
@@ -117,6 +119,9 @@ export const collections = [
   stageshowCollection,
 ];
 
+export const englishCollections = originalCollections.map(localizeCollection);
+export const collections = english ? englishCollections : originalCollections;
+
 export function collectionCases(collection) {
   return collection.categories.flatMap((category) =>
     category.items.map((item) => ({ ...item, category: category.title })),
@@ -124,6 +129,7 @@ export function collectionCases(collection) {
 }
 
 export function resolveRoute(pathname) {
+  pathname = localePath(pathname, "zh-CN");
   if (pathname === "/") return {};
   if (pathname === "/sitemap") return { sitemap: true };
   if (!pathname.startsWith("/")) return { missing: true };
@@ -139,10 +145,10 @@ export function resolveRoute(pathname) {
   return item ? { collection, item } : { missing: true };
 }
 
-export function libraryHref(collection, item) {
-  return "/" + [collection?.id, item?.id].filter(Boolean).join("/");
+export function libraryHref(collection, item, language) {
+  return localePath("/" + [collection?.id, item?.id].filter(Boolean).join("/"), language);
 }
 
-export function libraryUrl(collection, item) {
-  return new URL(libraryHref(collection, item), libraryBaseUrl).href;
+export function libraryUrl(collection, item, language) {
+  return new URL(libraryHref(collection, item, language), libraryBaseUrl).href;
 }

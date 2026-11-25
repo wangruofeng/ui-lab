@@ -1,3 +1,5 @@
+import { t } from "../../app/locale.js";
+
 import { connectSlidingTabs } from "../../app/sliding-tabs.js";
 
 const ease = "cubic-bezier(.22,1,.36,1)";
@@ -36,9 +38,9 @@ function previewToggle({ label, name, variant, content }) {
 }
 
 const gooeyActions = [
-  { label: "新建文件", x: -54, y: -34, icon: '<path d="M9 2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6L9 2v4h4"/>' },
-  { label: "添加图片", x: 0, y: -64, icon: '<rect x="2" y="2" width="12" height="12" rx="2"/><circle cx="6" cy="6" r="1"/><path d="m3 12 3-3 2 2 2-3 3 3"/>' },
-  { label: "新建文件夹", x: 54, y: -34, icon: '<path d="M2 11.5v-7A1.5 1.5 0 0 1 3.5 3H6l2 2h4.5A1.5 1.5 0 0 1 14 6.5v5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 11.5Z"/>' },
+  { label: t("新建文件", "New file"), x: -54, y: -34, icon: '<path d="M9 2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6L9 2v4h4"/>' },
+  { label: t("添加图片", "Add image"), x: 0, y: -64, icon: '<rect x="2" y="2" width="12" height="12" rx="2"/><circle cx="6" cy="6" r="1"/><path d="m3 12 3-3 2 2 2-3 3 3"/>' },
+  { label: t("新建文件夹", "New folder"), x: 54, y: -34, icon: '<path d="M2 11.5v-7A1.5 1.5 0 0 1 3.5 3H6l2 2h4.5A1.5 1.5 0 0 1 14 6.5v5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 11.5Z"/>' },
 ];
 
 const gooeyPosition = ({ x, y }, index) =>
@@ -57,10 +59,10 @@ const gooeyMenu = {
         <circle cx="100" cy="90" r="20"/>
       </g>
     </svg>
-    <button class="tn-gooey-trigger" type="button" aria-label="打开菜单" aria-expanded="false" aria-controls="tn-gooey-actions">
+    <button class="tn-gooey-trigger" type="button" aria-label="${t("打开菜单", "Open menu")}" aria-expanded="false" aria-controls="tn-gooey-actions">
       <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg>
     </button>
-    <div id="tn-gooey-actions" role="group" aria-label="快捷操作" inert>
+    <div id="tn-gooey-actions" role="group" aria-label="${t("快捷操作", "Quick actions")}" inert>
       ${gooeyActions.map((action, index) => `<button class="tn-gooey-satellite" type="button" aria-label="${action.label}" ${gooeyPosition(action, index)}>
         <svg viewBox="0 0 16 16" aria-hidden="true">${action.icon}</svg>
       </button>`).join("")}
@@ -75,7 +77,7 @@ const gooeyMenu = {
       if ((shell.dataset.open === "true") === open) return;
       shell.dataset.open = String(open);
       trigger.setAttribute("aria-expanded", String(open));
-      trigger.setAttribute("aria-label", open ? "关闭菜单" : "打开菜单");
+      trigger.setAttribute("aria-label", open ? t("关闭菜单", "Close menu") : t("打开菜单", "Open menu"));
       if (open || restoreFocus) trigger.focus();
       actions.inert = !open;
       if (open) shell.getAnimations().forEach(effect => effect.cancel());
@@ -109,7 +111,7 @@ const morphMenu = {
   markup: `<div class="tn-morph-anchor">
     <div class="tn-menu-morph" data-open="false">
       <div class="tn-menu-actions" id="tn-menu-actions" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-      <button type="button" class="tn-menu-trigger" aria-expanded="false" aria-controls="tn-menu-actions" aria-label="打开菜单">
+      <button type="button" class="tn-menu-trigger" aria-expanded="false" aria-controls="tn-menu-actions" aria-label="${t("打开菜单", "Open menu")}">
         <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 4v12M4 10h12"/></svg>
       </button>
     </div>
@@ -124,7 +126,7 @@ const morphMenu = {
       if (open === isOpen()) return;
       shell.dataset.open = String(open);
       trigger.setAttribute("aria-expanded", String(open));
-      trigger.setAttribute("aria-label", open ? "关闭菜单" : "打开菜单");
+      trigger.setAttribute("aria-label", open ? t("关闭菜单", "Close menu") : t("打开菜单", "Open menu"));
       if (open) {
         settle?.cancel();
         trigger.focus({ preventScroll: true });
@@ -161,7 +163,7 @@ const successCheck = {
   markup: `<div class="tn-check" data-open="false" aria-hidden="true">
       <svg viewBox="0 0 24 24"><path pathLength="1" d="m8.64 12.48 2.24 2.4 4.48-4.8"/></svg>
     </div>
-    <button class="demo-trigger tn-stage-toggle" type="button" aria-pressed="false">播放动画</button>
+    <button class="demo-trigger tn-stage-toggle" type="button" aria-pressed="false">${t("播放动画", "Play animation")}</button>
     <p class="td-feedback" role="status"></p>`,
   connect(stage) {
     const badge = stage.querySelector(".tn-check");
@@ -177,7 +179,7 @@ const successCheck = {
       const exitStart = { ...pose, opacity: style.opacity, filter: style.filter };
       badge.dataset.open = String(show);
       button.setAttribute("aria-pressed", String(show));
-      status.textContent = show ? "操作成功。" : "成功标记已收起。";
+      status.textContent = show ? t("操作成功。", "Action completed.") : t("成功标记已收起。", "Success indicator dismissed.");
 
       if (!show) {
         animate(badge, [exitStart, { ...pose, opacity: 0, filter: "blur(4px)" }], duration);
@@ -204,7 +206,7 @@ const successCheck = {
 export const transitionsNavigationDemos = {
   "menu-dropdown": {
     markup: `<div class="tn-dropdown-demo">
-      <button class="demo-trigger" type="button" aria-expanded="true" aria-controls="tn-dropdown">切换菜单</button>
+      <button class="demo-trigger" type="button" aria-expanded="true" aria-controls="tn-dropdown">${t("切换菜单", "Toggle menu")}</button>
       <div class="tn-dropdown" id="tn-dropdown" data-state="open" aria-hidden="true"><span></span><span></span><span></span></div>
     </div>`,
     connect(stage) {
@@ -234,8 +236,8 @@ export const transitionsNavigationDemos = {
     },
   },
   "modal-open-close": previewToggle({
-    label: "切换弹窗",
-    name: "弹窗布局预览",
+    label: t("切换弹窗", "Toggle modal"),
+    name: t("弹窗布局预览", "Modal layout preview"),
     variant: "modal",
     content: `<span class="tn-modal-title"></span>
       <span class="tn-modal-dot"></span>
@@ -243,8 +245,8 @@ export const transitionsNavigationDemos = {
       <div class="tn-modal-actions"><span></span><span></span></div>`,
   }),
   "panel-reveal": previewToggle({
-    label: "切换面板",
-    name: "底部面板布局预览",
+    label: t("切换面板", "Toggle panel"),
+    name: t("底部面板布局预览", "Bottom panel layout preview"),
     variant: "sheet",
     content: `<div class="tn-sheet-lines"><span></span><span></span></div>
       <div class="tn-sheet-tiles"><span></span><span></span><span></span><span></span></div>`,
@@ -253,9 +255,9 @@ export const transitionsNavigationDemos = {
     markup: `<div class="tn-toast" id="tn-toast" role="status" aria-hidden="true">
       <span class="tn-toast-dot" aria-hidden="true"></span>
       <span class="tn-toast-line" aria-hidden="true"></span>
-      <span class="td-feedback">示例提示已显示</span>
+      <span class="td-feedback">${t("示例提示已显示", "Sample toast displayed")}</span>
     </div>
-    <button class="demo-trigger tn-stage-toggle" type="button" aria-expanded="false" aria-controls="tn-toast">切换提示</button>`,
+    <button class="demo-trigger tn-stage-toggle" type="button" aria-expanded="false" aria-controls="tn-toast">${t("切换提示", "Toggle toast")}</button>`,
     connect(stage) {
       const toast = stage.querySelector(".tn-toast");
       const trigger = stage.querySelector(".tn-stage-toggle");
@@ -272,18 +274,18 @@ export const transitionsNavigationDemos = {
   "page-side-by-side": {
     markup: `<div class="tn-page-slide" data-page="1">
       <span class="tn-page-title" aria-hidden="true"></span>
-      <div class="tn-page tn-page-tokens" data-page-id="1" role="group" aria-label="选择代币">
+      <div class="tn-page tn-page-tokens" data-page-id="1" role="group" aria-label="${t("选择代币", "Choose a token")}">
         ${pageTokens.map(([name, symbol, icon]) => `<button class="tn-page-token" type="button">
           <span class="tn-token-icon"><svg viewBox="0 0 16 16" aria-hidden="true">${icon}</svg></span>
           <span>${name}<small>${symbol}</small></span>
         </button>`).join("")}
       </div>
-      <div class="tn-page tn-page-amount" data-page-id="2" role="group" aria-label="示例金额" inert>
+      <div class="tn-page tn-page-amount" data-page-id="2" role="group" aria-label="${t("示例金额", "Sample amount")}" inert>
         <p class="tn-amount-value">$10</p>
         <div class="tn-amount-presets"><span>25%</span><span>50%</span><span>Max</span></div>
-        <p>$66.11 可用</p>
+        <p>${t("$66.11 可用", "$66.11 available")}</p>
       </div>
-      <button class="tn-page-back" type="button" aria-label="返回代币列表" inert>
+      <button class="tn-page-back" type="button" aria-label="${t("返回代币列表", "Back to token list")}" inert>
         <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m10 4-4 4 4 4"/></svg>
       </button>
     </div>`,
@@ -310,7 +312,7 @@ export const transitionsNavigationDemos = {
     },
   },
   "tabs-sliding": {
-    markup: `<div class="sliding-tabs" role="tablist" aria-label="工作方式">
+    markup: `<div class="sliding-tabs" role="tablist" aria-label="${t("工作方式", "Work mode")}">
       <span class="sliding-tabs-indicator" aria-hidden="true"></span>
       ${["Plan", "Debug", "Ask"].map((label, index) => `<button type="button" role="tab" aria-selected="${index === 0}" tabindex="${index === 0 ? 0 : -1}">${label}</button>`).join("")}
     </div>`,
@@ -320,7 +322,7 @@ export const transitionsNavigationDemos = {
   },
   "tooltip-open-close": {
     markup: `<div class="td-stack"><div class="td-actions tn-tooltip" data-visible="false">
-      ${[["复制", "复制摘要"], ["分享", "分享给团队"], ["更多", "查看更多操作"]].map(([label, hint]) =>
+      ${[[t("复制", "Copy"), t("复制摘要", "Copy summary")], [t("分享", "Share"), t("分享给团队", "Share with team")], [t("更多", "More"), t("查看更多操作", "See more actions")]].map(([label, hint]) =>
         `<button class="demo-trigger" type="button" data-hint="${hint}">${label}</button>`,
       ).join("")}<span role="tooltip" id="tn-tooltip"></span>
       </div></div>`,
@@ -355,7 +357,7 @@ export const transitionsNavigationDemos = {
     markup: `<div class="tn-accordion">
       <div class="tn-accordion-item" data-open="false">
         <button class="tn-accordion-trigger" type="button" aria-expanded="false" aria-controls="tn-accordion-panel">
-          外观
+          ${t("外观", "Appearance")}
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4 6 4 4 4-4"/></svg>
         </button>
         <div class="tn-accordion-panel" id="tn-accordion-panel" inert>
@@ -382,7 +384,7 @@ export const transitionsNavigationDemos = {
     },
   },
   "image-open-tilt": {
-    markup: `<div class="td-stack tn-image-stage"><button type="button" class="tn-image-toggle" aria-label="放大示例图片" aria-pressed="false">
+    markup: `<div class="td-stack tn-image-stage"><button type="button" class="tn-image-toggle" aria-label="${t("放大示例图片", "Enlarge sample image")}" aria-pressed="false">
       <img data-fade-on-load src="./assets/mountains.jpg" alt="" width="320" height="180"></button></div>`,
     connect(stage) {
       const trigger = stage.querySelector("button");
@@ -391,7 +393,7 @@ export const transitionsNavigationDemos = {
         const direction = opening ? 1 : -.6;
         const start = getComputedStyle(trigger).transform;
         trigger.setAttribute("aria-pressed", String(opening));
-        trigger.setAttribute("aria-label", opening ? "缩小示例图片" : "放大示例图片");
+        trigger.setAttribute("aria-label", opening ? t("缩小示例图片", "Shrink sample image") : t("放大示例图片", "Enlarge sample image"));
         animate(trigger, [
           { transform: start },
           {

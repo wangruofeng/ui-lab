@@ -1,3 +1,5 @@
+import { t } from "../../app/locale.js";
+
 import { boundaryDemos } from "./break-ui-boundaries.js";
 
 const demoMember = { initials: "JP", name: "Jo Park", email: "jo@example.com", projects: 3 };
@@ -44,7 +46,7 @@ function renderMember(member, fixed) {
 
 function renderMembers(members, fixed, variant) {
   if (!members.length) {
-    return fixed ? '<p class="break-ui-empty">暂无团队成员</p>' : "";
+    return fixed ? `<p class="break-ui-empty">${t("暂无团队成员", "No team members")}</p>` : "";
   }
 
   return `<div class="break-ui-list">${members.map((member) => {
@@ -66,11 +68,11 @@ function renderSide(variant, worst, fixed, page) {
 
 export function renderBreakUiDemo(variant) {
   const showWorst = variant === "project-counts" || Boolean(boundaryDemos[variant]);
-  return `<section class="comparison" aria-label="极端数据前后对照">
-    <button type="button" class="break-ui-toggle" data-demo-toolbar aria-pressed="${showWorst}">极端数据</button>
+  return `<section class="comparison" aria-label="${t("极端数据前后对照", "Stress-test comparison")}">
+    <button type="button" class="break-ui-toggle" data-demo-toolbar aria-pressed="${showWorst}">${t("极端数据", "Edge cases")}</button>
     <div class="pair" aria-live="polite">
-      <section class="panel"><h3>调整前</h3><div class="stage break-ui-before">${renderSide(variant, showWorst, false)}</div></section>
-      <section class="panel"><h3>调整后</h3><div class="stage break-ui-after${variant === "missing-member-fields" ? " break-ui-center-row" : ""}">${renderSide(variant, showWorst, true)}</div></section>
+      <section class="panel"><h3>${t("调整前", "Before")}</h3><div class="stage break-ui-before">${renderSide(variant, showWorst, false)}</div></section>
+      <section class="panel"><h3>${t("调整后", "After")}</h3><div class="stage break-ui-after${variant === "missing-member-fields" ? " break-ui-center-row" : ""}">${renderSide(variant, showWorst, true)}</div></section>
     </div>
   </section>`;
 }

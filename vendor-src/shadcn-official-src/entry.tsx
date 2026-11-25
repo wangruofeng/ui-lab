@@ -1,5 +1,6 @@
 import type { ComponentType } from "react"
 import { createRoot } from "react-dom/client"
+import { t } from "./locale"
 
 const examples: Record<string, () => Promise<ComponentType>> = {
   "toast-promise": () => import("./additional-examples").then(module => module.PromiseToastExample),
@@ -25,7 +26,7 @@ const slug = new URLSearchParams(location.search).get("case") ?? ""
 const load = Object.hasOwn(examples, slug) ? examples[slug] : null
 
 async function mount() {
-  if (!load) throw new Error("案例不存在")
+  if (!load) throw new Error(t("案例不存在", "Case not found"))
   container.dataset.case = slug
   const Component = await load()
   const Toaster = slug === "questionnaire" ? (await import("sonner")).Toaster : null
@@ -36,5 +37,5 @@ async function mount() {
 
 mount().catch(error => {
   console.error(error)
-  container.textContent = "官方示例加载失败。"
+  container.textContent = t("官方示例加载失败。", "The official demo could not load.")
 })

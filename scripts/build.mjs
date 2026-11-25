@@ -1,4 +1,5 @@
 import { copyFile, cp, rm } from "node:fs/promises";
+import "./check-english-copy.mjs";
 import "./build-sitemap.mjs";
 import "./build-home.mjs";
 

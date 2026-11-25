@@ -1,11 +1,13 @@
+import { t } from "../../app/locale.js";
+
 export function renderStageshowDemo(variant) {
   return `<div class="stageshow-preview" data-state="loading">
     <iframe class="stageshow-frame" data-src="./demos/stageshow-demo/?example=${encodeURIComponent(variant)}"
       title="Stageshow · ${variant}" height="460" sandbox="allow-scripts allow-same-origin" inert></iframe>
     <div class="stageshow-placeholder">
       <div class="stageshow-skeleton" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-      <p class="stageshow-status" role="status">正在加载演示…</p>
-      <button class="demo-trigger" type="button" hidden>重试</button>
+      <p class="stageshow-status" role="status">${t("正在加载演示…", "Loading demo…")}</p>
+      <button class="demo-trigger" type="button" hidden>${t("重试", "Retry")}</button>
     </div>
   </div>`;
 }
@@ -43,7 +45,7 @@ export function connectStageshowDemo(section) {
     frame.inert = state !== "ready";
     retry.hidden = state !== "error";
     placeholder.inert = state === "ready";
-    if (state === "error") status.textContent = "演示加载失败，请重试。";
+    if (state === "error") status.textContent = t("演示加载失败，请重试。", "The demo could not load. Try again.");
   }
 
   function receive(event) {
@@ -54,7 +56,7 @@ export function connectStageshowDemo(section) {
 
   function load() {
     preview.dataset.state = "loading";
-    status.textContent = "正在加载演示…";
+    status.textContent = t("正在加载演示…", "Loading demo…");
     retry.hidden = true;
     window.addEventListener("message", receive);
     timeout = setTimeout(() => finish("error"), 20000);

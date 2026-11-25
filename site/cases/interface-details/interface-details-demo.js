@@ -1,3 +1,5 @@
+import { t } from "../../app/locale.js";
+
 function compare(first, second, before, after = before) {
   return `<div class="pair">
     <section class="panel"><h3>${first}</h3><div class="stage detail-stage">${before}</div></section>
@@ -10,50 +12,50 @@ const description = "Small decisions make everyday tools easier to understand an
 
 function renderWrap() {
   const copy = `<article class="detail-copy" lang="en"><h4>${heading}</h4><p>${description}</p></article>`;
-  return `<label class="detail-width" data-demo-toolbar>容器宽度
+  return `<label class="detail-width" data-demo-toolbar>${t("容器宽度", "Container width")}
     <input type="range" min="140" max="260" value="205" step="5">
     <output>205 px</output>
-  </label>${compare("默认换行", "标题 balance · 正文 pretty", copy, copy.replace("detail-copy", "detail-copy detail-copy-balanced"))}`;
+  </label>${compare(t("默认换行", "Default wrapping"), t("标题 balance · 正文 pretty", "Heading: balance · Body: pretty"), copy, copy.replace("detail-copy", "detail-copy detail-copy-balanced"))}`;
 }
 
 function renderOptical() {
-  return `<button type="button" data-demo-toolbar data-guides aria-pressed="true">留白标记</button>
-  ${compare("等距留白", "光学补偿",
-    '<div class="detail-padding-sample"><span class="detail-play"><i aria-hidden="true"></i>播放预览</span><p>左 20 px · 右 20 px</p></div>',
-    '<div class="detail-padding-sample"><span class="detail-play detail-play-optical"><i aria-hidden="true"></i>播放预览</span><p>左 14 px · 右 26 px</p></div>')}`;
+  return `<button type="button" data-demo-toolbar data-guides aria-pressed="true">${t("留白标记", "Padding guides")}</button>
+  ${compare(t("等距留白", "Equal padding"), t("光学补偿", "Optical adjustment"),
+    `<div class="detail-padding-sample"><span class="detail-play"><i aria-hidden="true"></i>${t("播放预览", "Play preview")}</span><p>${t("左 20 px · 右 20 px", "Left 20 px · Right 20 px")}</p></div>`,
+    `<div class="detail-padding-sample"><span class="detail-play detail-play-optical"><i aria-hidden="true"></i>${t("播放预览", "Play preview")}</span><p>${t("左 14 px · 右 26 px", "Left 14 px · Right 26 px")}</p></div>`)}`;
 }
 
 function renderStagger() {
-  return `<label class="detail-select" data-demo-toolbar>入场方式
+  return `<label class="detail-select" data-demo-toolbar>${t("入场方式", "Entrance style")}
     <span class="select-control"><select>
-      <option value="block">整体</option><option value="groups">分组</option><option value="words">逐词</option>
+      <option value="block">${t("整体", "Single block")}</option><option value="groups">${t("分组", "By group")}</option><option value="words">${t("逐词", "Word by word")}</option>
     </select></span>
   </label>
-  <button type="button" data-demo-toolbar data-replay>重播</button>
+  <button type="button" data-demo-toolbar data-replay>${t("重播", "Replay")}</button>
   <div class="stage detail-stage detail-entrance-stage"><article class="detail-entrance">
     <h3 lang="en">${heading.split(" ").map(word => `<span>${word}</span>`).join(" ")}</h3>
     <p lang="en">${description}</p>
-    <div class="detail-entrance-actions"><span>查看案例</span><span>浏览目录</span></div>
+    <div class="detail-entrance-actions"><span>${t("查看案例", "View case")}</span><span>${t("浏览目录", "Browse cases")}</span></div>
   </article></div>`;
 }
 
 function renderShadows() {
-  return `<label class="detail-select" data-demo-toolbar>背景
+  return `<label class="detail-select" data-demo-toolbar>${t("背景", "Background")}
     <span class="select-control"><select>
-      <option value="light">浅色</option><option value="dark">深色</option><option value="photo">照片</option>
+      <option value="light">${t("浅色", "Light")}</option><option value="dark">${t("深色", "Dark")}</option><option value="photo">${t("照片", "Photo")}</option>
     </select></span>
   </label>
-  ${compare("固定色描边", "半透明阴影", '<span class="detail-surface detail-surface-border">消息设置</span>', '<span class="detail-surface detail-surface-shadow">消息设置</span>')}`;
+  ${compare(t("固定色描边", "Solid border"), t("半透明阴影", "Translucent shadow"), `<span class="detail-surface detail-surface-border">${t("消息设置", "Message settings")}</span>`, `<span class="detail-surface detail-surface-shadow">${t("消息设置", "Message settings")}</span>`)}`;
 }
 
 function renderDrawer(alternate = false) {
   return `<div class="detail-drawer-viewport"><div class="detail-drawer${alternate ? " detail-drawer-alternate" : ""}">
-    <strong>工作区</strong><span>概览</span><span>项目</span><span>设置</span>
+    <strong>${t("工作区", "Workspace")}</strong><span>${t("概览", "Overview")}</span><span>${t("项目", "Projects")}</span><span>${t("设置", "Settings")}</span>
   </div></div>`;
 }
 
 function renderMotionComparison(first, second, open) {
-  return `<button type="button" data-demo-toolbar data-drawer-toggle aria-expanded="${open}">${open ? "关闭面板" : "打开面板"}</button>
+  return `<button type="button" data-demo-toolbar data-drawer-toggle aria-expanded="${open}">${open ? t("关闭面板", "Close panel") : t("打开面板", "Open panel")}</button>
     <div class="detail-drawer-comparison" data-open="${open}">
       ${compare(first, second, renderDrawer(), renderDrawer(true))}
     </div>`;
@@ -61,12 +63,12 @@ function renderMotionComparison(first, second, open) {
 
 function renderRadius() {
   const sample = (adaptive) => `<figure class="detail-radius-sample">
-    <div class="detail-radius-shell${adaptive ? " detail-radius-adaptive" : ""}"><div>内圆角 12 px</div></div>
-    <figcaption>外圆角 <output>${adaptive ? 28 : 20}</output> px</figcaption>
+    <div class="detail-radius-shell${adaptive ? " detail-radius-adaptive" : ""}"><div>${t("内圆角 12 px", "Inner radius: 12 px")}</div></div>
+    <figcaption>${t("外圆角", "Outer radius:")} <output>${adaptive ? 28 : 20}</output> px</figcaption>
   </figure>`;
-  return `<label class="detail-width" data-demo-toolbar>内边距
+  return `<label class="detail-width" data-demo-toolbar>${t("内边距", "Padding")}
     <input type="range" min="4" max="24" value="16"><output>16 px</output>
-  </label>${compare("固定外圆角", "外圆角 = 内圆角 + 内边距", sample(false), sample(true))}`;
+  </label>${compare(t("固定外圆角", "Fixed outer radius"), t("外圆角 = 内圆角 + 内边距", "Outer radius = inner radius + padding"), sample(false), sample(true))}`;
 }
 
 function renderCopyIcon() {
@@ -74,11 +76,11 @@ function renderCopyIcon() {
     <svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
     <svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg>
   </span>`;
-  const variants = [["瞬切", "instant"], ["淡入淡出", "fade"], ["淡入淡出 + 缩放和模糊", "full"]];
-  return `<button type="button" data-demo-toolbar data-copy-example>复制示例文本</button>
+  const variants = [[t("瞬切", "Instant swap"), "instant"], [t("淡入淡出", "Crossfade"), "fade"], [t("淡入淡出 + 缩放和模糊", "Crossfade + scale and blur"), "full"]];
+  return `<button type="button" data-demo-toolbar data-copy-example>${t("复制示例文本", "Copy sample text")}</button>
     <div class="stage detail-stage detail-icon-stage">
       <div class="detail-icon-options">${variants.map(([label, mode]) => `<div data-icon-mode="${mode}">${icons}<span>${label}</span></div>`).join("")}</div>
-      <p class="detail-copy-status" role="status">示例文本 · UI Lab</p>
+      <p class="detail-copy-status" role="status">${t("示例文本 · UI Lab", "Sample text · UI Lab")}</p>
     </div>`;
 }
 
@@ -89,8 +91,8 @@ const demos = {
   "optical-button-padding": renderOptical,
   "staggered-entrance": renderStagger,
   "shadow-on-backgrounds": renderShadows,
-  "interruptible-motion": () => renderMotionComparison("固定起点的关键帧", "可中断的 CSS 过渡", false),
-  "subtle-drawer-exit": () => renderMotionComparison("完整滑出", "短距离淡出", true),
+  "interruptible-motion": () => renderMotionComparison(t("固定起点的关键帧", "Fixed-start keyframes"), t("可中断的 CSS 过渡", "Interruptible CSS transition"), false),
+  "subtle-drawer-exit": () => renderMotionComparison(t("完整滑出", "Full slide out"), t("短距离淡出", "Short fade out"), true),
 };
 
 export function renderInterfaceDetails(variant) {
@@ -122,14 +124,14 @@ export function connectInterfaceDetails(section, variant) {
       try {
         await navigator.clipboard.writeText("UI Lab");
         demo.dataset.copied = "";
-        status.textContent = "已复制 UI Lab";
+        status.textContent = t("已复制 UI Lab", "Copied UI Lab");
         timer = setTimeout(() => {
           delete demo.dataset.copied;
-          status.textContent = "示例文本 · UI Lab";
+          status.textContent = t("示例文本 · UI Lab", "Sample text · UI Lab");
         }, 1600);
       } catch {
         delete demo.dataset.copied;
-        status.textContent = "复制失败，请重试";
+        status.textContent = t("复制失败，请重试", "Copy failed. Try again.");
       }
     });
   }
@@ -189,7 +191,7 @@ export function connectInterfaceDetails(section, variant) {
       comparison.dataset.open = String(open);
       comparison.dataset.interacted = "";
       toggle.setAttribute("aria-expanded", String(open));
-      toggle.textContent = open ? "关闭面板" : "打开面板";
+      toggle.textContent = open ? t("关闭面板", "Close panel") : t("打开面板", "Open panel");
       setPanelsVisible(open);
 
       animation?.cancel();

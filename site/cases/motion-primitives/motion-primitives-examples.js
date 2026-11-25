@@ -1,3 +1,5 @@
+import { t } from "../../app/locale.js";
+
 const easing = "cubic-bezier(.2,.75,.25,1)";
 const reducedMotion = globalThis.matchMedia?.(
   "(prefers-reduced-motion: reduce)",
@@ -5,22 +7,22 @@ const reducedMotion = globalThis.matchMedia?.(
 const activeMotion = new WeakMap();
 const pageSize = 8;
 const destinations = [
-  "山谷步道",
-  "湖畔木屋",
-  "高地营地",
-  "河边书店",
-  "温室花园",
-  "白石码头",
-  "橡树林",
-  "山间车站",
+  t("山谷步道", "Valley Trail"),
+  t("湖畔木屋", "Lakeside Cabin"),
+  t("高地营地", "Highland Camp"),
+  t("河边书店", "Riverside Bookshop"),
+  t("温室花园", "Greenhouse Garden"),
+  t("白石码头", "Whitestone Pier"),
+  t("橡树林", "Oak Grove"),
+  t("山间车站", "Mountain Station"),
 ];
 const counts = [1248, 3680, 2156];
 const minutes = [125, 132, 108];
 const numberFormat = new Intl.NumberFormat("zh-CN");
 const words = {
-  "text-loop": ["待处理", "处理中", "已完成"],
+  "text-loop": [t("待处理", "Pending"), t("处理中", "In progress"), t("已完成", "Complete")],
   "text-morph": ["TYPE", "STYLE", "LAYOUT"],
-  "text-roll": ["最早加入", "最近更新", "按名排序"],
+  "text-roll": [t("最早加入", "Oldest first"), t("最近更新", "Recently updated"), t("按名排序", "By name")],
   "text-scramble": ["A7F2K9", "Q3T8W6", "N2M4R8"],
 };
 
@@ -56,27 +58,27 @@ const record = (name, detail) =>
 function renderExpandable(id) {
   if (id === "accordion") {
     return [
-      ["票价", "普通票 ¥40，学生票 ¥20。"],
-      ["开放时间", "周二至周日 10:00–18:00。"],
-      ["取票方式", "现场出示订单二维码即可。"],
+      [t("票价", "Ticket prices"), t("普通票 ¥40，学生票 ¥20。", "Standard ¥40, student ¥20.")],
+      [t("开放时间", "Opening hours"), t("周二至周日 10:00–18:00。", "Tuesday to Sunday, 10:00–18:00.")],
+      [t("取票方式", "Ticket pickup"), t("现场出示订单二维码即可。", "Show your order QR code at the venue.")],
     ]
       .map(([title, description]) => expander(title, `<p>${description}</p>`))
       .join("");
   }
   if (id === "disclosure") {
     return (
-      record("预计周五送达", "订单配送") +
+      record(t("预计周五送达", "Estimated delivery Friday"), t("订单配送", "Order delivery")) +
       expander(
-        "查看配送细节",
-        "<p>包裹由嘉兴仓发出。发货后可在订单页查看物流。</p>",
+        t("查看配送细节", "View shipping details"),
+        `<p>${t("包裹由嘉兴仓发出。发货后可在订单页查看物流。", "This package ships from our Jiaxing warehouse. Track it from your order page after dispatch.")}</p>`,
       )
     );
   }
   return (
-    record("项目简报", "共享范围 · 仅团队") +
+    record(t("项目简报", "Project brief"), t("共享范围 · 仅团队", "Sharing · Team only")) +
     expander(
-      "更多操作",
-      `<div class="mp-controls">${button("export", "导出简报")}${button("copy", "复制链接")}</div>`,
+      t("更多操作", "More actions"),
+      `<div class="mp-controls">${button("export", t("导出简报", "Export brief"))}${button("copy", t("复制链接", "Copy link"))}</div>`,
     ) +
     '<p class="mp-status" role="status"></p>'
   );
@@ -92,54 +94,54 @@ const renderers = {
   disclosure: renderExpandable,
   "toolbar-expandable": renderExpandable,
   dialog: () => `
-    <div class="mp-center">${button("open", "通知设置", 'aria-haspopup="dialog"')}</div>
-    <dialog class="mp-modal" aria-label="通知设置">
-      <strong>通知设置</strong>
-      <label><input type="checkbox" checked> 每周发送摘要</label>
-      <label><input type="checkbox"> 项目更新时提醒</label>
-      <form method="dialog"><button class="motion-action">完成</button></form>
+    <div class="mp-center">${button("open", t("通知设置", "Notification settings"), 'aria-haspopup="dialog"')}</div>
+    <dialog class="mp-modal" aria-label="${t("通知设置", "Notification settings")}">
+      <strong>${t("通知设置", "Notification settings")}</strong>
+      <label><input type="checkbox" checked> ${t("每周发送摘要", "Send a weekly summary")}</label>
+      <label><input type="checkbox"> ${t("项目更新时提醒", "Notify me about project updates")}</label>
+      <form method="dialog"><button class="motion-action">${t("完成", "Done")}</button></form>
     </dialog>`,
   "animated-group": () => `
-    ${button("group", "显示记录", 'aria-expanded="false"')}
+    ${button("group", t("显示记录", "Show records"), 'aria-expanded="false"')}
     <div class="mp-records" hidden>
-      ${record("春季提案.pdf", "09:10 · 导入成功")}
-      ${record("版式参考.zip", "09:12 · 导入成功")}
-      ${record("素材索引.csv", "09:14 · 导入成功")}
+      ${record(t("春季提案.pdf", "Spring Proposal.pdf"), t("09:10 · 导入成功", "09:10 · Imported"))}
+      ${record(t("版式参考.zip", "Layout References.zip"), t("09:12 · 导入成功", "09:12 · Imported"))}
+      ${record(t("素材索引.csv", "Asset Index.csv"), t("09:14 · 导入成功", "09:14 · Imported"))}
     </div>`,
   carousel: () =>
     renderViews(
-      ["山谷", "河畔", "高地"],
+      [t("山谷", "Valley"), t("河畔", "Lakeside"), t("高地", "Highlands")],
       [
-        ["山谷步道", "valley-trail"],
-        ["河畔露营", "riverside-camp"],
-        ["高地环线", "highland-loop"],
+        [t("山谷步道", "Valley Trail"), "valley-trail"],
+        [t("河畔露营", "Lakeside camping"), "riverside-camp"],
+        [t("高地环线", "Highlands loop"), "highland-loop"],
       ].map(
         ([title, image]) => `
       <figure class="mp-slide">
         <img data-fade-on-load src="./assets/source-art/carousel/${image}.webp" alt="" draggable="false"><figcaption>${title}</figcaption>
       </figure>`,
       ),
-      "选择目的地",
+      t("选择目的地", "Choose a destination"),
     ),
   "transition-panel": () =>
     renderViews(
-      ["名称", "设置", "预览"],
+      [t("名称", "Name"), t("设置", "Settings"), t("预览", "Preview")],
       [
-        '<label>项目名称<input placeholder="输入名称" data-mp-name></label>',
-        '<label><input type="checkbox"> 允许团队编辑</label>',
-        "<p data-mp-summary>尚未填写项目名称</p>",
+        `<label>${t("项目名称", "Project name")}<input placeholder="${t("输入名称", "Enter a name")}" data-mp-name></label>`,
+        `<label><input type="checkbox"> ${t("允许团队编辑", "Allow team editing")}</label>`,
+        `<p data-mp-summary>${t("尚未填写项目名称", "No project name entered")}</p>`,
       ],
-      "项目步骤",
+      t("项目步骤", "Project steps"),
     ),
   "toolbar-dynamic": () =>
     renderViews(
-      ["文字", "图形"],
+      [t("文字", "Text"), t("图形", "Shape")],
       [
         '<div class="mp-controls">' +
           [
-            ["weight", "加粗"],
-            ["italic", "斜体"],
-            ["underline", "下划线"],
+            ["weight", t("加粗", "Bold")],
+            ["italic", t("斜体", "Italic")],
+            ["underline", t("下划线", "Underline")],
           ]
             .map(([style, label]) =>
               button(
@@ -149,11 +151,11 @@ const renderers = {
               ),
             )
             .join("") +
-          '</div><p class="mp-tool-sample">画布标题</p>',
+          `</div><p class="mp-tool-sample">${t("画布标题", "Canvas title")}</p>`,
         '<div class="mp-controls">' +
           [
-            ["fill", "填充"],
-            ["outline", "描边"],
+            ["fill", t("填充", "Fill")],
+            ["outline", t("描边", "Stroke")],
           ]
             .map(([style, label]) =>
               button(
@@ -163,12 +165,12 @@ const renderers = {
               ),
             )
             .join("") +
-          '</div><div class="mp-tool-sample mp-tool-shape" role="img" aria-label="样本图形"></div>',
+          `</div><div class="mp-tool-sample mp-tool-shape" role="img" aria-label="${t("样本图形", "Sample shape")}"></div>`,
       ],
-      "选择工具",
+      t("选择工具", "Choose a tool"),
     ),
-  "animated-number": () => numeric(counts, "已筹集金额", "元"),
-  "sliding-number": () => numeric(minutes, "下一班列车", "分钟"),
+  "animated-number": () => numeric(counts, t("已筹集金额", "Amount raised"), t("元", " CNY")),
+  "sliding-number": () => numeric(minutes, t("下一班列车", "Next train"), t("分钟", " min")),
   "spinning-text": () => {
     const text = Array.from("NORTH FIELD · DESIGN STUDIO · ");
     return `<div class="mp-display"><div class="mp-wheel" role="img" aria-label="North Field Design Studio">
@@ -182,7 +184,7 @@ const renderers = {
     </div></div>`;
   },
   "text-effect": () =>
-    textStage("春日来信 · 设计小展", ["春日来信", " · ", "设计小展"]),
+    textStage(t("春日来信 · 设计小展", "Letters from Spring · A design exhibition"), [t("春日来信", "Letters from Spring"), " · ", t("设计小展", "A design exhibition")]),
   "text-loop": () => textStage(words["text-loop"][0]),
   "text-morph": () =>
     textStage(
@@ -195,46 +197,46 @@ const renderers = {
       Array.from(words["text-roll"][0]),
     ),
   "text-scramble": () => textStage(words["text-scramble"][0]),
-  "text-shimmer": () => textStage("等待导出"),
+  "text-shimmer": () => textStage(t("等待导出", "Waiting to export")),
   "text-shimmer-wave": () =>
-    textStage("正在同步文件", Array.from("正在同步文件")),
+    textStage(t("正在同步文件", "Syncing files"), Array.from(t("正在同步文件", "Syncing files"))),
   "image-comparison": () => `
     <div class="mp-photo">
-      <img src="./assets/mountains.jpg" alt="偏暖的山谷照片" draggable="false">
-      <img class="mp-photo-cool" src="./assets/mountains.jpg" alt="偏冷的同一张山谷照片" draggable="false">
+      <img src="./assets/mountains.jpg" alt="${t("偏暖的山谷照片", "Warm-toned valley photo")}" draggable="false">
+      <img class="mp-photo-cool" src="./assets/mountains.jpg" alt="${t("偏冷的同一张山谷照片", "Cool-toned version of the same valley photo")}" draggable="false">
       <span class="mp-divider" aria-hidden="true"></span>
     </div>
-    <label class="mp-range">冷暖分界 <input data-mp-range type="range" min="0" max="100" value="50"></label>`,
+    <label class="mp-range">${t("冷暖分界", "Warm–cool boundary")} <input data-mp-range type="range" min="0" max="100" value="50"></label>`,
   "in-view": () => `
-    <div class="mp-scroll mp-in-view-scroll" tabindex="0" role="region" aria-label="展览导览">
-      <p class="mp-in-view-instruction">向下滚动 ↓</p>
+    <div class="mp-scroll mp-in-view-scroll" tabindex="0" role="region" aria-label="${t("展览导览", "Exhibition guide")}">
+      <p class="mp-in-view-instruction">${t("向下滚动 ↓", "Scroll down ↓")}</p>
       <div class="mp-in-view-target">
         <div class="mp-in-view-content">
-          <strong>展览导览</strong>
-          <p>从一楼的光影装置出发，沿楼梯上行，在二楼的观景窗前结束参观。</p>
+          <strong>${t("展览导览", "Exhibition guide")}</strong>
+          <p>${t("从一楼的光影装置出发，沿楼梯上行，在二楼的观景窗前结束参观。", "Start at the light installation on the first floor, take the stairs, and finish at the viewing window on the second floor.")}</p>
         </div>
       </div>
     </div>`,
-  "progressive-blur": () => scrollArea("收藏地点", false),
-  "scroll-progress": () => scrollArea("路线指南", true),
+  "progressive-blur": () => scrollArea(t("收藏地点", "Saved places"), false),
+  "scroll-progress": () => scrollArea(t("路线指南", "Trail guide"), true),
   "infinite-slider": () => {
-    const cards = ["北坡", "白石", "潮汐", "远岸"]
+    const cards = [t("北坡", "North Slope"), t("白石", "Whitestone"), t("潮汐", "Tidewater"), t("远岸", "Far Shore")]
       .map((name) => `<span class="mp-exhibit">${name}</span>`)
       .join("");
-    return `<div class="mp-marquee" aria-label="北坡、白石、潮汐、远岸">
+    return `<div class="mp-marquee" aria-label="${t("北坡、白石、潮汐、远岸", "North Slope, Whitestone, Tidewater, Far Shore")}">
       <div class="mp-belt" aria-hidden="true"><div>${cards}</div><div>${cards}</div></div>
     </div>`;
   },
   "border-trail": () => `
-    <div class="mp-center"><div class="mp-trail"><i aria-hidden="true"></i><span>文件已就绪</span></div></div>`,
+    <div class="mp-center"><div class="mp-trail"><i aria-hidden="true"></i><span>${t("文件已就绪", "File ready")}</span></div></div>`,
   cursor: () =>
     pointerStage(
       '<span class="mp-marker" aria-hidden="true"></span>',
-      "模拟取样",
+      t("模拟取样", "Simulate sampling"),
     ),
   dock: () => `
-    <div class="mp-center"><div class="mp-dock" role="group" aria-label="工作区快捷入口">
-      ${["文稿", "文件", "日历", "设置"]
+    <div class="mp-center"><div class="mp-dock" role="group" aria-label="${t("工作区快捷入口", "Workspace shortcuts")}">
+      ${[t("文稿", "Document"), t("文件", "Files"), t("日历", "Calendar"), t("设置", "Settings")]
         .map((name, index) =>
           button(
             "dock",
@@ -243,27 +245,27 @@ const renderers = {
           ),
         )
         .join("")}
-    </div></div><p class="mp-status" role="status">选择工具</p>`,
+    </div></div><p class="mp-status" role="status">${t("选择工具", "Choose a tool")}</p>`,
   "glow-effect": () => `
-    <div class="mp-center mp-lamp"><span>环境灯</span></div>`,
+    <div class="mp-center mp-lamp"><span>${t("环境灯", "Ambient light")}</span></div>`,
   magnetic: () => `
-    <div class="mp-center"><button type="button" class="mp-magnet" data-mp-pointer data-mp-action="save"><span>保存草稿</span></button></div>
+    <div class="mp-center"><button type="button" class="mp-magnet" data-mp-pointer data-mp-action="save"><span>${t("保存草稿", "Save draft")}</span></button></div>
     <p class="mp-status" role="status"></p>`,
   spotlight: () =>
     pointerStage(
-      '<span class="mp-starfield" aria-hidden="true"></span><strong>夜景样本</strong>',
-      "移动聚光灯",
+      `<span class="mp-starfield" aria-hidden="true"></span><strong>${t("夜景样本", "Night sample")}</strong>`,
+      t("移动聚光灯", "Move the spotlight"),
     ),
   tilt: () =>
     pointerStage(
-      '<div class="mp-tilt-card"><strong>白砂岩</strong><small>石材样本</small></div>',
-      "切换观察角度",
+      `<div class="mp-tilt-card"><strong>${t("白砂岩", "White sandstone")}</strong><small>${t("石材样本", "Stone sample")}</small></div>`,
+      t("切换观察角度", "Change viewing angle"),
     ),
 };
 
 function numeric(values, label, unit) {
   const initial = numberFormat.format(values[0]);
-  const visual = unit === "分钟" ? glyphs(initial) : initial;
+  const visual = unit === t("分钟", " min") ? glyphs(initial) : initial;
   return `<div class="mp-display"><small>${label}</small>
     <strong class="mp-number"><span class="mp-value" aria-hidden="true">${visual}</span> <small>${unit}</small></strong>
     <span class="mp-announcement" role="status">${initial}${unit}</span>
@@ -284,11 +286,11 @@ function scrollArea(label, progress) {
       ${Array.from({ length: pageSize }, (_, index) =>
         record(
           progress
-            ? `第 ${index + 1} 段 · ${destinations[index]}`
+            ? `${t("第", "Section")} ${index + 1} ${t("段 ·", " ·")} ${destinations[index]}`
             : destinations[index],
           progress
-            ? "沿石板路向前，经过观察平台后进入林间小道。"
-            : `路线 ${(index + 1) * 2} km`,
+            ? t("沿石板路向前，经过观察平台后进入林间小道。", "Follow the stone path past the viewing platform and onto the woodland trail.")
+            : `${t("路线", "Trail")} ${(index + 1) * 2} km`,
         ),
       ).join("")}
     </div>
@@ -300,21 +302,21 @@ function pointerStage(content, label) {
     <div class="mp-controls">${button("pointer", label)}<output class="mp-status"></output></div>`;
 }
 
-const playButton = button("play", "播放", 'aria-pressed="false"');
+const playButton = button("play", t("播放", "Play"), 'aria-pressed="false"');
 const frameActions = {
-  "animated-number": button("number", "更新"),
-  "sliding-number": button("number", "刷新"),
+  "animated-number": button("number", t("更新", "Update")),
+  "sliding-number": button("number", t("刷新", "Refresh")),
   "spinning-text": playButton,
-  "text-effect": button("text", "重播"),
-  "text-loop": button("text", "切换状态"),
-  "text-morph": button("text", "切换名称"),
-  "text-roll": button("text", "切换排序"),
-  "text-scramble": button("text", "生成口令"),
-  "text-shimmer": button("text", "开始导出"),
-  "text-shimmer-wave": button("text", "重播"),
+  "text-effect": button("text", t("重播", "Replay")),
+  "text-loop": button("text", t("切换状态", "Switch status")),
+  "text-morph": button("text", t("切换名称", "Switch name")),
+  "text-roll": button("text", t("切换排序", "Switch sort order")),
+  "text-scramble": button("text", t("生成口令", "Generate code")),
+  "text-shimmer": button("text", t("开始导出", "Start export")),
+  "text-shimmer-wave": button("text", t("重播", "Replay")),
   "infinite-slider": playButton,
-  "border-trail": button("trail", "模拟导入"),
-  "glow-effect": button("glow", "开灯", 'aria-pressed="false"'),
+  "border-trail": button("trail", t("模拟导入", "Simulate import")),
+  "glow-effect": button("glow", t("开灯", "Turn light on"), 'aria-pressed="false"'),
 };
 
 export function renderMotionExample(item, after) {
@@ -369,7 +371,7 @@ function switchView(demo, control) {
   const summary = next.querySelector("[data-mp-summary]");
   if (summary) {
     const name = demo.querySelector("[data-mp-name]").value.trim();
-    summary.textContent = name ? `项目：${name}` : "尚未填写项目名称";
+    summary.textContent = name ? `${t("项目：", "Project: ")}${name}` : t("尚未填写项目名称", "No project name entered");
   }
   next.hidden = false;
   next.inert = false;
@@ -439,7 +441,7 @@ function numberChange(demo) {
   const next = values[nextIndex(demo, values.length)];
   const announcement = demo.querySelector(".mp-announcement");
   announcement.textContent =
-    numberFormat.format(next) + (sliding ? "分钟" : "元");
+    numberFormat.format(next) + (sliding ? t("分钟", " min") : t("元", " CNY"));
   if (sliding) {
     const oldDigits = String(values[previous]);
     const direction = Math.sign(next - values[previous]);
@@ -539,13 +541,13 @@ function changeText(demo, control) {
   const next = choices
     ? choices[nextIndex(demo, choices.length)]
     : id === "text-shimmer"
-      ? previous === "正在导出"
-        ? "等待导出"
-        : "正在导出"
+      ? previous === t("正在导出", "Exporting")
+        ? t("等待导出", "Waiting to export")
+        : t("正在导出", "Exporting")
       : previous;
   live.textContent = next;
   if (id === "text-shimmer")
-    control.textContent = next === "正在导出" ? "结束导出" : "开始导出";
+    control.textContent = next === t("正在导出", "Exporting") ? t("结束导出", "Finish export") : t("开始导出", "Start export");
   if (id === "text-morph") {
     display
       .querySelectorAll(".mp-glyph-ghost")
@@ -597,7 +599,7 @@ function changeText(demo, control) {
   }
   if (id === "text-shimmer") {
     display.textContent = next;
-    if (next === "正在导出" && moves(demo)) {
+    if (next === t("正在导出", "Exporting") && moves(demo)) {
       display.classList.add("mp-sheen");
       animate(
         display,
@@ -679,7 +681,7 @@ const actions = {
   group(demo, control) {
     const records = demo.querySelector(".mp-records");
     records.hidden = !records.hidden;
-    control.textContent = records.hidden ? "显示记录" : "清空记录";
+    control.textContent = records.hidden ? t("显示记录", "Show records") : t("清空记录", "Clear records");
     control.setAttribute("aria-expanded", String(!records.hidden));
     if (!records.hidden && moves(demo)) {
       Array.from(records.children).forEach((node, index) =>
@@ -699,7 +701,7 @@ const actions = {
   play(demo, control) {
     const playing = demo.classList.toggle("is-playing");
     control.setAttribute("aria-pressed", String(playing));
-    control.textContent = playing ? "暂停" : "播放";
+    control.textContent = playing ? t("暂停", "Pause") : t("播放", "Play");
   },
   trail(demo) {
     const trail = demo.querySelector(".mp-trail");
@@ -732,7 +734,7 @@ const actions = {
       setStatus(demo, "50%，50%");
   },
   save(demo) {
-    setStatus(demo, "已保存草稿");
+    setStatus(demo, t("已保存草稿", "Draft saved"));
   },
   style(demo, control) {
     const pressed = control.getAttribute("aria-pressed") === "false";
@@ -745,21 +747,21 @@ const actions = {
   async copy(demo) {
     try {
       await navigator.clipboard.writeText(location.href);
-      setStatus(demo, "已复制案例链接");
+      setStatus(demo, t("已复制案例链接", "Case link copied"));
     } catch {
-      setStatus(demo, "可从浏览器地址栏复制案例链接");
+      setStatus(demo, t("可从浏览器地址栏复制案例链接", "Copy the case link from the browser’s address bar."));
     }
   },
   export(demo) {
-    const file = new Blob(["项目简报\n共享范围 · 仅团队\n"], {
+    const file = new Blob([t("项目简报\n共享范围 · 仅团队\n", "Project brief\nSharing · Team only\n")], {
       type: "text/plain;charset=utf-8",
     });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(file);
-    link.download = "项目简报.txt";
+    link.download = t("项目简报.txt", "Project Brief.txt");
     link.click();
     setTimeout(() => URL.revokeObjectURL(link.href), 1000);
-    setStatus(demo, "已导出示例简报");
+    setStatus(demo, t("已导出示例简报", "Sample brief exported"));
   },
   dock(demo, control) {
     demo
@@ -767,12 +769,12 @@ const actions = {
       .forEach((item) =>
         item.setAttribute("aria-pressed", String(control === item)),
       );
-    setStatus(demo, `已打开${control.getAttribute("aria-label")}`);
+    setStatus(demo, `${t("已打开", "Open")}${control.getAttribute("aria-label")}`);
   },
   glow(demo, control) {
     const active = demo.classList.toggle("is-lit");
     control.setAttribute("aria-pressed", String(active));
-    control.textContent = active ? "关灯" : "开灯";
+    control.textContent = active ? t("关灯", "Turn light off") : t("开灯", "Turn light on");
   },
 };
 

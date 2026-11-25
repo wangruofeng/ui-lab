@@ -50,7 +50,12 @@
   <body>
     <main id="demo"></main>
     <script>
-      document.querySelector("#demo").dataset.case = new URLSearchParams(location.search).get("case") ?? "";
+      const query = new URLSearchParams(location.search);
+      if (query.get("lang") === "en") {
+        document.documentElement.lang = "en";
+        document.title = "Playbook comparison";
+      }
+      document.querySelector("#demo").dataset.case = query.get("case") ?? "";
     </script>
   </body>
 </html>

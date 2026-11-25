@@ -1,3 +1,5 @@
+import { t } from "../../app/locale.js";
+
 /* Transitions.dev by Jakub Antalik, P9 and P26 public demos.
  * Source: https://transitions.dev/detail.html (2026-11-24 snapshot).
  * See transitions-dev-LICENSE.md.
@@ -319,7 +321,7 @@ export const transitionsOfficialNumberDemos = {
   "number-pop-in": {
     markup: `<div class="td-stack td-official-number">
       <div class="p9-number" data-proto-number aria-live="polite"><span class="p9-char">6</span><span class="p9-char">5</span><span class="p9-char">.</span><span class="p9-char">7</span><span class="p9-char">8</span></div>
-      <button type="button" data-demo-toolbar>更新数字</button>
+      <button type="button" data-demo-toolbar>${t("更新数字", "Update")}</button>
     </div>`,
     connect(stage) {
       const number = stage.querySelector("[data-proto-number]");
@@ -332,8 +334,8 @@ export const transitionsOfficialNumberDemos = {
   },
   "spinning-counter": {
     markup: `<div class="td-stack td-official-number">
-      <div class="p26-value" data-proto-reel aria-label="计数"></div>
-      <button type="button" data-demo-toolbar>更新数字</button>
+      <div class="p26-value" data-proto-reel aria-label="${t("计数", "Count")}"></div>
+      <button type="button" data-demo-toolbar>${t("更新数字", "Update")}</button>
     </div>`,
     connect(stage) {
       const reel = stage.querySelector("[data-proto-reel]");

@@ -1,3 +1,5 @@
+import { english, t } from "../../app/locale.js";
+
 const minimumHeights = {
   "message-scroller": 540,
   "code-block": 320,
@@ -20,10 +22,10 @@ const minimumHeights = {
 export function renderShadcnDemo(variant) {
   if (variant === "attachment") {
     return `<iframe class="sc-attachment-frame" src="./demos/shadcn-attachment-demo/"
-      title="shadcn/ui 官方 Attachment 组件演示" sandbox="allow-scripts allow-same-origin"></iframe>`;
+      title="${t("shadcn/ui 官方 Attachment 组件演示", "Official shadcn/ui Attachment demo")}" sandbox="allow-scripts allow-same-origin"></iframe>`;
   }
-  return `<iframe class="sc-official-frame" src="./demos/shadcn-official-demo/?case=${encodeURIComponent(variant)}"
-    data-case="${variant}" height="${minimumHeights[variant]}" title="shadcn/ui 官方 ${variant} 示例"
+  return `<iframe class="sc-official-frame" src="./demos/shadcn-official-demo/?case=${encodeURIComponent(variant)}${english ? "&amp;lang=en" : ""}"
+    data-case="${variant}" height="${minimumHeights[variant]}" title="${t("shadcn/ui 官方", "Official shadcn/ui")} ${variant} ${t("示例", "example")}"
     sandbox="allow-scripts allow-same-origin allow-downloads allow-forms" allow="clipboard-write"></iframe>`;
 }
 
