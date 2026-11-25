@@ -11,6 +11,8 @@ import { breakUiCollection } from "../cases/break-ui/break-ui-cases.js";
 import { interfaceDetailsCollection } from "../cases/interface-details/interface-details-cases.js";
 import { stageshowCollection } from "../cases/stageshow/stageshow-cases.js";
 
+export const libraryBaseUrl = "https://ui-lab.wangruofeng007.com/";
+
 export const collections = [
   {
     id: "refactoring-ui",
@@ -33,7 +35,7 @@ export const collections = [
     author: "Robin Williams",
     edition: "第 4 版 · 人民邮电出版社 · ISBN 978-7-115-40440-4",
     description:
-      "从亲密性、对齐、重复与对比，到配色、印刷品和字体。用可编辑的版面观察设计原则。",
+      "在可编辑的版面上练习亲密性、对齐、重复与对比，以及配色、印刷品和字体。",
     categories: nonDesignerCategories,
   },
   {
@@ -43,7 +45,7 @@ export const collections = [
     title: "写给程序员的设计书",
     author: "David Kadavy",
     edition: "逆向拆解美感 · Design for Hackers",
-    description: "从产品目的、排印和构图入手，拆解层级、色彩感知与配色决策。",
+    description: "从产品目标出发，练习排版、构图、视觉层级与配色。",
     categories: designHackersCategories,
   },
   {
@@ -52,7 +54,7 @@ export const collections = [
     type: "参考项目",
     title: "UI Skills Playbook",
     author: "Julien Thibeaut",
-    description: "按布局、排版、视觉、可访问性和动效主题浏览完整的交互指南。",
+    description: "布局、排版、色彩、可访问性和动效的交互示例。",
     url: "https://www.ui-skills.com/playbook",
     categories: playbookCategories,
   },
@@ -63,7 +65,7 @@ export const collections = [
     title: "Kill AI Slop",
     author: "yetone",
     description:
-      "从配色、字体到动效与布局，用前后对照练习识别和清理常见的界面套路。",
+      "用前后对照识别模板化的配色、排版、文案、布局和动效。",
     url: "https://killaislop.com/#catalogue",
     categories: killSlopCategories,
   },
@@ -73,7 +75,7 @@ export const collections = [
     type: "参考项目",
     title: "loading.dev",
     author: "Jakub Krehel、Paul Faivret",
-    description: "体验全部 36 种加载指示器，按旋转、错峰、扩散、波形和形变浏览，逐个调整速度和尺寸。",
+    description: "可调速度和尺寸的加载指示器，涵盖旋转、错峰、扩散、波形和形变。",
     url: "https://loading.dev/",
     categories: loadingDevCategories,
   },
@@ -83,7 +85,7 @@ export const collections = [
     type: "参考项目",
     title: "Transitions.dev",
     author: "Jakub Antalik",
-    description: "操作表单、内容卡片和通知，观察动效如何说明界面状态的变化。",
+    description: "通过表单、卡片和通知，观察动效如何提示状态变化。",
     url: "https://transitions.dev/library.html",
     categories: transitionsCategories,
   },
@@ -93,7 +95,7 @@ export const collections = [
     type: "参考项目",
     title: "shadcn/ui",
     author: "shadcn/ui",
-    description: "按官网示例体验付款表格、日期范围、命令菜单、聊天滚动和可调整面板等交互。",
+    description: "官网示例包括表格、日期范围、命令菜单、聊天滚动和可调整面板。",
     url: "https://ui.shadcn.com/docs/components",
     categories: shadcnCategories,
   },
@@ -104,7 +106,7 @@ export const collections = [
     title: "Motion Primitives",
     author: "Julien Thibeaut",
     description:
-      "按浮层、切换、文字、滚动和指针反馈浏览交互动效案例。操作两侧演示，观察同一状态变化的不同表现。",
+      "对照浮层、切换、文字、滚动和指针反馈的不同动效。",
     url: "https://motion-primitives.com/",
     categories: motionPrimitivesCategories,
   },
@@ -137,4 +139,8 @@ export function resolveRoute(hash) {
 
 export function libraryHref(collection, item) {
   return "#/" + [collection?.id, item?.id].filter(Boolean).join("/");
+}
+
+export function libraryUrl(collection, item) {
+  return new URL(libraryHref(collection, item), libraryBaseUrl).href;
 }

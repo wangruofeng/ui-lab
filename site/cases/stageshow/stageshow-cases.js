@@ -51,7 +51,7 @@ export const stageshowCollection = {
   type: "参考项目",
   title: "Stageshow",
   author: "Benji Taylor",
-  description: "通过官方脚本演示观察产品构图、图表联动、多人协作和手势反馈。",
+  description: "用官方演示观察产品构图、图表联动、多人协作和手势反馈。",
   url: source,
   categories: groups.map(([title, examples]) => ({
     title,

@@ -301,7 +301,7 @@ export const motionPrimitivesCategories = groups.map(([title, items]) => ({
       kind: "motion-primitives",
       notes: [before, after],
       criterion,
-      tip: criterion,
+      tip: after || instruction,
       reference: "https://motion-primitives.com/docs/" + id,
       outline: [],
     };

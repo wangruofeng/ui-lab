@@ -20,7 +20,7 @@ export const interfaceDetailsCollection = {
   type: "参考项目",
   title: "Details that make interfaces feel better",
   author: "Jakub Krehel",
-  description: "动手比较文字换行、分组入场、按钮留白、嵌套圆角、状态图标和不同背景上的边缘处理。",
+  description: "对照文字换行、按钮留白、嵌套圆角、入场动效、状态图标和描边阴影。",
   url: source,
   categories: [
     {
@@ -28,13 +28,13 @@ export const interfaceDetailsCollection = {
       items: [
         example(
           "responsive-text-wrap", "同步调宽，比较标题和正文的换行",
-          "拖动同一个宽度滑块观察两侧。右侧让标题各行更均衡，并尽量减少正文末行的孤词。",
+          "拖动宽度滑块，对照标题行宽和正文末行的孤词。",
           "text-wrapping",
           "给两侧同一组内容和宽度。比较默认换行与标题 balance、正文 pretty 的结果，核对窄容器里没有水平溢出。",
         ),
         example(
           "optical-button-padding", "按视觉重心调整图文按钮留白",
-          "两侧按钮等宽。右侧从图标一侧挪出 6 px 给另一侧，补偿播放三角形偏右的视觉重心。可以关闭留白标记再比较。",
+          "右侧将图标一侧的 6 px 留白移到另一侧，补偿播放图标的视觉重心。关闭留白标记再比较。",
           "align-optically-not-geometrically",
           "保持同一按钮宽度、图标大小和文字。比较等距留白与光学补偿，检查图文组的视觉重心、触控区域和键盘焦点。",
         ),
@@ -63,7 +63,7 @@ export const interfaceDetailsCollection = {
         ),
         example(
           "subtle-drawer-exit", "比较抽屉完整滑出和短距离淡出",
-          "两侧抽屉默认打开。关闭时，左侧滑出完整宽度，右侧只移动一段距离并逐渐淡出。再打开时两侧使用相同的入场方式。",
+          "关闭抽屉，比较左侧完整滑出和右侧短距离淡出。重新打开时，两侧入场方式相同。",
           "make-exit-animations-subtle",
           "保持抽屉内容、入场路径和动效时长一致。比较完整滑出与缩短离场位移并淡出的观感，检查快速开关后的最终状态。",
         ),

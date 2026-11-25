@@ -78,7 +78,7 @@ function renderSearchResults() {
   const query = queryInput.value.trim().toLowerCase();
   if (!query) {
     searchResults.replaceChildren();
-    searchStatus.textContent = "输入案例名称、来源或关键词。";
+    searchStatus.textContent = "";
     return;
   }
   const terms = query.split(/\s+/);
@@ -93,10 +93,10 @@ function renderSearchResults() {
   const shown = matches.slice(0, 24);
   searchStatus.textContent =
     matches.length > shown.length
-      ? `共 ${matches.length} 个结果，显示前 ${shown.length} 个。`
+      ? `${matches.length} 个结果，显示前 ${shown.length} 个`
       : matches.length
         ? `${matches.length} 个结果`
-        : "没有找到匹配的案例。";
+        : "未找到相关案例";
   searchResults.innerHTML = shown
     .map(
       ({ collection, item }) => `

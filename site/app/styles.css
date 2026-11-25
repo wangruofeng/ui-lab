@@ -642,14 +642,20 @@ h1 {
   padding: 5px 8px;
 }
 .case-prompt-field {
+  display: grid;
+  gap: 8px;
+  padding: 8px 10px 10px;
   border-radius: 14px;
   background: var(--stage-fill);
+}
+
+.case-prompt-field:has(> #case-prompt:focus-visible) {
+  background: var(--brand-soft);
 }
 
 .case-prompt-actions {
   display: flex;
   justify-content: flex-end;
-  padding: 6px 6px 0;
 }
 
 #copy-prompt {
@@ -688,16 +694,44 @@ h1 {
   display: block;
   width: 100%;
   min-height: 10rem;
+  margin: 0;
+  overflow: auto;
   resize: vertical;
-  padding: 4px 12px 12px;
+  padding: 4px 6px 6px 8px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 4px;
   font: inherit;
   font-size: 15px;
   line-height: 1.7;
   color: inherit;
   background: transparent;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
+
+.prompt-syntax-heading {
+  font-weight: 700;
+}
+
+.prompt-syntax-link {
+  color: var(--brand);
+}
+
+.prompt-syntax-code {
+  border-radius: 3px;
+  background: var(--brand-soft-hover);
+}
+
+#case-prompt:focus-visible {
+  outline-color: transparent;
+}
+
+@media (forced-colors: active) {
+  #case-prompt:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
 #copy-status {
   margin: 6px 0 0;
   color: var(--muted);
@@ -1941,6 +1975,46 @@ h1 {
 
 .chapter-card a:focus-visible {
   outline-offset: -2px;
+}
+
+.chapter-jumps {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .chapter-jumps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .chapter-jumps button {
+    min-height: 44px;
+    padding: 6px 10px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--surface);
+    color: var(--ink);
+    font-size: 0.875rem;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+  }
+
+  .chapter-jumps button:hover {
+    background: var(--brand-soft);
+  }
+
+  .collection-chapters h2 {
+    scroll-margin-block-start: 16px;
+  }
+
+  .collection-chapters .chapter-card a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+  }
 }
 
 .playbook-frame {
@@ -3406,6 +3480,10 @@ h1 {
   font-size: 12px;
 }
 
+#search-status:empty {
+  margin: 0;
+}
+
 #search-results {
   display: grid;
   gap: 4px;
@@ -3434,8 +3512,16 @@ h1 {
   border-radius: 14px 14px 0 0;
 }
 
-.catalog-dialog .nav-dialog-inner {
-  padding-bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+.catalog-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.catalog-content {
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  padding: 12px 18px calc(18px + env(safe-area-inset-bottom, 0px));
 }
 
 .catalog-dialog .sidebar {
@@ -3447,13 +3533,39 @@ h1 {
 }
 
 .catalog-dialog .nav-dialog-header {
-  position: sticky;
-  z-index: 1;
-  top: -18px;
-  margin: -18px -18px 15px;
-  padding: 12px 18px;
+  flex: none;
+  margin: 0;
+  padding: 6px 12px 6px 18px;
   border-bottom: 1px solid var(--line);
   background: var(--surface);
+}
+
+#catalog-dialog-title:focus {
+  outline: none;
+}
+
+.catalog-dialog .dialog-close {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.catalog-dialog .dialog-close svg {
+  width: 30px;
+  height: 30px;
+  padding: 7px;
+  border-radius: 50%;
+  background: var(--brand-soft);
+  stroke-width: var(--icon-stroke-width);
+}
+
+.catalog-dialog .dialog-close:hover svg {
+  background: var(--brand-soft-hover);
 }
 
 .catalog-dialog .catalog-heading {

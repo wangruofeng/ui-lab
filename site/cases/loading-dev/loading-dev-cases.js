@@ -72,7 +72,7 @@ export const loadingDevCategories = groups.map(({ title, cases }) => ({
     demo: "loading",
     variant: id,
     tip: observation,
-    outline: ["循环动效表达任务进行中，搭配文字可以说明用户正在等待什么。"],
+    outline: ["用文字说明正在加载什么。"],
     criterion: `为「${label}」实现加载反馈，提供可读的状态文本并保留固定布局。验证动画可暂停，在系统要求减少动态效果时默认静止。`,
     reference: `https://loading.dev/spinners/${id}`,
   })),

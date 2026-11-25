@@ -45,7 +45,7 @@ const topics = [
       [
         "use-text-balance",
         "平衡标题换行",
-        "比较原标题和应用 text-wrap: balance 的结果，正文按需使用 pretty；使用窄屏和长文案检查孤行及布局宽度。",
+        "比较标题应用 text-wrap: balance 前后的换行，正文按需用 pretty。用窄屏和长文案检查孤行与布局宽度。",
       ],
       [
         "use-tabular-nums-for-data",
@@ -150,7 +150,7 @@ const topics = [
       [
         "show-visible-focus-rings",
         "显示清晰的键盘焦点环",
-        "用 Tab 和 Shift+Tab 遍历控件，确认 :focus-visible 清楚、未被裁切，键盘操作的焦点顺序符合阅读顺序。",
+        "用 Tab 和 Shift+Tab 遍历控件，确认 :focus-visible 的焦点环完整可见，顺序符合阅读顺序。",
       ],
       [
         "show-errors-beside-fields",

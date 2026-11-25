@@ -1,3 +1,5 @@
+import { libraryUrl } from "./library.js";
+
 const criteria = {
   feature:
     "用户能从页面入口完成一次核心任务，并看到提交结果。指出哪些外壳可以等主流程稳定后补齐。",
@@ -88,18 +90,47 @@ const criteria = {
     "确定一次只调整的变量，记录前后对照、观察结果和适用条件，然后决定是否推广。",
 };
 
-export function buildPrompt(item) {
+export function buildPrompt(collection, item) {
   const check = item.criterion ?? criteria[item.id];
   if (!check) throw new Error(`案例缺少提示词验收条件：${item.id}`);
-  return [
-    `请用「${item.title}」的设计原则优化我提供的目标界面。`,
-    "输入：附上目标页面的代码、截图或文字描述，并说明最重要的用户任务。",
-    ...(!item.criterion
-      ? [
-          `参考思路：${item.tip}案例场景是「${item.scene}」，请将原则应用到我提供的内容和布局。`,
-        ]
+
+  const reference = [
+    "## 参考案例",
+    [collection.title, item.category, item.title].join(" › "),
+    ...(item.scene && item.scene !== item.category && item.scene !== item.title
+      ? [`演示场景 ${item.scene}`]
       : []),
-    `修改和验收：${check}`,
-    "仅调整与本原则直接相关的区域，沿用已有组件和设计令牌。提供代码时直接实现；只有截图或描述时，给出可执行的规格，并标注需要补充的信息。最后简述修改前后的差异与实际验证结果。",
-  ].join("\n\n");
+    `案例编号 ${collection.id}/${item.id}`,
+    libraryUrl(collection, item),
+  ].join("\n");
+
+  const summary = item.tip && !check.startsWith(item.tip)
+    ? `## 案例说明\n${item.tip}`
+    : "";
+
+  return [
+    "## 任务\n用下列 UI Lab 案例中的设计做法，优化我提供的界面。目标以我提供的代码、截图或描述和用户任务为准。",
+    reference,
+    summary,
+    `## 应用与验收\n${check}`,
+    "## 交付\n沿用目标项目的组件和设计令牌，只改与案例相关的区域。有代码时直接修改。仅有截图或描述时，给出可执行的规格并列出缺失信息。\n说明采用了案例中的哪条做法、改了什么、实际验证了什么，并附上参考案例的标题和链接。链接无法读取时，依据上面的案例说明及验收条件，并注明依据。",
+  ].filter(Boolean).join("\n\n");
+}
+
+export function renderPromptSource(container, markdown) {
+  const syntax = /^(?<heading>#{1,6}[ \t]+[^\n]+)|(?<code>`[^`\n]+`)|(?<link>\[[^\]\n]+\]\(https?:\/\/[^)\s]+\)|https?:\/\/[^\s<>"，。！？；、）】)]+)/gm;
+  const fragments = [];
+  let offset = 0;
+
+  for (const { 0: text, index, groups } of markdown.matchAll(syntax)) {
+    const type = groups.heading ? "heading" : groups.code ? "code" : "link";
+    const token = document.createElement(groups.code ? "code" : "span");
+    token.className = `prompt-syntax-${type}`;
+    token.textContent = text;
+    fragments.push(markdown.slice(offset, index), token);
+    offset = index + text.length;
+  }
+
+  fragments.push(markdown.slice(offset));
+  container.replaceChildren(...fragments);
 }

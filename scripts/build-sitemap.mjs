@@ -1,11 +1,10 @@
 import { writeFile } from "node:fs/promises";
-import { collections, libraryHref } from "../site/app/library.js";
+import { collections, libraryBaseUrl, libraryUrl } from "../site/app/library.js";
 
-const origin = "https://ui-lab.wangruofeng007.com/";
 const entities = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" };
 const escapeXml = (value) => value.replace(/[&<>"']/g, (char) => entities[char]);
 const absoluteUrl = (collection, item) =>
-  escapeXml(new URL(libraryHref(collection, item), origin).href);
+  escapeXml(libraryUrl(collection, item));
 
 const sources = collections.map((collection) => {
   const chapters = collection.categories.map((chapter) => {
@@ -25,7 +24,7 @@ ${chapters}
 }).join("\n");
 
 await writeFile(new URL("../site/sitemap.xml", import.meta.url), `<?xml version="1.0" encoding="UTF-8"?>
-<sitemap xml:lang="zh-CN" home="${origin}">
+<sitemap xml:lang="zh-CN" home="${libraryBaseUrl}">
 ${sources}
 </sitemap>
 `);

@@ -22,7 +22,7 @@ export const breakUiCollection = {
   type: "参考项目",
   title: "Break UI",
   author: "Emil Kowalski",
-  description: "切换极端数据，对照成员资料、列表、日期、进度、内容密度和请求反馈的修复效果。",
+  description: "用极端数据测试成员资料、列表、日期、进度、长内容和请求失败。",
   url: reference,
   categories: [{
     title: "极端数据测试",
@@ -31,7 +31,7 @@ export const breakUiCollection = {
       kind: "interactive",
       demo: "break-ui",
       title: "用极端数据测试团队成员行",
-      tip: "切换到极端数据，观察同一条成员记录在修复前后的布局和文案。",
+      tip: "切换极端数据，对照同一条成员记录修复前后的布局和文案。",
       reference,
       outline: [
         "给文字列设置 min-width: 0，允许长邮箱在必要时换行。",
@@ -61,7 +61,7 @@ export const breakUiCollection = {
     items: [
       edgeCase(
         "project-counts", "格式化零、单个和大量项目",
-        "调整后，1 projects 改为 1 project，1284 projects 加上千位分隔变为 1,284 projects。0 projects 在两侧相同。点击「极端数据」可切回普通数据。",
+        "对照 0 projects、1 project 和 1,284 projects，检查单复数和千位分隔。再次点击「极端数据」可切回普通数据。",
         "numbers-and-money",
         "使用目标语言的复数规则与数字格式化器，验证 0 projects、1 project 和 1,284 projects，检查数值在窄屏仍清楚可读。",
       ),
@@ -83,7 +83,7 @@ export const breakUiCollection = {
     items: [
       edgeCase(
         "date-time-zone", "跨年时按发布时区显示日期",
-        "同一发布时间在洛杉矶仍是 12 月 31 日，在台北已是 1 月 1 日。调整后以发布计划采用的台北时区显示日期。",
+        "同一发布时间在洛杉矶是 12 月 31 日，在台北是 1 月 1 日。右侧按计划采用的台北时区显示。",
         "time",
         "固定同一带时区的时间戳，按任务指定的时区格式化日期。验证洛杉矶与台北在跨年时显示不同日历日期，并明确标注时区。",
       ),
@@ -115,7 +115,7 @@ export const breakUiCollection = {
     items: [
       edgeCase(
         "request-retry", "请求失败后提供就地重试",
-        "两侧模拟同一个请求失败状态。右侧点击「重试」可恢复项目列表，左侧保留失败记录供对照。",
+        "两侧都模拟请求失败，点击右侧「重试」可恢复项目列表。",
         "states",
         "模拟列表请求失败，显示用户能理解的说明和就地重试入口。重试成功后恢复列表并将键盘焦点移到结果。",
       ),
