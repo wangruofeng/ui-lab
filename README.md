@@ -1,5 +1,5 @@
 <div align="center">
-  <h1><img src="./site/assets/brand-mark.png" alt="" width="32" height="32" align="middle">&nbsp; UI&nbsp;Lab</h1>
+  <h1><sup><img src="./site/assets/brand-mark.png" alt="" width="32" height="32" align="middle"></sup>&nbsp; UI&nbsp;Lab</h1>
   <p><strong>一个可以动手体验的 UI 设计案例库。</strong></p>
   <p>401 个案例 · 12 个来源 · v1.2.0</p>
   <p>
