@@ -1,6 +1,8 @@
 ---
 name: ui-lab-case-curation
 description: 为 UI Lab 筛选和收录书籍、组件库、设计系统和交互项目的案例。用于查找可收录的案例、判断收录范围，或将选中的内容做成前后对照和单栏交互演示。
+metadata:
+  version: "1.0.0"
 ---
 
 # UI Lab 案例收录

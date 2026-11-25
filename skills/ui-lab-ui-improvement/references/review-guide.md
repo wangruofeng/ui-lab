@@ -1,0 +1,25 @@
+# 检索与审查指南
+
+## 从界面症状选关键词
+
+先跨来源搜索。表中的来源适合在结果较多时缩小范围。来源及案例的实际清单以当前目录数据为准。
+
+| 界面症状或任务 | 可检索词 | 优先比较的来源 |
+| --- | --- | --- |
+| 看不出主次，分组关系不清，信息难扫读 | 层级、留白、亲密性、对齐、hierarchy | 重构 UI、写给大家看的设计书、写给程序员的设计书 |
+| 卡片和徽章重复，光晕压住内容，文字卖点反复出现 | 网格、光晕、投影、表面、文案、gradient | Kill AI Slop、重构 UI |
+| 长文本、极大数字和请求失败破坏布局或操作 | 截断、扩展名、空状态、重试、overflow、retry | Break UI |
+| 表格、表单和选择控件缺少关键状态或键盘路径 | data table、combobox、date picker、dialog、focus | shadcn/ui、UI Skills Playbook |
+| 等待、状态交接或动画中断让用户看不懂发生了什么 | loading、placeholder、feedback、中断、减少动态效果 | loading.dev、Transitions.dev、Motion Primitives、Details that make interfaces feel better |
+| 多步操作、数据联动或手势需要可观察的反馈 | 拖拽、chart、gesture、reorder、协作 | Stageshow、Transitions.dev |
+
+## 从案例得到验收条件
+
+| 检查点 | 需要看到的变化 |
+| --- | --- |
+| 信息层级 | 用同一份内容检查标题、主操作、辅助信息的阅读顺序。去掉重复元素后，分组和状态仍能读懂。 |
+| 边界状态 | 用相关的长文本、空数据或失败场景复现问题。修复后，用户能识别受影响的条目并完成后续动作。 |
+| 控件行为 | 走一遍受影响的输入、提交或取消流程。涉及自定义控件时，用键盘检查焦点和反馈。 |
+| 动效与加载 | 观察状态切换、中途操作及适用的减少动态效果模式。操作完成或失败后的结果仍清晰可见。 |
+
+例如，上传列表在窄屏藏起文件扩展名，且单条失败后只能刷新。验收时用窄屏长文件名确认扩展名仍可见，再模拟失败，确认可在同一行重试并看到恢复状态。参考[截断长文件名时保留扩展名](https://ui-lab.wangruofeng007.com/#/break-ui/long-file-name)和[请求失败后提供就地重试](https://ui-lab.wangruofeng007.com/#/break-ui/request-retry)。

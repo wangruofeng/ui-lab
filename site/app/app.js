@@ -422,13 +422,15 @@ function renderSitemap() {
       <details class="sitemap-source">
         <summary>${collection.title} <span>${collectionCases(collection).length} 个案例</span></summary>
         <p><a href="${libraryHref(collection)}">浏览来源目录</a></p>
-        <div class="sitemap-chapters">${chapters}</div>
+        <div class="chapter-grid sitemap-chapters">${chapters}</div>
       </details>`;
   }).join("");
   main.innerHTML = `
     <div class="breadcrumbs"><a href="${libraryHref()}">设计案例库</a></div>
     <h1 id="case-title" tabindex="-1">站点地图</h1>
+    <p><a href="./sitemap.xml">XML 版站点地图</a></p>
     <div class="sitemap-sources">${sources}</div>`;
+  main.querySelectorAll(".sitemap-chapters").forEach(connectChapterGrid);
 }
 
 function renderRoute() {

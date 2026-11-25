@@ -1663,11 +1663,7 @@ h1 {
   text-underline-offset: 0.18em;
 }
 .sitemap-chapters {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 256px), 1fr));
-  align-items: start;
-  gap: 12px;
-  padding-bottom: 16px;
+  margin-bottom: 16px;
 }
 .sitemap-chapters h3 {
   margin: 0 0 8px;
