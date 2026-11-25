@@ -35,6 +35,9 @@ function Viewer() {
       if (Number.isFinite(event.data.elapsed)) setElapsed(event.data.elapsed)
       if (typeof event.data.staticScene === 'boolean') setStaticScene(event.data.staticScene)
       if (Number.isFinite(event.data.height)) setHeight(Math.max(1, event.data.height))
+      if (event.data.error || event.data.ready) {
+        window.parent.postMessage({ type: 'ui-lab:stageshow-preview', ready: !event.data.error }, location.origin)
+      }
       if (event.data.error) { setError(String(event.data.error)); setReady(false); setPlaying(false) }
       else if (event.data.ready) { setReady(true); send({ playing: playing && !still, speed, visible: visible.current }) }
     }
