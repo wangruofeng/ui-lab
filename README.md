@@ -30,11 +30,17 @@ npm start
 
 打开 [127.0.0.1:4322](http://127.0.0.1:4322/)。日常预览无需安装 npm 依赖。
 
-### 在 Codex 中使用
+### 为 Agent 安装 Skill
 
-将 [UI 优化 Skill](./skills/ui-lab-ui-improvement/) 目录复制到目标项目的 `.agents/skills/`，然后试试：
+推荐在目标项目中运行以下命令，再选择要安装到的 Agent。Skills CLI 需要 Node.js 22.20 或更高版本。[安装文档](https://github.com/vercel-labs/skills#install-a-skill)
 
-> 用 `$ui-lab-ui-improvement` 找一个适合优化上传失败反馈的案例。
+```sh
+npx skills add wangruofeng/ui-lab --skill ui-lab-ui-improvement
+```
+
+默认安装到当前项目。需要跨项目使用时加 `-g`。也可以将 [UI 优化 Skill](./skills/ui-lab-ui-improvement/) 整个目录复制到所用 Agent 的技能目录。
+
+> 用 `ui-lab-ui-improvement` 找一个适合优化上传失败反馈的案例。
 
 ## 更多文档
 
