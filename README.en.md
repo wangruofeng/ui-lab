@@ -16,9 +16,11 @@
 
 ## Features
 
-- **Compare before and after.** See how a redesign makes the same content easier to read in examples such as the poster redesign.
-- **Try interactive demos.** Retry an action in place after it fails, or compare glows on status indicators.
-- **Apply cases to your own interface.** Search across sources and copy Markdown prompts with reference links and acceptance criteria from case pages.
+- **Browse by chapter or search across sources.** Explore cases from design books, component libraries, and motion projects, or press `⌘K` or `Ctrl+K` to search the whole library.
+- **Compare before and after.** Edit the poster headline, toggle layout guides, and play the transition to see how alignment and visual hierarchy affect readability. [Try the poster redesign](https://ui-lab.wangruofeng007.com/en/non-designers-design-book/easy-design)
+- **Try motion in context.** Click the plus button to open the menu, then select an action or press `Esc` to close it. Watch the transition in both directions. [Try the Gooey plus menu](https://ui-lab.wangruofeng007.com/en/transitions-dev/gooey-plus-menu)
+- **Apply a case to your own project.** Copy the Markdown from the Prompt tab and give your agent the case link, design guidance, and acceptance criteria to adapt to your interface.
+- **Switch languages on the same page.** Use the header link to switch between Simplified Chinese and English while viewing the same source or case.
 
 ## Quick start
 
