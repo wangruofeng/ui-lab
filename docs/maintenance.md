@@ -4,7 +4,7 @@
 
 ## 本地开发
 
-运行 `npm start`，访问 <http://127.0.0.1:4322/>。需要 Node.js、npm 和 Python 3。
+使用 Node.js 和 npm 运行 `npm start`，访问 <http://127.0.0.1:4322/>。
 
 启动预览和构建时会生成 [XML 站点地图](http://127.0.0.1:4322/sitemap.xml)，其中包含案例的来源、章节、标题、摘要和正式链接。
 
@@ -17,19 +17,21 @@
 
 ## 构建与部署
 
-运行 `npm run build` 将 `site/` 发布文件复制到 `dist/`。可以用以下命令预览当前工作区的构建产物。
+运行 `npm run build` 生成首页加载占位和 XML 站点地图，并将发布文件复制到 `dist/`。随后运行 `npm run preview`，访问 <http://127.0.0.1:4323/> 预览构建产物。
 
-```sh
-python3 -m http.server 4323 --bind 127.0.0.1 --directory dist
-```
+Cloudflare Pages 从 GitHub 的 `main` 分支拉取代码，运行 `npm run build`，并发布 `dist/`。在 Pages 的部署记录中对照 GitHub 提交 SHA，即可确认生产站点使用的版本。来源和案例路径依赖 Cloudflare Pages 的默认单页应用回退，由根目录的 `index.html` 处理。
 
-Cloudflare Pages 从 GitHub 的 `main` 分支拉取代码，运行 `npm run build`，并发布 `dist/`。在 Pages 的部署记录中对照 GitHub 提交 SHA，即可确认生产站点使用的版本。
+部署后直接打开并刷新来源页、案例页和 `/sitemap`，确认每个地址显示对应内容。检查 `/sitemap.xml` 中的来源与案例链接也使用路径 URL。旧部署的单页应用回退也可能返回 HTTP 200，需以实际页面内容和 XML 链接为准。
 
 ## 添加参考来源
 
 先阅读 [UI Lab 案例收录技能](../skills/ui-lab-case-curation/SKILL.md)，再在 `site/app/library.js` 的 `collections` 中增加一个来源，设置独立 ID、来源链接、介绍和章节。案例 ID 在来源内唯一，可用 `criterion` 声明独立的提示词验收条件。演示可复用 `site/app/scenes.js` 的现有模板，也可按需增加渲染器。
 
-案例链接统一使用 `#/来源/案例`。
+## 路由与目录
+
+- 来源页使用 `/来源`，案例页使用 `/来源/案例`，站内地图使用 `/sitemap`。旧的片段路由已退役。
+- 站内链接通过 `libraryHref()` 生成。XML 站点地图和案例提示词通过 `libraryUrl()` 生成指向正式域名的链接。
+- 案例首页与站内地图共用章节卡片布局。每个来源独立分栏，按章节顺序将卡片放入当前最短的列。宽度不足时显示为单列。
 
 ## 更新 UI Skills Playbook 演示
 

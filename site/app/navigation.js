@@ -142,7 +142,7 @@ sourceList.addEventListener("click", (event) => {
   const link = event.target.closest("a[href]");
   if (!link) return;
   sourceMenu.open = false;
-  if (link.hash === location.hash) sourceMenu.querySelector("summary").focus();
+  if (link.href === location.href) sourceMenu.querySelector("summary").focus();
 });
 document.addEventListener("click", (event) => {
   if (sourceMenu.open && !sourceMenu.contains(event.target))

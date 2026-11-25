@@ -16,7 +16,7 @@ metadata:
 ## 读取全量目录
 
 - **在 UI Lab 仓库中**，运行 `node scripts/build-sitemap.mjs` 从当前工作区生成 `site/sitemap.xml`。需要细节时查看 `site/app/library.js` 的 `collections`、`collectionCases()` 和 `libraryHref()`，以及 `site/cases/` 中的 `tip`、`criterion` 和演示实现。
-- **在其他项目中**，读取用户指定的 UI Lab 实例的 `/sitemap.xml`，默认使用[正式站点 XML](https://ui-lab.wangruofeng007.com/sitemap.xml)。XML 不可用时，使用[站内搜索](https://ui-lab.wangruofeng007.com/)或 [GitHub 案例目录](https://github.com/wangruofeng/ui-lab/tree/main/site/cases)。案例链接的 `#/` 路由由浏览器 JavaScript 解析。
+- **在其他项目中**，读取用户指定的 UI Lab 实例的 `/sitemap.xml`，默认使用[正式站点 XML](https://ui-lab.wangruofeng007.com/sitemap.xml)。XML 不可用时，使用[站内搜索](https://ui-lab.wangruofeng007.com/)或 [GitHub 案例目录](https://github.com/wangruofeng/ui-lab/tree/main/site/cases)。案例直达链接取自所选实例的 XML。
 - **关键词筛选**，用随附的 [Python 脚本](scripts/search_cases.py)。在 UI Lab 根目录运行以下命令。已安装的 Skill 使用其目录下的脚本；XML 已下载时传文件路径，也可以传 `-` 从标准输入读取。
 
 ```sh

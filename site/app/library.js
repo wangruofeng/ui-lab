@@ -16,7 +16,7 @@ export const libraryBaseUrl = "https://ui-lab.wangruofeng007.com/";
 export const collections = [
   {
     id: "refactoring-ui",
-    artwork: { kind: "cover", src: "./assets/source-art/refactoring-ui.webp" },
+    artwork: { kind: "cover", src: "./assets/source-art/refactoring-ui.webp", width: 404, height: 520 },
     type: "书籍",
     title: "重构 UI",
     author: "Adam Wathan、Steve Schoger",
@@ -29,6 +29,8 @@ export const collections = [
     artwork: {
       kind: "cover",
       src: "./assets/source-art/non-designers-design-book.webp",
+      width: 364,
+      height: 520,
     },
     type: "书籍",
     title: "写给大家看的设计书",
@@ -40,7 +42,7 @@ export const collections = [
   },
   {
     id: "design-for-hackers",
-    artwork: { kind: "cover", src: "./assets/source-art/design-for-hackers.webp" },
+    artwork: { kind: "cover", src: "./assets/source-art/design-for-hackers.webp", width: 414, height: 520 },
     type: "书籍",
     title: "写给程序员的设计书",
     author: "David Kadavy",
@@ -121,11 +123,11 @@ export function collectionCases(collection) {
   );
 }
 
-export function resolveRoute(hash) {
-  if (!hash || hash === "#/") return {};
-  if (hash === "#/sitemap") return { sitemap: true };
-  if (!hash.startsWith("#/")) return { missing: true };
-  const parts = hash.slice(2).split("/");
+export function resolveRoute(pathname) {
+  if (pathname === "/") return {};
+  if (pathname === "/sitemap") return { sitemap: true };
+  if (!pathname.startsWith("/")) return { missing: true };
+  const parts = pathname.slice(1).split("/");
   const [collectionId, itemId] = parts;
   if (!collectionId || parts.length > 2) return { missing: true };
   const collection = collections.find((entry) => entry.id === collectionId);
@@ -138,7 +140,7 @@ export function resolveRoute(hash) {
 }
 
 export function libraryHref(collection, item) {
-  return "#/" + [collection?.id, item?.id].filter(Boolean).join("/");
+  return "/" + [collection?.id, item?.id].filter(Boolean).join("/");
 }
 
 export function libraryUrl(collection, item) {

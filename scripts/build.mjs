@@ -1,5 +1,6 @@
 import { copyFile, cp, rm } from "node:fs/promises";
 import "./build-sitemap.mjs";
+import "./build-home.mjs";
 
 const source = new URL("../site/", import.meta.url);
 const output = new URL("../dist/", import.meta.url);

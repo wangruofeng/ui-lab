@@ -4,7 +4,6 @@
   <p>401 个案例 · 12 个来源 · v1.2.0</p>
   <p>
     <a href="https://ui-lab.wangruofeng007.com/">在线体验</a> ·
-    <a href="https://ui-lab.wangruofeng007.com/#/sitemap">站点地图</a> ·
     <a href="https://ui-lab.wangruofeng007.com/sitemap.xml">XML 索引</a>
   </p>
   <a href="https://ui-lab.wangruofeng007.com/">
@@ -14,13 +13,13 @@
 
 ## 功能
 
-- **对照改版前后**。看同样的内容怎样读得更清楚，例如[海报重排](https://ui-lab.wangruofeng007.com/#/non-designers-design-book/easy-design)。
-- **动手操作演示**。试试[失败后就地重试](https://ui-lab.wangruofeng007.com/#/break-ui/request-retry)，或比较[状态指示器的光晕](https://ui-lab.wangruofeng007.com/#/kill-ai-slop/status-dot-glow)。
+- **对照改版前后**。看同样的内容怎样读得更清楚，例如海报重排。
+- **动手操作演示**。试试失败后就地重试，或比较状态指示器的光晕。
 - **用案例优化自己的界面**。跨来源搜索，在案例页复制带有参考链接和验收条件的 Markdown 提示词。
 
 ## 快速开始
 
-直接打开[在线案例库](https://ui-lab.wangruofeng007.com/)，也可以在本地运行。需要 Node.js、npm 和 Python 3。
+直接打开[在线案例库](https://ui-lab.wangruofeng007.com/)，也可以使用 Node.js 和 npm 在本地运行。
 
 ```sh
 git clone https://github.com/wangruofeng/ui-lab.git
@@ -28,7 +27,7 @@ cd ui-lab
 npm start
 ```
 
-打开 [127.0.0.1:4322](http://127.0.0.1:4322/)。日常预览无需安装 npm 依赖。
+打开 [127.0.0.1:4322](http://127.0.0.1:4322/)。日常预览无需安装 npm 依赖。启动后可以直接打开[站点地图](http://127.0.0.1:4322/sitemap)或[海报重排案例](http://127.0.0.1:4322/non-designers-design-book/easy-design)。
 
 ### 为 Agent 安装 Skill
 

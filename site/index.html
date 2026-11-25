@@ -2,6 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
+    <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#ffffff" />
     <meta
@@ -27,7 +28,7 @@
     <a class="skip-link" href="#case">跳到内容</a>
     <header class="site-header">
       <div class="header-content">
-        <a href="#/" class="brand">
+        <a href="/" class="brand">
           <img
             class="brand-mark"
             src="./assets/brand-mark.png"
@@ -75,12 +76,122 @@
         </nav>
       </div>
     </header>
-    <div class="shell">
+    <div class="shell library-shell">
       <aside class="sidebar" aria-label="当前来源目录" hidden>
         <p class="catalog-heading">案例目录</p>
         <nav id="catalog" aria-label="按章节浏览"></nav>
       </aside>
-      <main id="case" tabindex="-1" aria-labelledby="case-title"></main>
+      <main id="case" tabindex="-1" aria-labelledby="case-title">
+        <div id="library-loading" hidden>
+          <!-- library-loading:start -->
+          <h1 id="case-title" tabindex="-1">设计案例库</h1>
+          <p class="intro">通过前后对照和交互演示学习界面设计。</p>
+          <div class="library-grid library-skeleton" role="status" aria-label="正在加载案例来源">
+            <article class="library-card" aria-hidden="true">
+              <div class="library-artwork"></div>
+              <div class="library-card-copy">
+                <h2><span>重构 UI</span></h2>
+                <p class="library-card-description">按原书章节练习视觉层级、排版、色彩和界面细节。</p>
+                <p class="card-meta"><span>书籍 · 50 个案例</span><span>Adam Wathan、Steve Schoger</span></p>
+              </div>
+            </article>
+            <article class="library-card" aria-hidden="true">
+              <div class="library-artwork"></div>
+              <div class="library-card-copy">
+                <h2><span>写给大家看的设计书</span></h2>
+                <p class="library-card-description">在可编辑的版面上练习亲密性、对齐、重复与对比，以及配色、印刷品和字体。</p>
+                <p class="card-meta"><span>书籍 · 43 个案例</span><span>Robin Williams</span></p>
+              </div>
+            </article>
+            <article class="library-card" aria-hidden="true">
+              <div class="library-artwork"></div>
+              <div class="library-card-copy">
+                <h2><span>写给程序员的设计书</span></h2>
+                <p class="library-card-description">从产品目标出发，练习排版、构图、视觉层级与配色。</p>
+                <p class="card-meta"><span>书籍 · 43 个案例</span><span>David Kadavy</span></p>
+              </div>
+            </article>
+            <article class="library-card" aria-hidden="true">
+              <div class="library-artwork"></div>
+              <div class="library-card-copy">
+                <h2><span>UI Skills Playbook</span></h2>
+                <p class="library-card-description">布局、排版、色彩、可访问性和动效的交互示例。</p>
+                <p class="card-meta"><span>参考项目 · 47 个案例</span><span>Julien Thibeaut</span></p>
+              </div>
+            </article>
+            <article class="library-card" aria-hidden="true">
+              <div class="library-artwork"></div>
+              <div class="library-card-copy">
+                <h2><span>Kill AI Slop</span></h2>
+                <p class="library-card-description">用前后对照识别模板化的配色、排版、文案、布局和动效。</p>
+                <p class="card-meta"><span>参考网站 · 35 个案例</span><span>yetone</span></p>
+              </div>
+            </article>
+            <article class="library-card" aria-hidden="true">
+              <div class="library-artwork"></div>
+              <div class="library-card-copy">
+                <h2><span>loading.dev</span></h2>
+                <p class="library-card-description">可调速度和尺寸的加载指示器，涵盖旋转、错峰、扩散、波形和形变。</p>
+                <p class="card-meta"><span>参考项目 · 36 个案例</span><span>Jakub Krehel、Paul Faivret</span></p>
+              </div>
+            </article>
+            <article class="library-card" aria-hidden="true">
+              <div class="library-artwork"></div>
+              <div class="library-card-copy">
+                <h2><span>Transitions.dev</span></h2>
+                <p class="library-card-description">通过表单、卡片和通知，观察动效如何提示状态变化。</p>
+                <p class="card-meta"><span>参考项目 · 44 个案例</span><span>Jakub Antalik</span></p>
+              </div>
+            </article>
+            <article class="library-card" aria-hidden="true">
+              <div class="library-artwork"></div>
+              <div class="library-card-copy">
+                <h2><span>shadcn/ui</span></h2>
+                <p class="library-card-description">官网示例包括表格、日期范围、命令菜单、聊天滚动和可调整面板。</p>
+                <p class="card-meta"><span>参考项目 · 17 个案例</span><span>shadcn/ui</span></p>
+              </div>
+            </article>
+            <article class="library-card" aria-hidden="true">
+              <div class="library-artwork"></div>
+              <div class="library-card-copy">
+                <h2><span>Motion Primitives</span></h2>
+                <p class="library-card-description">对照浮层、切换、文字、滚动和指针反馈的不同动效。</p>
+                <p class="card-meta"><span>参考项目 · 33 个案例</span><span>Julien Thibeaut</span></p>
+              </div>
+            </article>
+            <article class="library-card" aria-hidden="true">
+              <div class="library-artwork"></div>
+              <div class="library-card-copy">
+                <h2><span>Break UI</span></h2>
+                <p class="library-card-description">用极端数据测试成员资料、列表、日期、进度、长内容和请求失败。</p>
+                <p class="card-meta"><span>参考项目 · 11 个案例</span><span>Emil Kowalski</span></p>
+              </div>
+            </article>
+            <article class="library-card" aria-hidden="true">
+              <div class="library-artwork"></div>
+              <div class="library-card-copy">
+                <h2><span>Details that make interfaces feel better</span></h2>
+                <p class="library-card-description">对照文字换行、按钮留白、嵌套圆角、入场动效、状态图标和描边阴影。</p>
+                <p class="card-meta"><span>参考项目 · 8 个案例</span><span>Jakub Krehel</span></p>
+              </div>
+            </article>
+            <article class="library-card" aria-hidden="true">
+              <div class="library-artwork"></div>
+              <div class="library-card-copy">
+                <h2><span>Stageshow</span></h2>
+                <p class="library-card-description">用官方演示观察产品构图、图表联动、多人协作和手势反馈。</p>
+                <p class="card-meta"><span>参考项目 · 34 个案例</span><span>Benji Taylor</span></p>
+              </div>
+            </article>
+          </div>
+          <!-- library-loading:end -->
+        </div>
+      </main>
+      <script>
+        if (location.pathname === "/") {
+          document.getElementById("library-loading").hidden = false;
+        }
+      </script>
     </div>
     <footer class="site-footer">
       <div class="site-footer-meta">
@@ -93,7 +204,7 @@
           </a>
           <a href="https://github.com/wangruofeng/ui-lab">GitHub</a>
           <a href="https://github.com/wangruofeng/ui-lab/blob/main/LICENSE" aria-label="UI Lab 原创代码的 MIT 许可证">MIT</a>
-          <a href="#/sitemap">站点地图</a>
+          <a href="/sitemap">站点地图</a>
         </div>
       </div>
     </footer>

@@ -1,3 +1,4 @@
+import { renderArtwork, renderLibraryHome } from "./library-home.js";
 import { connectSlidingTabs } from "./sliding-tabs.js";
 import { prepareMotionExamples } from "../cases/motion-primitives/motion-primitives-examples.js";
 import { installMotionPrimitives } from "../cases/motion-primitives/motion-primitives.js";
@@ -318,16 +319,8 @@ function breadcrumbs(collection, item) {
   </nav>`;
 }
 
-function renderArtwork(artwork, preview = false) {
-  if (!artwork) return "";
-  const image = `<img src="${artwork.src}" alt="" decoding="async" data-fade-on-load>`;
-  const classes = `library-artwork library-artwork--${artwork.kind}`;
-  return preview
-    ? `<button type="button" class="${classes}" aria-label="${artwork.kind === "cover" ? "放大查看封面" : "放大查看 Logo"}" aria-haspopup="dialog" aria-controls="artwork-dialog">${image}</button>`
-    : `<div class="${classes}">${image}</div>`;
-}
 
-function connectChapterGrid(grid, { shortestColumn = false } = {}) {
+function connectChapterGrid(grid) {
   const cards = [...grid.children];
   if (!cards.length) return;
 
@@ -350,10 +343,8 @@ function connectChapterGrid(grid, { shortestColumn = false } = {}) {
     const heights = cards.map(card => card.getBoundingClientRect().height);
     const offsets = Array(columns).fill(0);
     cards.forEach((card, index) => {
-      const column = shortestColumn
-        ? offsets.indexOf(Math.min(...offsets))
-        : index % columns;
-      if (shortestColumn) card.style.setProperty("--chapter-column", column + 1);
+      const column = offsets.indexOf(Math.min(...offsets));
+      card.style.setProperty("--chapter-column", column + 1);
       card.style.setProperty("--chapter-top", `${offsets[column]}px`);
       offsets[column] += heights[index] + gap;
     });
@@ -401,7 +392,7 @@ function renderOverview(collection) {
       </header>
       <nav class="chapter-jumps" aria-label="章节直达">${chapterJumps}</nav>
       <div class="chapter-grid collection-chapters">${chapterCards}</div>`;
-    connectChapterGrid(main.querySelector(".collection-chapters"), { shortestColumn: true });
+    connectChapterGrid(main.querySelector(".collection-chapters"));
     for (const button of main.querySelectorAll(".chapter-jumps button")) {
       button.addEventListener("click", () => {
         const heading = document.getElementById(button.getAttribute("aria-controls"));
@@ -412,26 +403,7 @@ function renderOverview(collection) {
     return;
   }
 
-  const cards = collections
-    .map((entry) => {
-      const items = collectionCases(entry);
-      const directDemo = items.length === 1 && items[0].kind === "interactive" ? items[0] : undefined;
-      return `
-      <article class="library-card">
-        ${renderArtwork(entry.artwork)}
-        <div class="library-card-copy">
-          <h2><a href="${libraryHref(entry, directDemo)}">${entry.title}</a></h2>
-          <p class="library-card-description">${entry.description}</p>
-          <p class="card-meta"><span>${entry.type} · ${items.length} 个案例</span><span>${entry.author}</span></p>
-        </div>
-      </article>`;
-    })
-    .join("");
-
-  main.innerHTML = `
-    <h1 id="case-title" tabindex="-1">设计案例库</h1>
-    <p class="intro">通过前后对照和交互演示学习界面设计。</p>
-    <div class="library-grid">${cards}</div>`;
+  main.innerHTML = renderLibraryHome();
 }
 
 function renderSitemap() {
@@ -450,8 +422,10 @@ function renderSitemap() {
   }).join("");
   main.innerHTML = `
     <div class="breadcrumbs"><a href="${libraryHref()}">设计案例库</a></div>
-    <h1 id="case-title" tabindex="-1">站点地图</h1>
-    <p><a href="./sitemap.xml" aria-label="XML 版站点地图">XML 版</a></p>
+    <div class="sitemap-heading">
+      <h1 id="case-title" tabindex="-1">站点地图</h1>
+      <a href="/sitemap.xml" aria-label="XML 版站点地图">XML 版</a>
+    </div>
     <div class="sitemap-sources">${sources}</div>`;
   main.querySelectorAll(".sitemap-chapters").forEach(connectChapterGrid);
 }
@@ -459,7 +433,7 @@ function renderSitemap() {
 function renderRoute() {
   if (artworkDialog.open) artworkDialog.close();
   cancelAnimationFrame(frame);
-  route = resolveRoute(location.hash);
+  route = resolveRoute(location.pathname);
   const { collection, item, missing, sitemap } = route;
   updateNavigation(collection, item, missing);
   shell.classList.toggle("library-shell", !collection);
@@ -496,11 +470,26 @@ document.addEventListener("keydown", (event) => {
   event.preventDefault();
   adjacentCase.click();
 });
-window.addEventListener("hashchange", () => {
+function navigateToRoute() {
   renderRoute();
   document.querySelector("#case-title").focus({ preventScroll: true });
   window.scrollTo(0, 0);
+}
+
+document.addEventListener("click", (event) => {
+  if (event.defaultPrevented || event.button !== 0 ||
+      event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+  const link = event.target.closest("a[href]");
+  if (!link || link.target || link.hasAttribute("download") ||
+      link.origin !== location.origin || link.hash || link.search ||
+      resolveRoute(link.pathname).missing) return;
+
+  event.preventDefault();
+  if (link.href === location.href) return;
+  history.pushState(null, "", link.href);
+  navigateToRoute();
 });
+window.addEventListener("popstate", navigateToRoute);
 document.addEventListener("load", ({ target }) => {
   if (target instanceof HTMLImageElement && target.hasAttribute("data-fade-on-load")) {
     target.classList.add("image-loaded");

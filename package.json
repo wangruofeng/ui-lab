@@ -5,8 +5,9 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "prestart": "node scripts/build-sitemap.mjs",
-    "start": "python3 -m http.server 4322 --bind 127.0.0.1 --directory site",
+    "prestart": "node scripts/build-sitemap.mjs && node scripts/build-home.mjs",
+    "start": "node scripts/serve.mjs",
+    "preview": "node scripts/serve.mjs dist 4323",
     "build": "node scripts/build.mjs"
   }
 }
