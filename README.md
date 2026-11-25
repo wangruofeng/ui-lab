@@ -8,7 +8,7 @@
     <a href="https://ui-lab.wangruofeng007.com/sitemap.xml">XML 索引</a>
   </p>
   <a href="https://ui-lab.wangruofeng007.com/">
-    <img src="./docs/images/overview.webp" alt="UI Lab 首页，展示书籍和参考项目的案例目录" width="1000">
+    <img src="./docs/images/ui-lab-home.webp" alt="UI Lab 首页，展示书籍和参考项目的案例目录" width="1000">
   </a>
 </div>
 
