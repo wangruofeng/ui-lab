@@ -1,6 +1,6 @@
 # 案例来源与素材许可
 
-[返回项目首页](../README.md)
+简体中文 · [English](./sources.en.md) · [返回项目首页](../README.md)
 
 ## 案例来源
 

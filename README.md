@@ -3,6 +3,9 @@
   <p><strong>一个可以动手体验的 UI 设计案例库。</strong></p>
   <p>401 个案例 · 12 个来源 · v1.2.0</p>
   <p>
+    简体中文 · <a href="./README.en.md" lang="en">English</a>
+  </p>
+  <p>
     <a href="https://ui-lab.wangruofeng007.com/">在线体验</a> ·
     <a href="https://ui-lab.wangruofeng007.com/sitemap.xml">XML 索引</a>
   </p>

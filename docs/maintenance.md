@@ -1,6 +1,6 @@
 # 开发、构建与演示维护
 
-[返回项目首页](../README.md)
+简体中文 · [English](./maintenance.en.md) · [返回项目首页](../README.md)
 
 ## 本地开发
 
@@ -78,3 +78,7 @@ npm run build --prefix vendor-src/stageshow-src
 英文界面的字体在 `site/app/styles.css` 中按页面语言配置。正文和导航使用本地托管的 Inter，提示词中的代码使用 Roboto Mono。主标题优先使用访客设备上已安装的 Saans Medium，缺少该字体时使用 Inter。
 
 站点静态文案在 `site/index.html` 和 `site/app/locale-shell.js` 中维护。来源、章节和案例的英文名称在 `site/app/library-en.js` 中维护。案例英文说明、设计要点、书中出处和验收条件在 `site/app/case-copy-*-en.js` 中维护。演示文案用 `t(中文, 英文)` 在各自模块里维护。Playbook 内嵌演示通过 `lang=en` 使用原版英文文案。新增或改动案例时补齐两种语言的说明、演示和提示词。构建会检查英文目录、案例元数据和提示词是否仍混有汉字。
+
+## 文档语言
+
+项目文档默认使用简体中文，英文版使用 `.en.md` 后缀。修改文档时同步更新两种语言，新加的文档链接指向对应语言版本。README 截图存放在 `docs/images/`。
