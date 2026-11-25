@@ -1,4 +1,5 @@
 <div align="center">
+  <img src="./site/assets/brand-mark.png" alt="UI Lab 标志" width="64" height="64">
   <h1>UI Lab</h1>
   <p><strong>一个可以动手体验的 UI 设计案例库。</strong></p>
   <p>401 个案例 · 12 个来源 · v1.2.0</p>
